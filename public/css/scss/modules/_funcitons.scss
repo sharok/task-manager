@@ -1,0 +1,20 @@
+@function size-in-percent($partialSize, $fullSize) {
+  @return $partialSize / $fullSize * 100%;
+}
+
+@mixin top-center($height) {
+  top: 50%;
+  margin-top: -($height / 2);
+}
+
+@mixin position($position, $width, $height: null) {
+  position: $position;
+
+  @if ($height == null) {
+    height: $width;
+    width: $width;
+  } @else {
+    height: $height;
+    width: $width;
+  }
+}

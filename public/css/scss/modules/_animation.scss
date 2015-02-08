@@ -1,0 +1,26 @@
+@mixin animation-delay-class($delay, $add-delay: 0ms) {
+  .delay-#{$delay} {
+    animation-delay: $delay + $add-delay !important;
+  }
+}
+
+@mixin animation-duration-class($duration) {
+  .duration-#{$duration} {
+    animation-duration: $duration !important;
+  }
+}
+
+@mixin animation($config, $fill-mode: none) {
+  animation: $config; //config: animation-name, duration, timing-function, delay, count, direction
+  animation-fill-mode: $fill-mode;
+}
+
+@mixin animation-class($name, $config, $fill-mode: none) {
+  .#{$name} {
+    @include animation(#{$name}-animation $config, $fill-mode);
+  }
+
+  @keyframes #{$name}-animation {
+    @content
+  }
+}

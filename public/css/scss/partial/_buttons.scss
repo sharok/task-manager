@@ -1,0 +1,13 @@
+%button {
+  $button-height: 25px;
+
+  cursor: pointer;
+  height: $button-height;
+  display: inline-block;
+  box-sizing: border-box;
+  padding: 0 15px;
+  font-size: 13px;
+  line-height: $button-height;
+  border-radius: 2px;
+  border: none;
+}

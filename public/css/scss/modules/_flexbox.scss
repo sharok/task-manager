@@ -1,0 +1,11 @@
+@mixin flex-box($vertical-align, $horizontal-align, $flex-wrap: nowrap, $row-align: null) {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: $flex-wrap;
+  justify-content: $horizontal-align;
+  align-items: $vertical-align;
+
+  @if ($row-align != null) {
+    align-content: $row-align;
+  }
+}
