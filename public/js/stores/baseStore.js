@@ -34,7 +34,9 @@ module.exports = function (store) {
         },
         
         dispatcherToken: appDispatcher.register(function (payload) {
-            var action = actions[payload.action.type] || function () { };
+            var action = actions[payload.action.type];
+
+            if (typeof action == 'undefined') return;
 
             action(payload);
             childrenStore.emitChange();

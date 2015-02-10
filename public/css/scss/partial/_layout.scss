@@ -1,6 +1,30 @@
+.layer {
+    @include position(absolute, 100%);
+}
+
 body, html {
-//  background: $base-bg-color;
+    @extend .layer;
+
+    background: $secondary-bg-color;
     font-family: $base-font-family;
-//  color: $base-font-color;
+    color: $base-font-color;
+}
+
+.task-manager {
+    & > {
+        $side-block-width: 280px;
+
+        .side-block {
+            @include position(absolute, $side-block-width, 100%);
+        }
+
+        .content-block {
+            position: relative;
+            min-height: 100%;
+            margin-left: $side-block-width;
+
+            background: $base-bg-color;
+        }
+    }
 }
 

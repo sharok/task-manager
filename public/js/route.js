@@ -9,6 +9,14 @@ module.exports = function () {
         appActions.changePage(pages.MAIN);
     });
 
+    route('/tasks', function () {
+        appActions.changePage(pages.TASKS);
+    });
+
+    route('/profile', function () {
+        appActions.changePage(pages.PROFILE);
+    });
+
     route.start();
 };
 

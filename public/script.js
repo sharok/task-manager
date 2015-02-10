@@ -5,7 +5,7 @@ var React = require('react'),
     TaskManager = React.createFactory(require('./taskManager.jsx'));
 
 React.render(new TaskManager(), document.getElementById('application'))
-},{"./taskManager.jsx":181,"react":8}],2:[function(require,module,exports){
+},{"./taskManager.jsx":190,"react":8}],2:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -21153,7 +21153,7 @@ module.exports = {
         });
     }
 };
-},{"../appDispatcher":170,"../constants/actionTypes":171}],170:[function(require,module,exports){
+},{"../appDispatcher":170,"../constants/actionTypes":177}],170:[function(require,module,exports){
 "use strict"
 
 var Dispatcher = require('dispatcher'),
@@ -21185,7 +21185,157 @@ appDispatcher = assign(new Dispatcher(), {
 module.exports = appDispatcher;
 
 
-},{"./constants/payloadSources":173,"dispatcher":174,"object-assign":4}],171:[function(require,module,exports){
+},{"./constants/payloadSources":179,"dispatcher":180,"object-assign":4}],171:[function(require,module,exports){
+"use strict"
+
+var React = require('react');
+
+module.exports = React.createClass({displayName: "exports",
+    render: function () {
+        return (React.createElement("div", {className: "clock"}, 
+            React.createElement("small", null, "9 февраля"), 
+            React.createElement("strong", null, "13:56")
+        ));
+    }
+});
+},{"react":8}],172:[function(require,module,exports){
+"use strict"
+
+var React = require('react'),
+    dynamicStyle = require('../mixins/dynamicStyle'),
+    pageStore = require('../stores/pageStore'),
+    pages = require('../constants/pages'),
+
+    getNavigationState = function () {
+        return {
+            activePageName: pageStore.currentPageName()
+        }
+    };
+
+module.exports = React.createClass({displayName: "exports",
+    mixins: [dynamicStyle],
+
+    getInitialState: function () {
+        return getNavigationState();
+    },
+
+    componentWillMount: function () {
+        pageStore.addChangeListener(function () {
+            this.setState(getNavigationState());
+        }.bind(this));
+    },
+
+    createLink: function (link) {
+        var className = this.cs({
+            'active': link.pageName == this.state.activePageName
+        });
+
+        return React.createElement("li", {className: className}, React.createElement("a", {href:  link.href},  link.title, React.createElement("i", {className: "underline"})))
+    },
+
+    render: function () {
+        return (React.createElement("ul", {className: "navigation"}, 
+            React.createElement("b", null, "Навигация"), 
+            
+                [
+
+                    { title: 'сегодня', pageName: pages.MAIN, href: '/' },
+                    { title: 'все задачи', pageName: pages.TASKS, href: '/tasks' },
+                    { title: 'профиль', pageName: pages.PROFILE, href: '/profile' }
+
+                ].map(this.createLink)
+            
+        ))
+    }
+});
+},{"../constants/pages":178,"../mixins/dynamicStyle":183,"../stores/pageStore":189,"react":8}],173:[function(require,module,exports){
+"use strict"
+
+var React = require('react'),
+    dynamicStyle = require('../mixins/dynamicStyle');
+
+module.exports = React.createClass({displayName: "exports",
+    mixins: [dynamicStyle],
+
+    render: function () {
+        var value = +this.props.value,
+
+        className = this.cs({
+            'filler': true,
+            'low': value <= 25,
+            'medium': value < 60 && value > 25,
+            'high': value >= 60
+        });
+
+        return (React.createElement("div", {className: "progress-bar"}, 
+            React.createElement("div", {className: className, style:  { width: value + '%'} })
+        ))
+    }
+});
+},{"../mixins/dynamicStyle":183,"react":8}],174:[function(require,module,exports){
+"use strict"
+
+var React = require('react'),
+    Navigation = require('./navigation.jsx'),
+    Clock = require('./clock.jsx'),
+    TaskProgress = require('./task-progress.jsx'),
+    UpcomingTask = require('./upcoming-task.jsx');
+
+module.exports = React.createClass({displayName: "exports",
+    render: function () {
+        var tasks = [
+            { title: 'Поступление в ВУЗ', complete: 24 },
+            { title: 'Изучение английского', complete: 58 }
+        ];
+
+        return (React.createElement("div", {className: "side-block"}, 
+
+            React.createElement("div", {className: "section tablet tall"}, 
+                React.createElement(Clock, null), 
+                React.createElement(UpcomingTask, null)
+            ), 
+
+            React.createElement("div", {className: "section tablet"}, 
+                React.createElement(TaskProgress, {item:  tasks[0] })
+            ), 
+
+            React.createElement("div", {className: "section tablet"}, 
+                React.createElement(TaskProgress, {item:  tasks[1] })
+            ), 
+
+            React.createElement("div", {className: "section"}, 
+                React.createElement(Navigation, null)
+            )
+        ));
+    }
+});
+},{"./clock.jsx":171,"./navigation.jsx":172,"./task-progress.jsx":175,"./upcoming-task.jsx":176,"react":8}],175:[function(require,module,exports){
+"use strict"
+
+var React = require('react'),
+    ProgressBar = require('./progress-bar.jsx');
+
+module.exports = React.createClass({displayName: "exports",
+    render: function () {
+        return (React.createElement("div", {className: "task-progress"}, 
+            React.createElement("div", {className: "task-title"},  this.props.item.title), 
+            React.createElement(ProgressBar, {value:  this.props.item.complete})
+        ));
+    }
+});
+},{"./progress-bar.jsx":173,"react":8}],176:[function(require,module,exports){
+"use strict"
+
+var React = require('react');
+
+module.exports = React.createClass({displayName: "exports",
+    render: function () {
+        return (React.createElement("div", {className: "upcoming-task"}, 
+            "нет ближайших задач"
+        ));
+    }
+});
+},{"react":8}],177:[function(require,module,exports){
 "use strict"
 
 var keys = require('keys'),
@@ -21196,18 +21346,20 @@ var keys = require('keys'),
 
 module.exports = actionTypes;
 
-},{"keys":176}],172:[function(require,module,exports){
+},{"keys":182}],178:[function(require,module,exports){
 "use strict"
 
 var keys = require('keys'),
 
     pages = keys({
-        MAIN: null
+        MAIN: null,
+        TASKS: null,
+        PROFILE: null
     });
 
 module.exports = pages;
 
-},{"keys":176}],173:[function(require,module,exports){
+},{"keys":182}],179:[function(require,module,exports){
 "use strict"
 
 var keys = require('keys'),
@@ -21219,7 +21371,7 @@ var keys = require('keys'),
 
 module.exports = payloadSources;
 
-},{"keys":176}],174:[function(require,module,exports){
+},{"keys":182}],180:[function(require,module,exports){
 "use strict";
 
 var invariant = require('invariant'),
@@ -21325,7 +21477,7 @@ assign(Dispatcher.prototype, {
 });
 
 module.exports = Dispatcher;
-},{"invariant":175,"object-assign":4}],175:[function(require,module,exports){
+},{"invariant":181,"object-assign":4}],181:[function(require,module,exports){
 "use strict";
 
 var invariant = function() {
@@ -21351,7 +21503,7 @@ var invariant = function() {
 };
 
 module.exports = invariant;
-},{}],176:[function(require,module,exports){
+},{}],182:[function(require,module,exports){
 "use strict"
 
 module.exports = function(obj) {
@@ -21369,7 +21521,31 @@ module.exports = function(obj) {
     return ret;
 };
 
-},{}],177:[function(require,module,exports){
+},{}],183:[function(require,module,exports){
+var React = require('react');
+
+module.exports = {
+    cs: function (classConfig) {
+        return React.addons.classSet(classConfig);
+    },
+
+    st: function (stylesConf) {
+        var style= {};
+
+        Object.getOwnPropertyNames(stylesConf).forEach(function (styleName) {
+            var styleConf = stylesConf[styleName];
+
+            if (styleConf.when) {
+                style[styleName] = styleConf.value;
+            }
+        });
+
+        return style;
+    }
+};
+},{"react":8}],184:[function(require,module,exports){
+"use strict"
+
 var React = require('react');
 
 module.exports = React.createClass({displayName: "exports",
@@ -21379,7 +21555,27 @@ module.exports = React.createClass({displayName: "exports",
         ));
     }
 });
-},{"react":8}],178:[function(require,module,exports){
+},{"react":8}],185:[function(require,module,exports){
+"use strict"
+
+var React = require('react');
+
+module.exports = React.createClass({displayName: "exports",
+    render: function () {
+        return (React.createElement("div", null, "profile"))
+    }
+});
+},{"react":8}],186:[function(require,module,exports){
+"use strict"
+
+var React = require('react');
+
+module.exports = React.createClass({displayName: "exports",
+    render: function () {
+        return (React.createElement("div", null, "Tasks"))
+    }
+});
+},{"react":8}],187:[function(require,module,exports){
 "use strict"
 
 var appActions = require('./actions/appActions'),
@@ -21391,11 +21587,19 @@ module.exports = function () {
         appActions.changePage(pages.MAIN);
     });
 
+    route('/tasks', function () {
+        appActions.changePage(pages.TASKS);
+    });
+
+    route('/profile', function () {
+        appActions.changePage(pages.PROFILE);
+    });
+
     route.start();
 };
 
 
-},{"./actions/appActions":169,"./constants/pages":172,"page":5}],179:[function(require,module,exports){
+},{"./actions/appActions":169,"./constants/pages":178,"page":5}],188:[function(require,module,exports){
 "use strict"
 
 var EventEmitter = require('events').EventEmitter,
@@ -21432,7 +21636,9 @@ module.exports = function (store) {
         },
         
         dispatcherToken: appDispatcher.register(function (payload) {
-            var action = actions[payload.action.type] || function () { };
+            var action = actions[payload.action.type];
+
+            if (typeof action == 'undefined') return;
 
             action(payload);
             childrenStore.emitChange();
@@ -21442,7 +21648,7 @@ module.exports = function (store) {
 
     return childrenStore;
 };
-},{"../appDispatcher":170,"events":3,"invariant":175,"object-assign":4}],180:[function(require,module,exports){
+},{"../appDispatcher":170,"events":3,"invariant":181,"object-assign":4}],189:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
@@ -21452,27 +21658,36 @@ var React = require('react'),
     pageStore,
 
     _pages = { },
-    _currentPage = null;
+    _currentPage = null,
+    _currentPageName = null;
 
 _pages[pages.MAIN] = React.createFactory(require('../pages/main.jsx'));
+_pages[pages.TASKS] = React.createFactory(require('../pages/tasks.jsx'));
+_pages[pages.PROFILE] = React.createFactory(require('../pages/profile.jsx'));
 
 pageStore = baseStore({
     currentPage: function () {
         return _currentPage;
     },
 
+    currentPageName: function () {
+        return _currentPageName;
+    },
+
     setupActions: function (mapAction) {
         mapAction(actionTypes.CHANGE_PAGE, function (payload) {
-            _currentPage = _pages[payload.action.page] || null;
+            _currentPageName = payload.action.page;
+            _currentPage = _pages[_currentPageName] || null;
         });
     }
 });
 
 module.exports = pageStore;
-},{"../constants/actionTypes":171,"../constants/pages":172,"../pages/main.jsx":177,"./baseStore":179,"react":8}],181:[function(require,module,exports){
+},{"../constants/actionTypes":177,"../constants/pages":178,"../pages/main.jsx":184,"../pages/profile.jsx":185,"../pages/tasks.jsx":186,"./baseStore":188,"react":8}],190:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
+    SideBlock = require('./components/side-block.jsx'),
     route = require('./route'),
     pageStore = require('./stores/pageStore'),
 
@@ -21498,10 +21713,15 @@ module.exports = React.createClass({displayName: "exports",
     render: function () {
         var CurrentPage = this.state.currentPage || React.createElement("div", null);
 
-        return (React.createElement("div", null, 
-            React.createElement(CurrentPage, null)
+        return (React.createElement("div", {className: "layer task-manager"}, 
+            React.createElement("div", {className: "side-block"}, 
+                React.createElement(SideBlock, null)
+            ), 
+            React.createElement("div", {className: "content-block"}, 
+                React.createElement(CurrentPage, null)
+            )
         ))
     }
 });
 
-},{"./route":178,"./stores/pageStore":180,"react":8}]},{},[1]);
+},{"./components/side-block.jsx":174,"./route":187,"./stores/pageStore":189,"react":8}]},{},[1]);

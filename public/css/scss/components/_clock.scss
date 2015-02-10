@@ -1,0 +1,17 @@
+.clock{
+    text-transform: uppercase;
+
+    & > {
+        small {
+            opacity: 0.35;
+            font-size: 20px;
+        }
+
+        strong {
+            display: block;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            font-size: 60px;
+        }
+    }
+}

@@ -1,6 +1,7 @@
 "use strict"
 
 var React = require('react'),
+    SideBlock = require('./components/side-block.jsx'),
     route = require('./route'),
     pageStore = require('./stores/pageStore'),
 
@@ -26,8 +27,13 @@ module.exports = React.createClass({
     render: function () {
         var CurrentPage = this.state.currentPage || <div></div>;
 
-        return (<div>
-            <CurrentPage />
+        return (<div className="layer task-manager">
+            <div className="side-block">
+                <SideBlock />
+            </div>
+            <div className="content-block">
+                <CurrentPage />
+            </div>
         </div>)
     }
 });

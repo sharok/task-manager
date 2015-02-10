@@ -4,8 +4,9 @@ var React = require('react');
 
 module.exports = React.createClass({
     render: function () {
-        return (<div>
-            Welcome to Task manager!!!
+        return (<div className="clock">
+            <small>9 февраля</small>
+            <strong>13:56</strong>
         </div>);
     }
 });
