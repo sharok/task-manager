@@ -1,3 +1,5 @@
+"use strict"
+
 var React = require('react'),
     TaskManager = React.createFactory(require('./taskManager.jsx'));
 
