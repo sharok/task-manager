@@ -1,0 +1,47 @@
+За основу взят style guide - https://github.com/airbnb/javascript
+
+Изменения:
+    * Во всех файлах использовать strict mode:
+        "use strict"
+
+        var module = {};
+        ....
+
+        Для удобности можно изменить File Templates в WebStorm: File -> Setting -> Editor -> File and Code Templates
+
+    * Объявление переменных:
+        // Объявление переменных в каждой области видимости, т. е. функции
+        var module = require('module') // модули
+            variable1 = 1, // числа
+            variable2 = 'some text', // строки
+            object, // объекты определяются ниже
+            someFunction; // функции определяются ниже
+
+        object = {
+
+        };
+
+        someFunction = function () {
+
+        };
+
+    * Подключение модулей
+        // Подключать модули в такой последовательности
+
+        var npmModule = require('npm-module'), // camelCase
+            myModule = require('my-module'), // camelCase
+            FunctionConstructor = require('FunctionConstructor'), // с заглавной буквы
+            Component = require('react-component'); // с заглавной буквы
+
+    * Объявление react компонента:
+        "use strict"
+
+        var React = require('react');
+
+        module.exports = React.createClass({
+            render: function () {
+                return (<div>
+                    React Component
+                </div>);
+            }
+        });
