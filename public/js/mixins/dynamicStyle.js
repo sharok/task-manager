@@ -1,6 +1,6 @@
 var React = require('react');
 
-module.exports = {
+var dynamicStyle = {
     cs: function (classConfig) {
         return React.addons.classSet(classConfig);
     },
@@ -19,3 +19,5 @@ module.exports = {
         return style;
     }
 };
+
+module.exports = dynamicStyle;

@@ -1,6 +1,6 @@
 "use strict"
 
-module.exports = function(obj) {
+var keys = function(obj) {
     var ret = {};
     var key;
     if (!(obj instanceof Object && !Array.isArray(obj))) {
@@ -14,3 +14,5 @@ module.exports = function(obj) {
     }
     return ret;
 };
+
+module.exports = keys;

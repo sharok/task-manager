@@ -3,7 +3,7 @@
 var React = require('react'),
     dynamicStyle = require('../mixins/dynamicStyle');
 
-module.exports = React.createClass({
+var ProgressBar = React.createClass({
     mixins: [dynamicStyle],
 
     render: function () {
@@ -21,3 +21,5 @@ module.exports = React.createClass({
         </div>)
     }
 });
+
+module.exports = ProgressBar;

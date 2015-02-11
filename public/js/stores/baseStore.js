@@ -4,9 +4,9 @@ var EventEmitter = require('events').EventEmitter,
     invariant = require('invariant'),
     assign = require('object-assign'),
     appDispatcher = require('../appDispatcher'),
-    CHANGE_EVENT = 'change';
+    CHANGE_EVENT = 'CHANGE';
 
-module.exports = function (store) {
+var BaseStore = function (store) {
     invariant(store.setupActions, 'you must setup actions to store');
 
     var actions = {},
@@ -28,9 +28,7 @@ module.exports = function (store) {
         },
         
         removeChangeListener: function (callback) {
-            invariant(this.CHANGE_EVENT, 'change event is undefuned');
-
-            this.removeListener(this.CHANGE_EVENT, callback);
+            this.removeListener(CHANGE_EVENT, callback);
         },
         
         dispatcherToken: appDispatcher.register(function (payload) {
@@ -46,3 +44,5 @@ module.exports = function (store) {
 
     return childrenStore;
 };
+
+module.exports = BaseStore;

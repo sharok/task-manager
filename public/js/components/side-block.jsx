@@ -6,7 +6,7 @@ var React = require('react'),
     TaskProgress = require('./task-progress.jsx'),
     UpcomingTask = require('./upcoming-task.jsx');
 
-module.exports = React.createClass({
+var SideBlock = React.createClass({
     render: function () {
         var tasks = [
             { title: 'Поступление в ВУЗ', complete: 24 },
@@ -34,3 +34,5 @@ module.exports = React.createClass({
         </div>);
     }
 });
+
+module.exports = SideBlock;

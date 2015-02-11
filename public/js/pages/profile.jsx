@@ -1,9 +1,14 @@
 "use strict"
 
-var React = require('react');
+var React = require('react'),
+    PageTitle = require('../components/page-title.jsx');
 
-module.exports = React.createClass({
+var Profile = React.createClass({
     render: function () {
-        return (<div>profile</div>)
+        return (<div>
+            <PageTitle />
+        </div>)
     }
 });
+
+module.exports = Profile;

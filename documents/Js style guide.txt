@@ -1,47 +1,95 @@
 За основу взят style guide - https://github.com/airbnb/javascript
 
-Изменения:
-    * Во всех файлах использовать strict mode:
-        "use strict"
+Во всех файлах использовать strict mode:
+    "use strict"
 
-        var module = {};
-        ....
+    var module = {};
+    ....
 
-        Для удобности можно изменить File Templates в WebStorm: File -> Setting -> Editor -> File and Code Templates
+    Для удобности можно изменить File Templates в WebStorm: File -> Setting -> Editor -> File and Code Templates
 
-    * Объявление переменных:
-        // Объявление переменных в каждой области видимости, т. е. функции
-        var module = require('module') // модули
-            variable1 = 1, // числа
-            variable2 = 'some text', // строки
-            object, // объекты определяются ниже
-            someFunction; // функции определяются ниже
+*********************************************************************************************************
 
-        object = {
+Объявление модулей(для WebStorm: если опрделеять как литерал, IDE не может считать список методов):
+    //неправильно
+    module.exports = {
+        ...
+    };
 
-        };
+    //правильно
+    var module = {
+        ...
+    };
 
-        someFunction = function () {
+    module.exports = module;
 
-        };
+*********************************************************************************************************
 
-    * Подключение модулей
-        // Подключать модули в такой последовательности
+Объявление переменных, подключение модулей
+    // Желательно подключать модули в такой последовательности, с помощью одного "var"
+    var npmModule = require('npm-module'), // 1) npm пакеты, названия: camelCase
 
-        var npmModule = require('npm-module'), // camelCase
-            myModule = require('my-module'), // camelCase
-            FunctionConstructor = require('FunctionConstructor'), // с заглавной буквы
-            Component = require('react-component'); // с заглавной буквы
+        myModule = require('my-module'), // 2) модули приложения, названия: camelCase
 
-    * Объявление react компонента:
-        "use strict"
+        FunctionConstructor = require('FunctionConstructor'), // 3) функции конструкторы, названия: camelCase с заглавной буквы
 
-        var React = require('react');
+        Component = require('react-component'), //4) компоненты, названия: camelCase с заглавной буквы
 
-        module.exports = React.createClass({
-            render: function () {
-                return (<div>
-                    React Component
-                </div>);
-            }
-        });
+        CONSTANTS_LIST = require('constants'), //5) список констант, название заглавными буквами, разделение нижними подчеркиваниями
+
+        // 6) локальные переменные
+
+        variable1 = 1, // числа
+        variable2 = 'some text'; // строки
+
+    // объекты и функции определяются ниже с "var" для каждого
+    var object = {
+
+    };
+
+    var someFunction = function () {
+
+    };
+
+    // Также если в области видимости используются только локальные переменные
+    // можно использовать такой стиль:
+
+    var number = 3,
+
+    object = {
+        ...
+    },
+
+    callback = function () {
+        ...
+    };
+
+*********************************************************************************************************
+
+Объявление react компонента:
+
+    "use strict"
+
+    var React = require('react');
+
+    var Component = React.createClass({
+        render: function () {
+            return (<div>
+                React Component
+            </div>);
+        }
+    });
+
+    module.exports = Component;
+
+    // Для удобства можно сделать Snippet: File -> Settings -> Editor -> Live Templates
+    // Snippet
+    var React = require('react');
+
+    var $COMPONENT_NAME$ = React.createClass({
+        render: function () {
+            return ($END$);
+        }
+    });
+
+    module.exports = $COMPONENT_NAME$

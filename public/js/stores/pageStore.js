@@ -1,32 +1,59 @@
 "use strict"
 
 var React = require('react'),
-    baseStore = require('./baseStore'),
-    actionTypes = require('../constants/actionTypes'),
-    pages = require('../constants/pages'),
-    pageStore,
+    BaseStore = require('./baseStore'),
 
-    _pages = { },
-    _currentPage = null,
-    _currentPageName = null;
+    ACTION_TYPES = require('../constants/actionTypes'),
+    PAGES = require('../constants/pages'),
 
-_pages[pages.MAIN] = React.createFactory(require('../pages/main.jsx'));
-_pages[pages.TASKS] = React.createFactory(require('../pages/tasks.jsx'));
-_pages[pages.PROFILE] = React.createFactory(require('../pages/profile.jsx'));
+    pages = null,
+    currentPage = null;
 
-pageStore = baseStore({
+var fillPages = function () {
+    pages = {};
+
+    pages[PAGES.MAIN] = {
+        page: React.createFactory(require('../pages/main.jsx')),
+        name: PAGES.MAIN,
+        title: 'сегодня'
+    };
+
+    pages[PAGES.TASKS] = {
+        page: React.createFactory(require('../pages/tasks.jsx')),
+        name: PAGES.TASKS,
+        title: 'все задачи'
+    };
+
+    pages[PAGES.PROFILE] = {
+        page: React.createFactory(require('../pages/profile.jsx')),
+        name: PAGES.PROFILE,
+        title: 'профиль'
+    };
+};
+
+var pageStore = BaseStore({
     currentPage: function () {
-        return _currentPage;
+        if (currentPage == null) return null;
+
+        return currentPage.page;
     },
 
     currentPageName: function () {
-        return _currentPageName;
+        if (currentPage == null) return null;
+
+        return currentPage.name;
+    },
+
+    currentPageTitle: function () {
+        if (currentPage == null) return null;
+
+        return currentPage.title;
     },
 
     setupActions: function (mapAction) {
-        mapAction(actionTypes.CHANGE_PAGE, function (payload) {
-            _currentPageName = payload.action.page;
-            _currentPage = _pages[_currentPageName] || null;
+        mapAction(ACTION_TYPES.CHANGE_PAGE, function (payload) {
+            if (pages == null) fillPages();
+            currentPage = pages[payload.action.page] || null;
         });
     }
 });

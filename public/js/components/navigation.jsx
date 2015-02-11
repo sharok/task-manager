@@ -3,15 +3,15 @@
 var React = require('react'),
     dynamicStyle = require('../mixins/dynamicStyle'),
     pageStore = require('../stores/pageStore'),
-    pages = require('../constants/pages'),
+    PAGES = require('../constants/pages');
 
-    getNavigationState = function () {
-        return {
-            activePageName: pageStore.currentPageName()
-        }
+var getNavigationState = function () {
+    return {
+        activePageName: pageStore.currentPageName()
     };
+};
 
-module.exports = React.createClass({
+var Navigation = React.createClass({
     mixins: [dynamicStyle],
 
     getInitialState: function () {
@@ -38,12 +38,14 @@ module.exports = React.createClass({
             {
                 [
 
-                    { title: 'сегодня', pageName: pages.MAIN, href: '/' },
-                    { title: 'все задачи', pageName: pages.TASKS, href: '/tasks' },
-                    { title: 'профиль', pageName: pages.PROFILE, href: '/profile' }
+                    { title: 'сегодня', pageName: PAGES.MAIN, href: '/' },
+                    { title: 'все задачи', pageName: PAGES.TASKS, href: '/tasks' },
+                    { title: 'профиль', pageName: PAGES.PROFILE, href: '/profile' }
 
                 ].map(this.createLink)
             }
         </ul>)
     }
 });
+
+module.exports = Navigation;
