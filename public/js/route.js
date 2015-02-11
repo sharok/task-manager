@@ -1,22 +1,24 @@
 "use strict"
 
-var appActions = require('./actions/appActions'),
-    pages = require('./constants/pages'),
-    route = require('page');
+var route = require('page'),
+    appActions = require('./actions/appActions'),
+    PAGES = require('./constants/pages');
 
-module.exports = function () {
+var routeMap = function () {
     route('/', function () {
-        appActions.changePage(pages.MAIN);
+        appActions.changePage(PAGES.MAIN);
     });
 
     route('/tasks', function () {
-        appActions.changePage(pages.TASKS);
+        appActions.changePage(PAGES.TASKS);
     });
 
     route('/profile', function () {
-        appActions.changePage(pages.PROFILE);
+        appActions.changePage(PAGES.PROFILE);
     });
 
     route.start();
 };
+
+module.exports = routeMap;
 

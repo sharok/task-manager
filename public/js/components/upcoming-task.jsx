@@ -2,10 +2,12 @@
 
 var React = require('react');
 
-module.exports = React.createClass({
+var UpcomingTask = React.createClass({
     render: function () {
         return (<div className="upcoming-task">
             нет ближайших задач
         </div>);
     }
 });
+
+module.exports = UpcomingTask;

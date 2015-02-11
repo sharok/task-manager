@@ -1,13 +1,15 @@
 "use strict"
 
 var appDispatcher = require('../appDispatcher'),
-    actionTypes = require('../constants/actionTypes');
+    ACTION_TYPES = require('../constants/actionTypes');
 
-module.exports = {
+var appActions = {
     changePage: function (page) {
         appDispatcher.handleViewAction({
-            type: actionTypes.CHANGE_PAGE,
+            type: ACTION_TYPES.CHANGE_PAGE,
             page: page
         });
     }
 };
+
+module.exports = appActions;

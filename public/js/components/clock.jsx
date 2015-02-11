@@ -2,7 +2,7 @@
 
 var React = require('react');
 
-module.exports = React.createClass({
+var Clock = React.createClass({
     render: function () {
         return (<div className="clock">
             <small>9 февраля</small>
@@ -10,3 +10,5 @@ module.exports = React.createClass({
         </div>);
     }
 });
+
+module.exports = Clock;

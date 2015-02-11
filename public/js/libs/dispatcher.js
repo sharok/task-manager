@@ -2,12 +2,10 @@
 
 var invariant = require('invariant'),
     assign = require('object-assign'),
-
     _lastID = 1,
-    _prefix = 'ID_',
-    Dispatcher;
+    _prefix = 'ID_';
 
-Dispatcher = function () {
+var Dispatcher = function () {
     this._callbacks = {};
     this._isPending = {};
     this._isHandled = {};

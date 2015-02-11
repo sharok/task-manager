@@ -2,14 +2,12 @@
 
 var Dispatcher = require('dispatcher'),
     assign = require('object-assign'),
-    payloadSources = require('./constants/payloadSources'),
+    PAYLOAD_SOURCES = require('./constants/payloadSources');
 
-    appDispatcher;
-
-appDispatcher = assign(new Dispatcher(), {
+var appDispatcher = assign(new Dispatcher(), {
     handleViewAction: function (action) {
         var payload = {
-            source: payloadSources.VIEW_ACTION,
+            source: PAYLOAD_SOURCES.VIEW_ACTION,
             action: action
         };
 
@@ -18,7 +16,7 @@ appDispatcher = assign(new Dispatcher(), {
     
     handleServerAction: function (action) {
         var payload = {
-            source: payloadSources.SERVER_ACTION,
+            source: PAYLOAD_SOURCES.SERVER_ACTION,
             action: action
         };
 

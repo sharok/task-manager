@@ -3,7 +3,7 @@
 var React = require('react'),
     ProgressBar = require('./progress-bar.jsx');
 
-module.exports = React.createClass({
+var TaskProgress = React.createClass({
     render: function () {
         return (<div className="task-progress">
             <div className="task-title">{ this.props.item.title }</div>
@@ -11,3 +11,5 @@ module.exports = React.createClass({
         </div>);
     }
 });
+
+module.exports = TaskProgress;

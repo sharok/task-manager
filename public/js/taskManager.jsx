@@ -3,15 +3,15 @@
 var React = require('react'),
     SideBlock = require('./components/side-block.jsx'),
     route = require('./route'),
-    pageStore = require('./stores/pageStore'),
+    pageStore = require('./stores/pageStore');
 
-    taskManagerState = function () {
-        return {
-            currentPage: pageStore.currentPage()
-        }
-    };
+var taskManagerState = function () {
+    return {
+        currentPage: pageStore.currentPage()
+    }
+};
 
-module.exports = React.createClass({
+var TaskManager = React.createClass({
     getInitialState: function () {
         return taskManagerState();
     },
@@ -37,3 +37,5 @@ module.exports = React.createClass({
         </div>)
     }
 });
+
+module.exports = TaskManager;
