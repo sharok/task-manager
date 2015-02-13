@@ -1,0 +1,56 @@
+.navigation {
+    text-transform: uppercase;
+    font-size: 14px;
+
+    & > {
+        b {
+            display: block;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            color: #33353a;
+        }
+
+        li {
+            height: 38px;
+            line-height: 38px;
+        }
+
+        li > a {
+            position: relative;
+            display: inline-block;
+            height: inherit;
+            text-decoration: none;
+            color: #5a5c61;
+            line-height: inherit;
+
+            .underline {
+                left: 0;
+                bottom: 5px;
+                @include position(absolute, 100%, 1px);
+                background: #5a5c61;
+
+                transform: translateY(3px);
+                opacity: 0;
+
+                transition: transform 200ms ease, opacity 200ms ease, background 200ms ease;
+            }
+        }
+
+        li > a:hover {
+            .underline {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        li.active > a {
+            color: #aeaeae;
+
+            .underline {
+                background: #aeaeae;
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    }
+}

@@ -1,0 +1,24 @@
+.progress-bar {
+    position: relative;
+    height: 6px;
+    background: rgba(0,0,0,0.1);
+
+    & > {
+        .filler {
+            @include position(absolute, 0, 100%);
+            left: 0;
+        }
+
+        .filler.low {
+            background: #c94d48;
+        }
+
+        .filler.medium {
+            background: #4f8ecd;
+        }
+
+        .filler.high {
+            background: #78b45e;
+        }
+    }
+}
