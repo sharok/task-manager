@@ -7,7 +7,7 @@ var mongoose = require('mongoose'),
     model,
     init;
 
-mongoose.connect('mongodb://localhost/');
+mongoose.connect('mongodb://localhost/taskManager');
 db = mongoose.connection;
 
 db.on('error', function (err) {

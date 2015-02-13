@@ -1,5 +1,5 @@
 var mongoose = require('mongoose'),
-    db = require('./../setup/mongoose');
+    db = require('./../config/mongoose');
 
 module.exports = function (modelName) {
     var Model = db.model(modelName),
@@ -28,6 +28,13 @@ module.exports = function (modelName) {
 
         get: function (params, callback) {
             var query = Model.find(params);
+            query.done = done;
+
+            return query;
+        },
+
+        getOne: function (params, callback) {
+            var query = Model.findOne(params);
             query.done = done;
 
             return query;

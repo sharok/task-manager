@@ -5,23 +5,30 @@ var express = require('express'),
     methodOverride = require('method-override'),
     session = require('express-session'),
     path = require('path'),
-    routes = requireTree('./server/routes');
-
-//db = require('./server/config/mongoose'),
-app = express();
+    db = require('./server/config/mongoose'),
+    passport = require('passport'),
+    app = express();
 
 app
-    .set('views', __dirname + '/server/views')
-    .set('view engine', 'jade')
-
     .use(cookieParser())
     .use(bodyParser())
     .use(methodOverride())
     .use(session({secret: 'SECRET'}))
     .use(express.static('public'))
-;
-console.log(routes);
-routes.home.map(app);
+    .use(passport.initialize())
+    .use(passport.session());
+
+app
+    .set('views', __dirname + '/server/views')
+    .set('view engine', 'jade');
+
+db.init(path.join(__dirname, '/server/models'), function () {
+    //var routes = requireTree('./server/routes');
+    //routes.home.map(app);
+});
+
+require('./server/routes/home.js')(app, passport);
+require('./server/config/passport')(passport);
 
 app.listen(8080, function () {
     console.log('server running on port 8080');

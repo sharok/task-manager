@@ -1,3 +1,5 @@
+UserRepo = require('./../modules/repo')('user');
+
 module.exports = {
     index: function (params) {
         params = params || {
