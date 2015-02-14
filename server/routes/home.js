@@ -1,17 +1,13 @@
-//var homeController = require('./../controllers/home')
-//var map = function (app) {
-//    app.get('/', homeController.index({title: 'Task Manager'}));
-//};
-//
-//module.exports = {
-//    map: map
-//};
+'use strict'
 
-module.exports = function (app, passport) {
-    var homeController = require('./../controllers/home'),
-        authController = require('./../controllers/auth');
+var homeController = require('../controllers/home'),
+    authController = require('../controllers/auth'),
+    security = require('../modules/security');
 
-    app.get('/', homeController.index({title: 'Task Manager'}));
+var routes = function (app, passport) {
+
+
+    app.get('/', security.checkSiteUserIsAuthenticated, homeController.index({title: 'Task Manager'}));
 
     app.get('/login', authController.login());
 
@@ -19,13 +15,19 @@ module.exports = function (app, passport) {
 
     app.post('/signup', passport.authenticate('local-signup', {
         successRedirect: '/profile',
-        failureRedirect: '/signup',
-        failureFlash: false
+        failureRedirect: '/signup'
     }));
 
     app.post('/login', passport.authenticate('local-login', {
         successRedirect: '/profile',
-        failureRedirect: '/login',
-        failureFlash: false
+        failureRedirect: '/login'
     }));
+
+    app.get('/logout', function (req, res) {
+        req.logout();
+        res.redirect('/');
+    });
+
 }
+
+module.exports = routes;

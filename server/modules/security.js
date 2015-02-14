@@ -1,7 +1,7 @@
 'use strict'
 
 var security = {
-    apiUserLoggedIn: function (req, res, next) {
+    checkApiUserIsAuthenticated: function (req, res, next) {
         if (req.isAuthenticated()) {
             return next();
         }
@@ -10,7 +10,7 @@ var security = {
 
     },
 
-    siteUserLoggedIn: function (req, res, next) {
+    checkSiteUserIsAuthenticated: function (req, res, next) {
         if (req.isAuthenticated()) {
             return next();
         }
