@@ -15,7 +15,7 @@ var security = {
             return next();
         }
 
-        res.redirect('/');
+        res.redirect('/login');
 
     }
 

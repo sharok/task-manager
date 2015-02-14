@@ -1,8 +1,9 @@
-var BaseModel = require('../modules/baseModel'),
-    bcrypt = require('bcrypt-nodejs'),
-    user;
+'use strict'
 
-user = BaseModel({
+var BaseModel = require('../modules/baseModel'),
+    bcrypt = require('bcrypt-nodejs');
+
+var user = BaseModel({
     local: {
         email: String,
         password: String

@@ -1,8 +1,10 @@
+'use strict'
+
 var LocalStrategy = require('passport-local').Strategy,
-    User = require('../models/user'),
+    db = require('../config/mongoose'),
     UserRepo = require('../modules/repo')('user');
 
-module.exports = function (passport) {
+var passport = function (passport) {
     passport.serializeUser(function (user, done) {
         done(null, user.id);
     });
@@ -51,12 +53,12 @@ module.exports = function (passport) {
                             return done(null, false);
                         } else {
 
-                            var newUser = {
-                                local: {
-                                    email: email,
-                                    password: password
-                                }
-                            };
+                            var newUser = new db.model('user')();
+
+                            newUser.local = {
+                                email: email,
+                                password: t.generateHash(password)
+                            }
 
                             UserRepo.save(newUser, function (user) {
                                 done(null, user);
@@ -73,3 +75,6 @@ module.exports = function (passport) {
 
         }));
 }
+
+module.exports = passport;
+

@@ -6,7 +6,6 @@ var homeController = require('../controllers/home'),
 
 var routes = function (app, passport) {
 
-
     app.get('/', security.checkSiteUserIsAuthenticated, homeController.index({title: 'Task Manager'}));
 
     app.get('/login', authController.login());

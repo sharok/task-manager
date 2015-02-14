@@ -1,5 +1,6 @@
+'use strict'
+
 var express = require('express'),
-    requireTree = require('require-tree'),
     cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
     methodOverride = require('method-override'),
@@ -23,11 +24,9 @@ app
     .set('view engine', 'jade');
 
 db.init(path.join(__dirname, '/server/models'), function () {
-    //var routes = requireTree('./server/routes');
-    //routes.home.map(app);
 });
 
-require('./server/routes/home.js')(app, passport);
+require('./server/routes/routes.js')(app, passport);
 require('./server/config/passport')(passport);
 
 app.listen(8080, function () {
