@@ -22,9 +22,11 @@ var passport = function (passport) {
             passwordField: 'password',
             passReqToCallback: true
         },
+        //вынести функции любо в переменную выше, либо в отдльеный, лучше 1 вариант
         function (req, email, password, done) {
 
             UserRepo.getOne({'local.email': email}).done(function (user) {
+                    //кинуть ошибку если пользователь не найден вместо null
                     if (!user)
                         return done(null, false);
 
@@ -46,19 +48,23 @@ var passport = function (passport) {
             passReqToCallback: true
         },
         function (req, email, password, done) {
-
+            //тоже самое, что и с callback'ом входа, большая вложенность
             process.nextTick(function () {
                 UserRepo.getOne({'local.email': email}).done(function (user) {
                         if (user) {
                             return done(null, false);
                         } else {
 
+                            //вынести функцию создания пользователя в отдельный модуль, будут несколько
+                            //стратегий входа, тут надо будет просто выбирать нужную и вызвать
+                            //метод createUser
+                            //скорее всего тип такого: createUser(<strategy>, <params>)
                             var newUser = new db.model('user')();
 
                             newUser.local = {
                                 email: email,
                                 password: t.generateHash(password)
-                            }
+                            };
 
                             UserRepo.save(newUser, function (user) {
                                 done(null, user);

@@ -27,6 +27,6 @@ var routes = function (app, passport) {
         res.redirect('/');
     });
 
-}
+};
 
 module.exports = routes;

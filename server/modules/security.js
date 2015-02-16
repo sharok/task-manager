@@ -19,6 +19,6 @@ var security = {
 
     }
 
-}
+};
 
 module.exports = security;

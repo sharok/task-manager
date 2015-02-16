@@ -1,3 +1,5 @@
+//объекты, функции определить по стайлгайду
+
 var mongoose = require('mongoose'),
     fs = require('fs'),
     path = require('path'),

@@ -19,6 +19,7 @@ app
     .use(passport.initialize())
     .use(passport.session());
 
+//можно перенести выше к use
 app
     .set('views', __dirname + '/server/views')
     .set('view engine', 'jade');

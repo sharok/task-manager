@@ -1,3 +1,5 @@
+//Убрать, скорее всего контроллер который отдает вьюшки будет один
+
 UserRepo = require('./../modules/repo')('user');
 
 module.exports = {
