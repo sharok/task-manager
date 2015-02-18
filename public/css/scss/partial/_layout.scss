@@ -12,7 +12,7 @@ body, html {
 
 .task-manager {
     & > {
-        $side-block-width: 280px;
+        $side-block-width: 239px;
 
         .side-block {
             @include position(absolute, $side-block-width, 100%);

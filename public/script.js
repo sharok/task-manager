@@ -5,7 +5,7 @@ var React = require('react'),
     TaskManager = React.createFactory(require('./taskManager.jsx'));
 
 React.render(new TaskManager(), document.getElementById('application'));
-},{"./taskManager.jsx":192,"react":8}],2:[function(require,module,exports){
+},{"./taskManager.jsx":195,"react":8}],2:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -21155,7 +21155,7 @@ var appActions = {
 };
 
 module.exports = appActions;
-},{"../appDispatcher":170,"../constants/actionTypes":179}],170:[function(require,module,exports){
+},{"../appDispatcher":170,"../constants/actionTypes":182}],170:[function(require,module,exports){
 "use strict"
 
 var Dispatcher = require('dispatcher'),
@@ -21185,7 +21185,7 @@ var appDispatcher = assign(new Dispatcher(), {
 module.exports = appDispatcher;
 
 
-},{"./constants/payloadSources":181,"dispatcher":182,"object-assign":4}],171:[function(require,module,exports){
+},{"./constants/payloadSources":184,"dispatcher":185,"object-assign":4}],171:[function(require,module,exports){
 "use strict"
 
 var React = require('react');
@@ -21193,14 +21193,46 @@ var React = require('react');
 var Clock = React.createClass({displayName: "Clock",
     render: function () {
         return (React.createElement("div", {className: "clock"}, 
-            React.createElement("small", null, "9 февраля"), 
-            React.createElement("strong", null, "13:56")
+            React.createElement("strong", null, "13:56"), 
+            React.createElement("small", null, "воскресенье, 9 февраля")
         ));
     }
 });
 
 module.exports = Clock;
 },{"react":8}],172:[function(require,module,exports){
+"use strict"
+
+var React = require('react'),
+    SvgIco = require('./svg-ico.jsx');
+
+var IncomingFriends = React.createClass({displayName: "IncomingFriends",
+    render: function () {
+        return (React.createElement("div", {className: "tool"}, 
+            React.createElement(SvgIco, {name: "friends"})
+        ));
+    }
+});
+
+module.exports = IncomingFriends;
+
+},{"./svg-ico.jsx":179,"react":8}],173:[function(require,module,exports){
+"use strict"
+
+var React = require('react'),
+    SvgIco = require('./svg-ico.jsx');
+
+var IncomingTasks = React.createClass({displayName: "IncomingTasks",
+    render: function () {
+        return (React.createElement("div", {className: "tool"}, 
+            React.createElement(SvgIco, {name: "incoming"})
+        ));
+    }
+});
+
+module.exports = IncomingTasks;
+
+},{"./svg-ico.jsx":179,"react":8}],174:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
@@ -21220,7 +21252,7 @@ var Layout = React.createClass({displayName: "Layout",
 });
 
 module.exports = Layout;
-},{"./side-block.jsx":176,"react":8}],173:[function(require,module,exports){
+},{"./side-block.jsx":178,"react":8}],175:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
@@ -21257,7 +21289,6 @@ var Navigation = React.createClass({displayName: "Navigation",
 
     render: function () {
         return (React.createElement("ul", {className: "navigation"}, 
-            React.createElement("b", null, "Навигация"), 
             
                 [
 
@@ -21272,7 +21303,23 @@ var Navigation = React.createClass({displayName: "Navigation",
 });
 
 module.exports = Navigation;
-},{"../constants/pages":180,"../mixins/dynamicStyle":185,"../stores/pageStore":191,"react":8}],174:[function(require,module,exports){
+},{"../constants/pages":183,"../mixins/dynamicStyle":188,"../stores/pageStore":194,"react":8}],176:[function(require,module,exports){
+"use strict"
+
+var React = require('react'),
+    SvgIco = require('./svg-ico.jsx');
+
+var Notifications = React.createClass({displayName: "Notifications",
+    render: function () {
+        return (React.createElement("div", {className: "tool"}, 
+            React.createElement(SvgIco, {name: "bell"})
+        ));
+    }
+});
+
+module.exports = Notifications;
+
+},{"./svg-ico.jsx":179,"react":8}],177:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
@@ -21303,61 +21350,28 @@ var PageTitle = React.createClass({displayName: "PageTitle",
 });
 
 module.exports = PageTitle;
-},{"../stores/pageStore":191,"react":8}],175:[function(require,module,exports){
-"use strict"
-
-var React = require('react'),
-    dynamicStyle = require('../mixins/dynamicStyle');
-
-var ProgressBar = React.createClass({displayName: "ProgressBar",
-    mixins: [dynamicStyle],
-
-    render: function () {
-        var value = +this.props.value,
-
-        className = this.cs({
-            'filler': true,
-            'low': value <= 25,
-            'medium': value < 60 && value > 25,
-            'high': value >= 60
-        });
-
-        return (React.createElement("div", {className: "progress-bar"}, 
-            React.createElement("div", {className: className, style:  { width: value + '%'} })
-        ))
-    }
-});
-
-module.exports = ProgressBar;
-},{"../mixins/dynamicStyle":185,"react":8}],176:[function(require,module,exports){
+},{"../stores/pageStore":194,"react":8}],178:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
     Navigation = require('./navigation.jsx'),
     Clock = require('./clock.jsx'),
-    TaskProgress = require('./task-progress.jsx'),
-    UpcomingTask = require('./upcoming-task.jsx');
+    ToolBar = require('./tool-bar.jsx'),
+    UpcomingTasks = require('./upcoming-tasks.jsx');
 
 var SideBlock = React.createClass({displayName: "SideBlock",
     render: function () {
-        var tasks = [
-            { title: 'Поступление в ВУЗ', complete: 24 },
-            { title: 'Изучение английского', complete: 58 }
-        ];
 
         return (React.createElement("div", {className: "side-block"}, 
 
-            React.createElement("div", {className: "section tablet tall"}, 
+            React.createElement("div", {className: "section"}, 
                 React.createElement(Clock, null), 
-                React.createElement(UpcomingTask, null)
-            ), 
-
-            React.createElement("div", {className: "section tablet"}, 
-                React.createElement(TaskProgress, {item:  tasks[0] })
-            ), 
-
-            React.createElement("div", {className: "section tablet"}, 
-                React.createElement(TaskProgress, {item:  tasks[1] })
+                React.createElement("div", {className: "part"}, 
+                    React.createElement(ToolBar, null)
+                ), 
+                React.createElement("div", {className: "part"}, 
+                    React.createElement(UpcomingTasks, null)
+                )
             ), 
 
             React.createElement("div", {className: "section"}, 
@@ -21368,37 +21382,223 @@ var SideBlock = React.createClass({displayName: "SideBlock",
 });
 
 module.exports = SideBlock;
-},{"./clock.jsx":171,"./navigation.jsx":173,"./task-progress.jsx":177,"./upcoming-task.jsx":178,"react":8}],177:[function(require,module,exports){
+},{"./clock.jsx":171,"./navigation.jsx":175,"./tool-bar.jsx":180,"./upcoming-tasks.jsx":181,"react":8}],179:[function(require,module,exports){
+"use strict"
+
+var React = require('react');
+
+var icons = {
+    'bell': (
+        React.createElement("svg", {viewBox: "0 0 32.409 32.409"}, 
+            React.createElement("g", null, 
+                React.createElement("path", {d: "M27.568,20.168V13.63c-0.021-5.043-3.48-9.862-8.654-11.088c0,0-0.17-2.542-2.711-2.542c-2.58,0-2.709,2.47-2.709,2.47" + ' ' +
+		"C8.322,3.69,4.906,8.587,4.876,13.63v6.33c0,3.094-2.033,3.626-4.443,6.146h31.543C29.566,23.586,27.568,23.263,27.568,20.168z" + ' ' +
+		 "M16.203,32.409c2.771,0,5.088-2.212,5.713-5.043H10.492C11.117,30.197,13.435,32.409,16.203,32.409z"}), 
+                React.createElement("g", null
+                ), 
+                React.createElement("g", null
+                ), 
+                React.createElement("g", null
+                ), 
+                React.createElement("g", null
+                ), 
+                React.createElement("g", null
+                ), 
+                React.createElement("g", null
+                ), 
+                React.createElement("g", null
+                ), 
+                React.createElement("g", null
+                ), 
+                React.createElement("g", null
+                ), 
+                React.createElement("g", null
+                ), 
+                React.createElement("g", null
+                ), 
+                React.createElement("g", null
+                ), 
+                React.createElement("g", null
+                ), 
+                React.createElement("g", null
+                ), 
+                React.createElement("g", null
+                )
+            ), 
+            React.createElement("g", null
+            ), 
+            React.createElement("g", null
+            ), 
+            React.createElement("g", null
+            ), 
+            React.createElement("g", null
+            ), 
+            React.createElement("g", null
+            ), 
+            React.createElement("g", null
+            ), 
+            React.createElement("g", null
+            ), 
+            React.createElement("g", null
+            ), 
+            React.createElement("g", null
+            ), 
+            React.createElement("g", null
+            ), 
+            React.createElement("g", null
+            ), 
+            React.createElement("g", null
+            ), 
+            React.createElement("g", null
+            ), 
+            React.createElement("g", null
+            ), 
+            React.createElement("g", null
+            )
+        )
+    ),
+
+    'friends': (
+        React.createElement("svg", {viewBox: "0 0 561 561"}, 
+            React.createElement("g", null, 
+                React.createElement("g", {id: "people"}, 
+                    React.createElement("path", {d: "M382.5,255c43.35,0,76.5-33.15,76.5-76.5S425.85,102,382.5,102S306,135.15,306,178.5S339.15,255,382.5,255z M178.5,255" + ' ' +
+			"c43.35,0,76.5-33.15,76.5-76.5S221.85,102,178.5,102S102,135.15,102,178.5S135.15,255,178.5,255z M178.5,306" + ' ' +
+			"C119.85,306,0,336.6,0,395.25V459h357v-63.75C357,336.6,237.15,306,178.5,306z M382.5,306c-7.65,0-15.3,0-25.5,2.55" + ' ' +
+			"c30.6,20.4,51,51,51,86.7V459h153v-63.75C561,336.6,441.15,306,382.5,306z"})
+                )
+            ), 
+            React.createElement("g", null
+            ), 
+            React.createElement("g", null
+            ), 
+            React.createElement("g", null
+            ), 
+            React.createElement("g", null
+            ), 
+            React.createElement("g", null
+            ), 
+            React.createElement("g", null
+            ), 
+            React.createElement("g", null
+            ), 
+            React.createElement("g", null
+            ), 
+            React.createElement("g", null
+            ), 
+            React.createElement("g", null
+            ), 
+            React.createElement("g", null
+            ), 
+            React.createElement("g", null
+            ), 
+            React.createElement("g", null
+            ), 
+            React.createElement("g", null
+            ), 
+            React.createElement("g", null
+            )
+        )
+    ),
+
+    'incoming': (
+        React.createElement("svg", {viewBox: "0 0 32 32"}, 
+            React.createElement("g", null, 
+                React.createElement("g", null, 
+                    React.createElement("polygon", {points: "22,12 18,12 18,6 14,6 14,12 10,12 16,18   "}), 
+                    React.createElement("polygon", {points: "28,16 28,22 4,22 4,16 0,16 0,26 32,26 32,16   "})
+                )
+            ), 
+            React.createElement("g", null
+            ), 
+            React.createElement("g", null
+            ), 
+            React.createElement("g", null
+            ), 
+            React.createElement("g", null
+            ), 
+            React.createElement("g", null
+            ), 
+            React.createElement("g", null
+            ), 
+            React.createElement("g", null
+            ), 
+            React.createElement("g", null
+            ), 
+            React.createElement("g", null
+            ), 
+            React.createElement("g", null
+            ), 
+            React.createElement("g", null
+            ), 
+            React.createElement("g", null
+            ), 
+            React.createElement("g", null
+            ), 
+            React.createElement("g", null
+            ), 
+            React.createElement("g", null
+            )
+        )
+    )
+};
+
+var SvgIco = React.createClass({displayName: "SvgIco",
+    render: function () {
+        return icons[this.props.name] || React.createElement("svg", null);
+    }
+});
+
+module.exports = SvgIco;
+
+},{"react":8}],180:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
-    ProgressBar = require('./progress-bar.jsx');
+    Notifications = require('./notifications.jsx'),
+    IncomingFriends = require('./incoming-friends.jsx'),
+    IncomingTasks = require('./incoming-tasks.jsx');
 
-var TaskProgress = React.createClass({displayName: "TaskProgress",
+var ToolBar = React.createClass({displayName: "ToolBar",
     render: function () {
-        return (React.createElement("div", {className: "task-progress"}, 
-            React.createElement("div", {className: "task-title"},  this.props.item.title), 
-            React.createElement(ProgressBar, {value:  this.props.item.complete})
+        return (React.createElement("div", {className: "tool-bar"}, 
+            React.createElement(Notifications, null), 
+            React.createElement(IncomingFriends, null), 
+            React.createElement(IncomingTasks, null)
         ));
     }
 });
 
-module.exports = TaskProgress;
-},{"./progress-bar.jsx":175,"react":8}],178:[function(require,module,exports){
+module.exports = ToolBar;
+
+},{"./incoming-friends.jsx":172,"./incoming-tasks.jsx":173,"./notifications.jsx":176,"react":8}],181:[function(require,module,exports){
 "use strict"
 
 var React = require('react');
 
 var UpcomingTask = React.createClass({displayName: "UpcomingTask",
+    renderUpcomingTask: function (task) {
+        return (
+            React.createElement("section", null, 
+                React.createElement("strong", null,  task.time), 
+                React.createElement("small", null,  task.title)
+            )
+        );
+    },
+
     render: function () {
-        return (React.createElement("div", {className: "upcoming-task"}, 
-            "нет ближайших задач"
+        return (React.createElement("div", {className: "upcoming-tasks"}, 
+            React.createElement("h4", null, "Ближайшие задачи"), 
+            [
+                { time: '13:30', title: 'Лекция по алгоритмам' },
+                { time: '18:30', title: 'Speaking club' }
+            ].map(this.renderUpcomingTask)
         ));
     }
 });
 
 module.exports = UpcomingTask;
-},{"react":8}],179:[function(require,module,exports){
+},{"react":8}],182:[function(require,module,exports){
 "use strict"
 
 var keys = require('keys'),
@@ -21409,7 +21609,7 @@ var keys = require('keys'),
 
 module.exports = actionTypes;
 
-},{"keys":184}],180:[function(require,module,exports){
+},{"keys":187}],183:[function(require,module,exports){
 "use strict"
 
 var keys = require('keys'),
@@ -21422,7 +21622,7 @@ var keys = require('keys'),
 
 module.exports = pages;
 
-},{"keys":184}],181:[function(require,module,exports){
+},{"keys":187}],184:[function(require,module,exports){
 "use strict"
 
 var keys = require('keys'),
@@ -21434,7 +21634,7 @@ var keys = require('keys'),
 
 module.exports = payloadSources;
 
-},{"keys":184}],182:[function(require,module,exports){
+},{"keys":187}],185:[function(require,module,exports){
 "use strict";
 
 var invariant = require('invariant'),
@@ -21538,7 +21738,7 @@ assign(Dispatcher.prototype, {
 });
 
 module.exports = Dispatcher;
-},{"invariant":183,"object-assign":4}],183:[function(require,module,exports){
+},{"invariant":186,"object-assign":4}],186:[function(require,module,exports){
 "use strict";
 
 var invariant = function() {
@@ -21564,7 +21764,7 @@ var invariant = function() {
 };
 
 module.exports = invariant;
-},{}],184:[function(require,module,exports){
+},{}],187:[function(require,module,exports){
 "use strict"
 
 var keys = function(obj) {
@@ -21583,7 +21783,7 @@ var keys = function(obj) {
 };
 
 module.exports = keys;
-},{}],185:[function(require,module,exports){
+},{}],188:[function(require,module,exports){
 var React = require('react');
 
 var dynamicStyle = {
@@ -21607,7 +21807,7 @@ var dynamicStyle = {
 };
 
 module.exports = dynamicStyle;
-},{"react":8}],186:[function(require,module,exports){
+},{"react":8}],189:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
@@ -21623,7 +21823,7 @@ var Main = React.createClass({displayName: "Main",
 });
 
 module.exports = Main;
-},{"../components/layout.jsx":172,"../components/page-title.jsx":174,"react":8}],187:[function(require,module,exports){
+},{"../components/layout.jsx":174,"../components/page-title.jsx":177,"react":8}],190:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
@@ -21639,7 +21839,7 @@ var Profile = React.createClass({displayName: "Profile",
 });
 
 module.exports = Profile;
-},{"../components/layout.jsx":172,"../components/page-title.jsx":174,"react":8}],188:[function(require,module,exports){
+},{"../components/layout.jsx":174,"../components/page-title.jsx":177,"react":8}],191:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
@@ -21655,7 +21855,7 @@ var Tasks = React.createClass({displayName: "Tasks",
 });
 
 module.exports = Tasks;
-},{"../components/layout.jsx":172,"../components/page-title.jsx":174,"react":8}],189:[function(require,module,exports){
+},{"../components/layout.jsx":174,"../components/page-title.jsx":177,"react":8}],192:[function(require,module,exports){
 "use strict"
 
 var route = require('page'),
@@ -21681,7 +21881,7 @@ var routeMap = function () {
 module.exports = routeMap;
 
 
-},{"./actions/appActions":169,"./constants/pages":180,"page":5}],190:[function(require,module,exports){
+},{"./actions/appActions":169,"./constants/pages":183,"page":5}],193:[function(require,module,exports){
 "use strict"
 
 var EventEmitter = require('events').EventEmitter,
@@ -21730,7 +21930,7 @@ var BaseStore = function (store) {
 };
 
 module.exports = BaseStore;
-},{"../appDispatcher":170,"events":3,"invariant":183,"object-assign":4}],191:[function(require,module,exports){
+},{"../appDispatcher":170,"events":3,"invariant":186,"object-assign":4}],194:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
@@ -21792,7 +21992,7 @@ var pageStore = BaseStore({
 });
 
 module.exports = pageStore;
-},{"../constants/actionTypes":179,"../constants/pages":180,"../pages/main.jsx":186,"../pages/profile.jsx":187,"../pages/tasks.jsx":188,"./baseStore":190,"react":8}],192:[function(require,module,exports){
+},{"../constants/actionTypes":182,"../constants/pages":183,"../pages/main.jsx":189,"../pages/profile.jsx":190,"../pages/tasks.jsx":191,"./baseStore":193,"react":8}],195:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
@@ -21827,4 +22027,4 @@ var TaskManager = React.createClass({displayName: "TaskManager",
 
 module.exports = TaskManager;
 
-},{"./route":189,"./stores/pageStore":191,"react":8}]},{},[1]);
+},{"./route":192,"./stores/pageStore":194,"react":8}]},{},[1]);

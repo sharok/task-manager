@@ -1,24 +1,18 @@
 .side-block {
     & > {
-        $side-padding: 30px;
-
         .section:first-child {
             border-top: none;
         }
 
         .section {
-            color: #777a81;
-            padding: 18px $side-padding;
-        }
+            padding: 32px 14px;
+            border-top: 1px solid #30414c;
 
-        .section.tablet {
-            background: #292b31;
-            border-bottom: 1px solid #212327;
-            border-top: 1px solid #2c2e33;
-        }
-
-        .section.tall {
-            padding: 50px $side-padding;
+            & > {
+                .part {
+                    margin-top: 20px;
+                }
+            }
         }
     }
 }

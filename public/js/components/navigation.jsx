@@ -34,7 +34,6 @@ var Navigation = React.createClass({
 
     render: function () {
         return (<ul className="navigation">
-            <b>Навигация</b>
             {
                 [
 

@@ -63,7 +63,7 @@ var passport = function (passport) {
 
                             newUser.local = {
                                 email: email,
-                                password: t.generateHash(password)
+                                password: newUser.generateHash(password)
                             };
 
                             UserRepo.save(newUser, function (user) {

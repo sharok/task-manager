@@ -1,14 +1,12 @@
 .navigation {
+    $link-color: #536874;
+    $active-link-color: #99aeba;
+
     text-transform: uppercase;
-    font-size: 14px;
+    font-size: 12px;
+    margin-top: -13px;
 
     & > {
-        b {
-            display: block;
-            margin-top: 5px;
-            margin-bottom: 5px;
-            color: #33353a;
-        }
 
         li {
             height: 38px;
@@ -20,14 +18,15 @@
             display: inline-block;
             height: inherit;
             text-decoration: none;
-            color: #5a5c61;
+            color: $link-color;
             line-height: inherit;
 
             .underline {
+                @include position(absolute, 100%, 1px);
+
                 left: 0;
                 bottom: 5px;
-                @include position(absolute, 100%, 1px);
-                background: #5a5c61;
+                background: $link-color;
 
                 transform: translateY(3px);
                 opacity: 0;
@@ -44,10 +43,10 @@
         }
 
         li.active > a {
-            color: #aeaeae;
+            color: $active-link-color;
 
             .underline {
-                background: #aeaeae;
+                background: $active-link-color;
                 opacity: 1;
                 transform: translateY(0);
             }

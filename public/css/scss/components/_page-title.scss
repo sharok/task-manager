@@ -3,15 +3,13 @@
 
     height: $height;
     padding: 0 30px;
-    font-size: 16px;
-    text-transform: uppercase;
+    font-size: 14px;
     line-height: $height;
-    background: #f6f7f7;
-    border-bottom: 1px solid #ecebeb;
+    text-transform: uppercase;
 
     & > {
         strong {
-            color: #faac7d;
+            color: #3b3c3b;
         }
 
         small {

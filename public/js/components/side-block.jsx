@@ -3,29 +3,22 @@
 var React = require('react'),
     Navigation = require('./navigation.jsx'),
     Clock = require('./clock.jsx'),
-    TaskProgress = require('./task-progress.jsx'),
-    UpcomingTask = require('./upcoming-task.jsx');
+    ToolBar = require('./tool-bar.jsx'),
+    UpcomingTasks = require('./upcoming-tasks.jsx');
 
 var SideBlock = React.createClass({
     render: function () {
-        var tasks = [
-            { title: 'Поступление в ВУЗ', complete: 24 },
-            { title: 'Изучение английского', complete: 58 }
-        ];
 
         return (<div className="side-block">
 
-            <div className="section tablet tall">
+            <div className="section">
                 <Clock />
-                <UpcomingTask />
-            </div>
-
-            <div className="section tablet">
-                <TaskProgress item={ tasks[0] } />
-            </div>
-
-            <div className="section tablet">
-                <TaskProgress item={ tasks[1] } />
+                <div className="part">
+                    <ToolBar />
+                </div>
+                <div className="part">
+                    <UpcomingTasks />
+                </div>
             </div>
 
             <div className="section">

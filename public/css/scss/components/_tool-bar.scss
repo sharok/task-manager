@@ -1,0 +1,29 @@
+.tool-bar {
+    @include flex-box(flex-start, space-between);
+    $background-color: #3c5464;
+
+    background: $background-color;
+    height: 44px;
+    box-shadow: 0 0 3px rgba(0,0,0,0.05);
+
+    & {
+        .tool {
+            @include flex-box(center, center);
+
+            cursor: pointer;
+            width: 62px;
+            height: inherit;
+            transition: background 200ms ease;
+
+            svg {
+                fill: #fff;
+                width: 20px;
+            }
+        }
+
+        .tool:hover {
+            background: darken($background-color, 3%);
+        }
+    }
+}
+
