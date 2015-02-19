@@ -1,8 +1,12 @@
 'use strict'
 
 var security = {
+    isAuthenticated: function (req) {
+        return req.isAuthenticated();
+    },
+
     checkApiUserIsAuthenticated: function (req, res, next) {
-        if (req.isAuthenticated()) {
+        if (security.isAuthenticated(req)) {
             return next();
         }
 
@@ -11,14 +15,12 @@ var security = {
     },
 
     checkSiteUserIsAuthenticated: function (req, res, next) {
-        if (req.isAuthenticated()) {
+        if (security.isAuthenticated(req)) {
             return next();
         }
 
         res.redirect('/login');
-
     }
-
 };
 
 module.exports = security;

@@ -1,7 +1,8 @@
 "use strict"
 
 var React = require('react'),
-    pageStore = require('../stores/pageStore');
+    pageStore = require('../stores/pageStore'),
+    bindToStore = require('../mixins/bindToStore');
 
 var getPageTitleState = function () {
     return {
@@ -10,12 +11,14 @@ var getPageTitleState = function () {
 };
 
 var PageTitle = React.createClass({
+    mixins: [bindToStore],
+
     getInitialState: function () {
         return getPageTitleState();
     },
 
     componentWillMount: function () {
-        pageStore.addChangeListener(function () {
+        this.onStoreChange(pageStore, function () {
             this.setState(getPageTitleState());
         }.bind(this));
     },

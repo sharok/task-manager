@@ -2,8 +2,11 @@
 
 var React = require('react'),
     dynamicStyle = require('../mixins/dynamicStyle'),
+    bindToStore = require('../mixins/bindToStore'),
     pageStore = require('../stores/pageStore'),
     PAGES = require('../constants/pages');
+
+window.PageStore = pageStore;
 
 var getNavigationState = function () {
     return {
@@ -12,14 +15,14 @@ var getNavigationState = function () {
 };
 
 var Navigation = React.createClass({
-    mixins: [dynamicStyle],
+    mixins: [dynamicStyle, bindToStore],
 
     getInitialState: function () {
         return getNavigationState();
     },
 
     componentWillMount: function () {
-        pageStore.addChangeListener(function () {
+        this.onStoreChange(pageStore, function () {
             this.setState(getNavigationState());
         }.bind(this));
     },

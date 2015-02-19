@@ -2,21 +2,25 @@
 
 var React = require('react'),
     route = require('./route'),
-    pageStore = require('./stores/pageStore');
+    pageStore = require('./stores/pageStore'),
+    bindToStore = require('./mixins/bindToStore');
 
 var taskManagerState = function () {
     return {
-        currentPage: pageStore.currentPage()
+        page: pageStore.currentPage(),
+        layout: pageStore.currentPageLayout()
     }
 };
 
 var TaskManager = React.createClass({
+    mixins: [bindToStore],
+
     getInitialState: function () {
-        return taskManagerState();
+        return taskManagerState()''
     },
 
     componentWillMount: function () {
-        pageStore.addChangeListener(function () {
+        this.onStoreChange(pageStore, function () {
             this.setState(taskManagerState());
         }.bind(this));
 
@@ -24,9 +28,12 @@ var TaskManager = React.createClass({
     },
     
     render: function () {
-        var CurrentPage = this.state.currentPage || <div></div>;
+        var CurrentPage = this.state.page,
+            Layout = this.state.layout;
 
-        return <CurrentPage />;
+        if (CurrentPage == null) return <div></div>;
+
+        return <Layout><CurrentPage /></Layout>;
     }
 });
 

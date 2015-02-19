@@ -6,26 +6,32 @@ var React = require('react'),
     ACTION_TYPES = require('../constants/actionTypes'),
     PAGES = require('../constants/pages'),
 
+
     pages = null,
     currentPage = null;
 
 var fillPages = function () {
+    var DeskLayout = require('../components/desk-layout.jsx');
+
     pages = {};
 
     pages[PAGES.MAIN] = {
-        page: React.createFactory(require('../pages/main.jsx')),
+        layout: DeskLayout,
+        page: require('../pages/main.jsx'),
         name: PAGES.MAIN,
         title: 'сегодня'
     };
 
     pages[PAGES.TASKS] = {
-        page: React.createFactory(require('../pages/tasks.jsx')),
+        layout: DeskLayout,
+        page: require('../pages/tasks.jsx'),
         name: PAGES.TASKS,
         title: 'все задачи'
     };
 
     pages[PAGES.PROFILE] = {
-        page: React.createFactory(require('../pages/profile.jsx')),
+        layout: DeskLayout,
+        page: require('../pages/profile.jsx'),
         name: PAGES.PROFILE,
         title: 'профиль'
     };
@@ -42,6 +48,11 @@ var pageStore = BaseStore({
         if (currentPage == null) return null;
 
         return currentPage.name;
+    },
+
+    currentPageLayout: function () {
+        if (currentPage == null) return null;
+        return currentPage.layout;
     },
 
     currentPageTitle: function () {

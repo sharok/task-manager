@@ -2,6 +2,7 @@
 
 var homeController = require('../controllers/home'),
     authController = require('../controllers/auth'),
+    accountController = require('../apiControllers/accountController'),
     security = require('../modules/security');
 
 var routes = function (app, passport) {
@@ -12,6 +13,7 @@ var routes = function (app, passport) {
 
     app.get('/signup', authController.signup());
 
+    //TODO: добавить префикс /auth/
     app.post('/signup', passport.authenticate('local-signup', {
         successRedirect: '/profile',
         failureRedirect: '/signup'
@@ -27,6 +29,9 @@ var routes = function (app, passport) {
         res.redirect('/');
     });
 
+    //TODO: вынести mapping api в отдельный файл
+
+    app.get('/api/account/isAuthorized', accountController.isAuthorized);
 };
 
 module.exports = routes;
