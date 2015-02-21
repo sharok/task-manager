@@ -1,16 +1,12 @@
-//объекты, функции определить по стайлгайду
+"use strict";
 
 var mongoose = require('mongoose'),
     fs = require('fs'),
     path = require('path'),
-    async = require('async'),
-    db,
-    models,
-    model,
-    init;
+    async = require('async');
 
 mongoose.connect('mongodb://localhost/taskManager');
-db = mongoose.connection;
+var db = mongoose.connection;
 
 db.on('error', function (err) {
     console.log('error db connection');
@@ -20,31 +16,31 @@ db.once('open', function callback() {
     console.log('db connected');
 });
 
-models = {};
+var models = {};
 
-init = function (modelsDirectory, callback) {
-    var schemaList = fs.readdirSync(modelsDirectory);
+var mongooseConfig = {
 
-    async.each(schemaList, function (item, cb) {
-        var modelName = path.basename(item, '.js'),
-            schema = require(path.join(modelsDirectory, modelName));
+    init: function (modelsDirectory, callback) {
+        var schemaList = fs.readdirSync(modelsDirectory);
 
-        models[modelName] = mongoose.model(modelName, schema.model);
-        cb();
-    }, callback);
-};
+        async.each(schemaList, function (item, cb) {
+            var modelName = path.basename(item, '.js'),
+                schema = require(path.join(modelsDirectory, modelName));
 
-model = function (modelName) {
-    var name = modelName.toLowerCase();
+            models[modelName] = mongoose.model(modelName, schema.model);
+            cb();
+        }, callback);
+    },
 
-    if (typeof models[name] == 'undefined') {
-        throw 'Model "' + name + '" is not exist';
+    model: function (modelName) {
+        var name = modelName.toLowerCase();
+
+        if (typeof models[name] == 'undefined') {
+            throw 'Model "' + name + '" is not exist';
+        }
+
+        return models[name];
     }
+}
 
-    return models[name];
-};
-
-module.exports = {
-    init: init,
-    model: model
-};
+module.exports = mongooseConfig;

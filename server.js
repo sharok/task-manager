@@ -17,10 +17,7 @@ app
     .use(session({secret: 'SECRET'}))
     .use(express.static('public'))
     .use(passport.initialize())
-    .use(passport.session());
-
-//можно перенести выше к use
-app
+    .use(passport.session())
     .set('views', __dirname + '/server/views')
     .set('view engine', 'jade');
 
