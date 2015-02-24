@@ -11,9 +11,17 @@ var React = require('react'),
     currentPage = null;
 
 var fillPages = function () {
-    var DeskLayout = require('../components/desk-layout.jsx');
+    var DeskLayout = require('../components/desk-layout.jsx'),
+        EnterLayout = require('../components/welcome-layout/welcome-layout.jsx');
 
     pages = {};
+
+    pages[PAGES.LOGIN] = {
+        layout: EnterLayout,
+        page: require('../pages/login.jsx'),
+        name: PAGES.LOGIN,
+        title: 'Login to Clevy'
+    }
 
     pages[PAGES.MAIN] = {
         layout: DeskLayout,

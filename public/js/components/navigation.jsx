@@ -6,8 +6,6 @@ var React = require('react'),
     pageStore = require('../stores/pageStore'),
     PAGES = require('../constants/pages');
 
-window.PageStore = pageStore;
-
 var getNavigationState = function () {
     return {
         activePageName: pageStore.currentPageName()

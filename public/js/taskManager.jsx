@@ -16,7 +16,7 @@ var TaskManager = React.createClass({
     mixins: [bindToStore],
 
     getInitialState: function () {
-        return taskManagerState()''
+        return taskManagerState();
     },
 
     componentWillMount: function () {

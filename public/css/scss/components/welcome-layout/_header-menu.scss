@@ -1,0 +1,42 @@
+.header-menu {
+  color: #ebf7f5;
+  font-size: 14px;
+  text-transform: uppercase;
+
+  ul {
+    line-height: 57px;
+
+    li:nth-child(1):hover ~ .underline {
+      left: 10px;
+    }
+    li:nth-child(2):hover ~ .underline {
+      left: 142px;
+    }
+    li:nth-child(3):hover ~ .underline {
+      left: 274px;
+    }
+
+    & > {
+      li {
+        cursor: pointer;
+        display: inline-block;
+        padding: 0 15px;
+        text-align: center;
+        width: 129px;
+        & > a {
+          color: #6a6a6b;
+          text-decoration: none;
+        }
+      }
+      .underline {
+        background: #134b62;
+        height: 3px;
+        left: -130px;
+        margin-top: -5px;
+        position: absolute;
+        transition: 0.3s ease-in-out;
+        width: 129px;
+      }
+    }
+  }
+}

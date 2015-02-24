@@ -2,10 +2,12 @@
     @include position(absolute, 100%);
 }
 
+* {
+    box-sizing: border-box;
+}
 body, html {
     @extend .layer;
 
-    background: $secondary-bg-color;
     font-family: $base-font-family;
     color: $base-font-color;
 }

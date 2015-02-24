@@ -1,37 +1,33 @@
 'use strict'
 
 var homeController = require('../controllers/home'),
-    authController = require('../controllers/auth'),
-    accountController = require('../apiControllers/accountController'),
-    security = require('../modules/security');
+    accountController = require('../apiControllers/accountController');
 
 var routes = function (app, passport) {
 
-    app.get('/', security.checkSiteUserIsAuthenticated, homeController.index({title: 'Task Manager'}));
+    app.get('/', homeController.index({title: 'Task Manager'}));
 
-    app.get('/login', authController.login());
-
-    app.get('/signup', authController.signup());
-
-    //TODO: добавить префикс /auth/
-    app.post('/signup', passport.authenticate('local-signup', {
+    app.post('/auth/signup', passport.authenticate('local-signup', {
         successRedirect: '/profile',
         failureRedirect: '/signup'
     }));
 
-    app.post('/login', passport.authenticate('local-login', {
+    app.post('/auth/login', passport.authenticate('local-login', {
         successRedirect: '/profile',
         failureRedirect: '/login'
     }));
 
-    app.get('/logout', function (req, res) {
+    app.get('/auth/logout', function (req, res) {
         req.logout();
         res.redirect('/');
     });
 
-    //TODO: вынести mapping api в отдельный файл
+    //TODO: move the mapping api in a separate file
 
     app.get('/api/account/isAuthorized', accountController.isAuthorized);
+
+    //TODO: this line is only for testing
+    app.get('/:no', homeController.index({title: 'Task Manager'}));
 };
 
 module.exports = routes;

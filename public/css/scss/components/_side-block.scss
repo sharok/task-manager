@@ -1,4 +1,6 @@
 .side-block {
+    background: $secondary-bg-color;
+
     & > {
         .section:first-child {
             border-top: none;
