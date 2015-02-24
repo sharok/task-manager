@@ -1,6 +1,7 @@
 "use strict"
 
 var React = require('react'),
+    lz = require('localization').get(),
     dynamicStyle = require('../mixins/dynamicStyle'),
     bindToStore = require('../mixins/bindToStore'),
     pageStore = require('../stores/pageStore'),
@@ -40,9 +41,9 @@ var Navigation = React.createClass({
             {
                 [
 
-                    { title: 'сегодня', pageName: PAGES.MAIN, href: '/' },
-                    { title: 'все задачи', pageName: PAGES.TASKS, href: '/tasks' },
-                    { title: 'профиль', pageName: PAGES.PROFILE, href: '/profile' }
+                    { title: lz.DESK, pageName: PAGES.MAIN, href: '/' },
+                    { title: lz.ALL_TASKS, pageName: PAGES.TASKS, href: '/tasks' },
+                    { title: lz.PROFILE, pageName: PAGES.PROFILE, href: '/profile' }
 
                 ].map(this.createLink)
             }

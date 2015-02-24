@@ -2,6 +2,7 @@
 
 var React = require('react'),
     BaseStore = require('./baseStore'),
+    lz = require('localization').get(),
 
     ACTION_TYPES = require('../constants/actionTypes'),
     PAGES = require('../constants/pages'),
@@ -19,21 +20,21 @@ var fillPages = function () {
         layout: DeskLayout,
         page: require('../pages/main.jsx'),
         name: PAGES.MAIN,
-        title: 'сегодня'
+        title: lz.TODAY
     };
 
     pages[PAGES.TASKS] = {
         layout: DeskLayout,
         page: require('../pages/tasks.jsx'),
         name: PAGES.TASKS,
-        title: 'все задачи'
+        title: lz.ALL_TASKS
     };
 
     pages[PAGES.PROFILE] = {
         layout: DeskLayout,
         page: require('../pages/profile.jsx'),
         name: PAGES.PROFILE,
-        title: 'профиль'
+        title: lz.PROFILE
     };
 };
 

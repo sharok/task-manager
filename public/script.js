@@ -5,7 +5,7 @@ var React = require('react'),
     TaskManager = React.createFactory(require('./taskManager.jsx'));
 
 React.render(new TaskManager(), document.getElementById('application'));
-},{"./taskManager.jsx":200,"react":10}],2:[function(require,module,exports){
+},{"./taskManager.jsx":203,"react":10}],2:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -21508,7 +21508,7 @@ var appDispatcher = assign(new Dispatcher(), {
 module.exports = appDispatcher;
 
 
-},{"./constants/payloadSources":186,"dispatcher":189,"object-assign":6}],173:[function(require,module,exports){
+},{"./constants/payloadSources":187,"dispatcher":190,"object-assign":6}],173:[function(require,module,exports){
 "use strict"
 
 var React = require('react');
@@ -21517,7 +21517,7 @@ var Clock = React.createClass({displayName: "Clock",
     render: function () {
         return (React.createElement("div", {className: "clock"}, 
             React.createElement("strong", null, "13:56"), 
-            React.createElement("small", null, "воскресенье, 9 февраля")
+            React.createElement("small", null, "sunday, 9 february")
         ));
     }
 });
@@ -21579,6 +21579,7 @@ module.exports = IncomingTasks;
 "use strict"
 
 var React = require('react'),
+    lz = require('localization').get(),
     dynamicStyle = require('../mixins/dynamicStyle'),
     bindToStore = require('../mixins/bindToStore'),
     pageStore = require('../stores/pageStore'),
@@ -21618,9 +21619,9 @@ var Navigation = React.createClass({displayName: "Navigation",
             
                 [
 
-                    { title: 'сегодня', pageName: PAGES.MAIN, href: '/' },
-                    { title: 'все задачи', pageName: PAGES.TASKS, href: '/tasks' },
-                    { title: 'профиль', pageName: PAGES.PROFILE, href: '/profile' }
+                    { title: lz.DESK, pageName: PAGES.MAIN, href: '/' },
+                    { title: lz.ALL_TASKS, pageName: PAGES.TASKS, href: '/tasks' },
+                    { title: lz.PROFILE, pageName: PAGES.PROFILE, href: '/profile' }
 
                 ].map(this.createLink)
             
@@ -21629,7 +21630,7 @@ var Navigation = React.createClass({displayName: "Navigation",
 });
 
 module.exports = Navigation;
-},{"../constants/pages":185,"../mixins/bindToStore":192,"../mixins/dynamicStyle":193,"../stores/pageStore":199,"react":10}],178:[function(require,module,exports){
+},{"../constants/pages":186,"../mixins/bindToStore":195,"../mixins/dynamicStyle":196,"../stores/pageStore":202,"localization":194,"react":10}],178:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
@@ -21679,7 +21680,7 @@ var PageTitle = React.createClass({displayName: "PageTitle",
 });
 
 module.exports = PageTitle;
-},{"../mixins/bindToStore":192,"../stores/pageStore":199,"react":10}],180:[function(require,module,exports){
+},{"../mixins/bindToStore":195,"../stores/pageStore":202,"react":10}],180:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
@@ -21903,7 +21904,8 @@ module.exports = ToolBar;
 },{"./incoming-friends.jsx":175,"./incoming-tasks.jsx":176,"./notifications.jsx":178,"react":10}],183:[function(require,module,exports){
 "use strict"
 
-var React = require('react');
+var React = require('react'),
+    lz = require('localization').get();
 
 var UpcomingTask = React.createClass({displayName: "UpcomingTask",
     renderUpcomingTask: function (task) {
@@ -21917,9 +21919,9 @@ var UpcomingTask = React.createClass({displayName: "UpcomingTask",
 
     render: function () {
         return (React.createElement("div", {className: "upcoming-tasks"}, 
-            React.createElement("h4", null, "Ближайшие задачи"), 
+            React.createElement("h4", null,  lz.UPCOMING_TASKS), 
             [
-                { time: '13:30', title: 'Лекция по алгоритмам' },
+                { time: '13:30', title: 'Algorithm lecture' },
                 { time: '18:30', title: 'Speaking club' }
             ].map(this.renderUpcomingTask)
         ));
@@ -21927,7 +21929,7 @@ var UpcomingTask = React.createClass({displayName: "UpcomingTask",
 });
 
 module.exports = UpcomingTask;
-},{"react":10}],184:[function(require,module,exports){
+},{"localization":194,"react":10}],184:[function(require,module,exports){
 "use strict"
 
 var keys = require('keys'),
@@ -21938,7 +21940,18 @@ var keys = require('keys'),
 
 module.exports = actionTypes;
 
-},{"keys":191}],185:[function(require,module,exports){
+},{"keys":192}],185:[function(require,module,exports){
+"use strict"
+
+var keys = require('keys');
+
+var languages = keys({
+    RU: null,
+    EN: null
+});
+
+module.exports = languages;
+},{"keys":192}],186:[function(require,module,exports){
 "use strict"
 
 var keys = require('keys'),
@@ -21951,7 +21964,7 @@ var keys = require('keys'),
 
 module.exports = pages;
 
-},{"keys":191}],186:[function(require,module,exports){
+},{"keys":192}],187:[function(require,module,exports){
 "use strict"
 
 var keys = require('keys'),
@@ -21963,8 +21976,10 @@ var keys = require('keys'),
 
 module.exports = payloadSources;
 
-},{"keys":191}],187:[function(require,module,exports){
+},{"keys":192}],188:[function(require,module,exports){
 "use strict"
+
+//TODO: сделать как то нормально)
 var ajax = require('component-ajax');
 
 var sendRequest = function (url, callback) {
@@ -21983,7 +21998,7 @@ var api = {
 };
 
 module.exports = api;
-},{"component-ajax":3}],188:[function(require,module,exports){
+},{"component-ajax":3}],189:[function(require,module,exports){
 "use strict"
 
 var api = require('./api'),
@@ -22003,7 +22018,7 @@ var authorizer = {
 };
 
 module.exports = authorizer;
-},{"./api":187}],189:[function(require,module,exports){
+},{"./api":188}],190:[function(require,module,exports){
 "use strict";
 
 var invariant = require('invariant'),
@@ -22107,7 +22122,7 @@ assign(Dispatcher.prototype, {
 });
 
 module.exports = Dispatcher;
-},{"invariant":190,"object-assign":6}],190:[function(require,module,exports){
+},{"invariant":191,"object-assign":6}],191:[function(require,module,exports){
 "use strict";
 
 var invariant = function() {
@@ -22133,7 +22148,7 @@ var invariant = function() {
 };
 
 module.exports = invariant;
-},{}],191:[function(require,module,exports){
+},{}],192:[function(require,module,exports){
 "use strict"
 
 var keys = function(obj) {
@@ -22152,7 +22167,38 @@ var keys = function(obj) {
 };
 
 module.exports = keys;
-},{}],192:[function(require,module,exports){
+},{}],193:[function(require,module,exports){
+"use strict"
+
+var localization = {
+    DESK: 'desk',
+    ALL_TASKS: 'all tasks',
+    PROFILE: 'profile',
+    UPCOMING_TASKS: 'upcoming tasks',
+    TODAY: 'today'
+};
+
+module.exports = localization;
+},{}],194:[function(require,module,exports){
+"use strict"
+var languages = require('../constants/languages'),
+    currentLanguage = languages.EN;
+
+var localization = {
+    get: function () {
+        if (currentLanguage == languages.EN)
+            return require('./en');
+
+        throw new Error('unknown localization');
+    },
+
+    change: function (language) {
+        currentLanguage = language;
+    }
+};
+
+module.exports = localization;
+},{"../constants/languages":185,"./en":193}],195:[function(require,module,exports){
 "use strict"
 
 var bindToStore = {
@@ -22170,7 +22216,7 @@ var bindToStore = {
 };
 
 module.exports = bindToStore;
-},{}],193:[function(require,module,exports){
+},{}],196:[function(require,module,exports){
 var React = require('react');
 
 var dynamicStyle = {
@@ -22194,7 +22240,7 @@ var dynamicStyle = {
 };
 
 module.exports = dynamicStyle;
-},{"react":10}],194:[function(require,module,exports){
+},{"react":10}],197:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
@@ -22209,7 +22255,7 @@ var Main = React.createClass({displayName: "Main",
 });
 
 module.exports = Main;
-},{"../components/page-title.jsx":179,"react":10}],195:[function(require,module,exports){
+},{"../components/page-title.jsx":179,"react":10}],198:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
@@ -22224,7 +22270,7 @@ var Profile = React.createClass({displayName: "Profile",
 });
 
 module.exports = Profile;
-},{"../components/page-title.jsx":179,"react":10}],196:[function(require,module,exports){
+},{"../components/page-title.jsx":179,"react":10}],199:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
@@ -22239,7 +22285,7 @@ var Tasks = React.createClass({displayName: "Tasks",
 });
 
 module.exports = Tasks;
-},{"../components/page-title.jsx":179,"react":10}],197:[function(require,module,exports){
+},{"../components/page-title.jsx":179,"react":10}],200:[function(require,module,exports){
 "use strict"
 
 var route = require('page'),
@@ -22276,7 +22322,7 @@ var routeMap = function () {
 module.exports = routeMap;
 
 
-},{"./actions/appActions":171,"./constants/pages":185,"./libs/authorizer":188,"page":7}],198:[function(require,module,exports){
+},{"./actions/appActions":171,"./constants/pages":186,"./libs/authorizer":189,"page":7}],201:[function(require,module,exports){
 "use strict"
 
 var EventEmitter = require('events').EventEmitter,
@@ -22325,11 +22371,12 @@ var BaseStore = function (store) {
 };
 
 module.exports = BaseStore;
-},{"../appDispatcher":172,"events":5,"invariant":190,"object-assign":6}],199:[function(require,module,exports){
+},{"../appDispatcher":172,"events":5,"invariant":191,"object-assign":6}],202:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
     BaseStore = require('./baseStore'),
+    lz = require('localization').get(),
 
     ACTION_TYPES = require('../constants/actionTypes'),
     PAGES = require('../constants/pages'),
@@ -22347,21 +22394,21 @@ var fillPages = function () {
         layout: DeskLayout,
         page: require('../pages/main.jsx'),
         name: PAGES.MAIN,
-        title: 'сегодня'
+        title: lz.TODAY
     };
 
     pages[PAGES.TASKS] = {
         layout: DeskLayout,
         page: require('../pages/tasks.jsx'),
         name: PAGES.TASKS,
-        title: 'все задачи'
+        title: lz.ALL_TASKS
     };
 
     pages[PAGES.PROFILE] = {
         layout: DeskLayout,
         page: require('../pages/profile.jsx'),
         name: PAGES.PROFILE,
-        title: 'профиль'
+        title: lz.PROFILE
     };
 };
 
@@ -22398,7 +22445,7 @@ var pageStore = BaseStore({
 });
 
 module.exports = pageStore;
-},{"../components/desk-layout.jsx":174,"../constants/actionTypes":184,"../constants/pages":185,"../pages/main.jsx":194,"../pages/profile.jsx":195,"../pages/tasks.jsx":196,"./baseStore":198,"react":10}],200:[function(require,module,exports){
+},{"../components/desk-layout.jsx":174,"../constants/actionTypes":184,"../constants/pages":186,"../pages/main.jsx":197,"../pages/profile.jsx":198,"../pages/tasks.jsx":199,"./baseStore":201,"localization":194,"react":10}],203:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
@@ -22417,7 +22464,7 @@ var TaskManager = React.createClass({displayName: "TaskManager",
     mixins: [bindToStore],
 
     getInitialState: function () {
-        return taskManagerState()
+        return taskManagerState();
     },
 
     componentWillMount: function () {
@@ -22440,4 +22487,4 @@ var TaskManager = React.createClass({displayName: "TaskManager",
 
 module.exports = TaskManager;
 
-},{"./mixins/bindToStore":192,"./route":197,"./stores/pageStore":199,"react":10}]},{},[1]);
+},{"./mixins/bindToStore":195,"./route":200,"./stores/pageStore":202,"react":10}]},{},[1]);
