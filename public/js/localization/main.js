@@ -1,5 +1,5 @@
 "use strict"
-var languages = require('../constants/languages'),
+var languages = require('constants/languages'),
     currentLanguage = languages.EN;
 
 var localization = {

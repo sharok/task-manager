@@ -1,7 +1,7 @@
 "use strict"
 
-var appDispatcher = require('../appDispatcher'),
-    ACTION_TYPES = require('../constants/actionTypes');
+var appDispatcher = require('appDispatcher'),
+    ACTION_TYPES = require('constants/actionTypes');
 
 var appActions = {
     changePage: function (page) {

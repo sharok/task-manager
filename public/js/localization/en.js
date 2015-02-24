@@ -5,7 +5,10 @@ var localization = {
     ALL_TASKS: 'all tasks',
     PROFILE: 'profile',
     UPCOMING_TASKS: 'upcoming tasks',
-    TODAY: 'today'
+    TODAY: 'today',
+    ADD_TASK: 'add task',
+    THEN: 'then',
+    PRIORITY: 'priority'
 };
 
 module.exports = localization;

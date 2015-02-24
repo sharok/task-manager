@@ -3,7 +3,7 @@
 var keys = require('keys'),
 
     pages = keys({
-        MAIN: null,
+        DESK: null,
         TASKS: null,
         PROFILE: null
     });

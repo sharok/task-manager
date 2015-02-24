@@ -1,11 +1,11 @@
 "use strict"
 
 var React = require('react'),
-    SideBlock = require('./side-block.jsx');
+    SideBlock = require('./side-bar/side-block.jsx');
 
 var Layout = React.createClass({
     render: function () {
-        return (<div className="layer task-manager">
+        return (<div className="desk">
             <div className="side-block">
                 <SideBlock />
             </div>

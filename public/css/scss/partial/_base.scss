@@ -1,13 +1,22 @@
 @import '../modules/_all';
 
 //colors
-$base-bg-color: #fff;
+$base-bg-color: #f4f4f5;
 $secondary-bg-color: #334754;
+
+$base-block-bg-color: #fff;
+$secondary-block-bg-color: #f2f2f2;
 
 //fonts
 $base-font-family: DINPro-Regular, Tahoma, Helvetica, sans-serif;
 
 //font-colors
-$base-font-color: #fff;
+$base-font-color: #545454;
+$secondary-font-color: #fff;
 
-//line-colors
+//shadows
+$base-block-shadow: 0 0 3px rgba(0,0,0,0.03);
+
+//components
+$task-add-box-height: 34px;
+$task-extra-height: 35px;

@@ -5,12 +5,19 @@
 body, html {
     @extend .layer;
 
-    background: $secondary-bg-color;
+    background: $base-bg-color;
     font-family: $base-font-family;
     color: $base-font-color;
 }
 
-.task-manager {
+.content-section {
+    padding: 30px;
+}
+
+.desk {
+    width: 900px;
+    margin: 0 auto;
+
     & > {
         $side-block-width: 239px;
 

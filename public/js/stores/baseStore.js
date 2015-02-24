@@ -3,7 +3,7 @@
 var EventEmitter = require('events').EventEmitter,
     invariant = require('invariant'),
     assign = require('object-assign'),
-    appDispatcher = require('../appDispatcher'),
+    appDispatcher = require('appDispatcher'),
     CHANGE_EVENT = 'CHANGE';
 
 var BaseStore = function (store) {

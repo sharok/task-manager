@@ -1,0 +1,35 @@
+@mixin placeholder($class) {
+    .#{$class}:-moz-placeholder {
+        @content;
+    }
+
+    .#{$class}:-ms-input-placeholder {
+        @content;
+    }
+
+    .#{$class}::-webkit-input-placeholder {
+        @content;
+    }
+
+    .#{$class}::-moz-placeholder {
+        @content;
+    }
+}
+
+@mixin placeholder-focus($class) {
+    .#{$class}:focus:-moz-placeholder {
+        @content;
+    }
+
+    .#{$class}:focus:-ms-input-placeholder {
+        @content;
+    }
+
+    .#{$class}:focus::-webkit-input-placeholder {
+        @content;
+    }
+
+    .#{$class}:focus::-moz-placeholder {
+        @content;
+    }
+}
