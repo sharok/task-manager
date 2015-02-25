@@ -2,7 +2,7 @@
 
 var Dispatcher = require('dispatcher'),
     assign = require('object-assign'),
-    PAYLOAD_SOURCES = require('./constants/payloadSources');
+    PAYLOAD_SOURCES = require('constants/payloadSources');
 
 var appDispatcher = assign(new Dispatcher(), {
     handleViewAction: function (action) {

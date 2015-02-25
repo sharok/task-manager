@@ -1,7 +1,7 @@
 "use strict"
 
 var React = require('react'),
-    SvgIco = require('./svg-ico.jsx');
+    SvgIco = require('../svg-ico.jsx');
 
 var Notifications = React.createClass({
     render: function () {

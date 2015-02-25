@@ -1,0 +1,253 @@
+@for $i from 1 through 20 {
+    $delay: 100ms * $i;
+    @include animation-delay-class($delay);
+    @include animation-duration-class($delay);
+}
+
+.no-delay {
+    animation-delay: 0ms !important;
+}
+
+@include animation-class(wide, 600ms ease, both) {
+    0% {
+        transform: scaleX(0) scaleY(2);
+    }
+
+    100% {
+        transform: scaleX(1) scaleY(1);
+    }
+}
+
+
+@include animation-class(fade-out, 300ms ease, both) {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+
+@include animation-class(grow-up, 300ms ease, both) {
+    0% {
+        opacity: 0;
+        transform: scale(0) translateY(200%);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@include animation-class(grow-fade, 300ms ease, both) {
+    0% {
+        opacity: 0.38;
+        transform: scale(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(1.5);
+    }
+}
+
+@include animation-class(reduce-left, 300ms ease, both) {
+    0% {
+        opacity: 0;
+        transform: scale(1.15) translateX(-30px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1) translateX(0px);
+    }
+}
+
+@include animation-class(reduce, 300ms ease, both) {
+    0% {
+        opacity: 0;
+        transform: scale(1.25);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+
+@include animation-class(grow-out, 300ms ease, both) {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(1.25);
+    }
+}
+
+@include animation-class(grow, 300ms ease, both) {
+    0% {
+        opacity: 0;
+        transform: scale(0);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@include animation-class(slide-left, 300ms ease, both) {
+    0% {
+        opacity: 0;
+        transform: translateX(-100%);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@include animation-class(slide-left-out, 300ms ease, both) {
+    0% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateX(-100%);
+    }
+}
+
+
+@include animation-class(slide-right, 300ms ease, both) {
+    0% {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@include animation-class(slide-right-out-min, 300ms ease, both) {
+    0% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+}
+
+@include animation-class(slide-right-out, 300ms ease, both) {
+    0% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+}
+
+@include animation-class(slide-up-min, 300ms ease, both) {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+
+@include animation-class(slide-down-out-min, 300ms ease, both) {
+    0% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+}
+
+@include animation-class(slide-up-out-min, 300ms ease, both) {
+    0% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-20px);
+
+    }
+}
+
+
+@include animation-class(slide-up, 300ms ease, both) {
+    0% {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+
+@include animation-class(slide-up-out, 300ms ease, both) {
+    0% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-100%);
+
+    }
+}
+
+
+@include animation-class(slide-down-out, 300ms ease, both) {
+    0% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+}
+
+@include animation-class(slide-down, 300ms ease, both) {
+    0% {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}

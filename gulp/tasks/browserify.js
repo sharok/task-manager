@@ -12,7 +12,8 @@ module.exports = function (params) {
     return function () {
         var task = browserify({
             entries: ['./public/js/app.js'],
-            extensions: ['.jsx']
+            extensions: ['.jsx'],
+            paths: ['./node_modules','./public/js']
         })
             .bundle()
             .on('error', function (err) {

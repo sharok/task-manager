@@ -3,7 +3,7 @@
 var React = require('react'),
     Navigation = require('./navigation.jsx'),
     Clock = require('./clock.jsx'),
-    ToolBar = require('./tool-bar.jsx'),
+    ToolBar = require('../tool-bar/tool-bar.jsx'),
     UpcomingTasks = require('./upcoming-tasks.jsx');
 
 var SideBlock = React.createClass({

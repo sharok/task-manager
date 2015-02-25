@@ -1,9 +1,9 @@
 "use strict"
 
 var route = require('page'),
-    authorizer = require('./libs/authorizer'),
-    appActions = require('./actions/appActions'),
-    PAGES = require('./constants/pages');
+    authorizer = require('libs/authorizer'),
+    appActions = require('actions/appActions'),
+    PAGES = require('constants/pages');
 
 var onlyForAuthorized = function (ctx, next) {
     if (authorizer.isAuthorized()) {
@@ -23,6 +23,8 @@ var onlyForNotAuthorized = function (ctx, next) {
 }
 
 var routeMap = function () {
+    route('/', onlyForAuthorized, function () {
+        appActions.changePage(PAGES.DESK);
 
     route('/', onlyForNotAuthorized, function () {
         appActions.changePage(PAGES.MAIN);

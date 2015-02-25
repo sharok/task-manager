@@ -1,9 +1,9 @@
 "use strict"
 
 var React = require('react'),
-    route = require('./route'),
-    pageStore = require('./stores/pageStore'),
-    bindToStore = require('./mixins/bindToStore');
+    route = require('route'),
+    pageStore = require('stores/pageStore'),
+    bindToStore = require('mixins/bindToStore');
 
 var taskManagerState = function () {
     return {

@@ -1,0 +1,45 @@
+.select-date {
+    @include flex-box(flext-start, flex-start);
+
+    & {
+        .select-date-variant:nth-child(1) {
+            transform: translateX(0);
+            transition: transform 180ms ease;
+            transition-delay: 50ms;
+        }
+
+        .select-date-variant:nth-child(2) {
+            transform: translateX(0);
+            transition: transform 180ms ease;
+        }
+
+        .select-date-variant {
+            cursor: pointer;
+            padding: 0 15px;
+            background: #4b6576;
+            text-transform: uppercase;
+            font-size: 12px;
+            line-height: $task-add-box-height;
+            color: #2f404b;
+        }
+
+        .select-date-variant.active {
+            background: #3d5666;
+            color: #fff;
+        }
+    }
+
+    &.hidden {
+        .select-date-variant:nth-child(1) {
+            transform: translateX(200%);
+            transition: transform 180ms ease;
+            transition-delay: 0ms;
+        }
+
+        .select-date-variant:nth-child(2) {
+            transform: translateX(100%);
+            transition: transform 180ms ease;
+            transition-delay: 50ms;
+        }
+    }
+}

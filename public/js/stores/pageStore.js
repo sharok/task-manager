@@ -2,46 +2,47 @@
 
 var React = require('react'),
     BaseStore = require('./baseStore'),
+    lz = require('localization').get(),
 
-    ACTION_TYPES = require('../constants/actionTypes'),
-    PAGES = require('../constants/pages'),
+    ACTION_TYPES = require('constants/actionTypes'),
+    PAGES = require('constants/pages'),
 
 
     pages = null,
     currentPage = null;
 
 var fillPages = function () {
-    var DeskLayout = require('../components/desk-layout.jsx'),
-        WelcomeLayout = require('../components/welcome-layout/welcome-layout.jsx');
+    var DeskLayout = require('components/desk-layout.jsx');
+        WelcomeLayout = require(/components/welcome-layout/welcome-layout.jsx');
 
     pages = {};
 
     pages[PAGES.LOGIN] = {
         layout: WelcomeLayout,
-        page: require('../pages/login.jsx'),
+        page: require('pages/login.jsx'),
         name: PAGES.LOGIN,
         title: 'Login to Clevy'
     }
 
-    pages[PAGES.MAIN] = {
+    pages[PAGES.DESK] = {
         layout: DeskLayout,
-        page: require('../pages/main.jsx'),
-        name: PAGES.MAIN,
-        title: 'сегодня'
+        page: require('pages/desk.jsx'),
+        name: PAGES.DESK,
+        title: lz.DESK
     };
 
     pages[PAGES.TASKS] = {
         layout: DeskLayout,
-        page: require('../pages/tasks.jsx'),
+        page: require('pages/tasks.jsx'),
         name: PAGES.TASKS,
-        title: 'все задачи'
+        title: lz.ALL_TASKS
     };
 
     pages[PAGES.PROFILE] = {
         layout: DeskLayout,
-        page: require('../pages/profile.jsx'),
+        page: require('pages/profile.jsx'),
         name: PAGES.PROFILE,
-        title: 'профиль'
+        title: lz.PROFILE
     };
 };
 

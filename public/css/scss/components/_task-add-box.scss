@@ -1,0 +1,25 @@
+.task-add-box {
+    @include flex-box(flext-start, stretch);
+    height: $task-add-box-height;
+    overflow: hidden;
+
+    & > {
+        .task-text-box {
+            box-sizing: border-box;
+            flex-grow: 1;
+            border: none;
+            padding: 0 14px;
+            color: $base-font-color;
+        }
+
+        @include placeholder(task-text-box) {
+            text-transform: uppercase;
+            color: #999999;
+            transition: color 200ms ease;
+        }
+
+        @include placeholder-focus(task-text-box) {
+            color: #e2e2e2;
+        }
+    }
+}

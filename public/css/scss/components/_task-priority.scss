@@ -1,0 +1,39 @@
+.task-priority {
+    display: inline-block;
+    height: $task-extra-height;
+
+    & > {
+        strong {
+            float: left;
+            padding: 0 14px;
+            color: $base-font-color;
+            font-size: 12px;
+            line-height: $task-extra-height;
+        }
+
+        section {
+            @include flex-box(flex-start, flex-start);
+
+            & > {
+                i {
+                    height: $task-extra-height;
+                    @include flex-box(center, flex-start);
+                    margin-right: 5px;
+
+                    svg {
+                        vertical-align: middle;
+                        height: 14px;
+                        fill: #dfdedf;
+                        transition: fill 200ms ease;
+                    }
+                }
+
+                i.active {
+                    svg {
+                        fill: #d55074;
+                    }
+                }
+            }
+        }
+    }
+}

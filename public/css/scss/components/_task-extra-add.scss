@@ -1,0 +1,10 @@
+.task-extra-add {
+    height: $task-extra-height;
+    background: $secondary-block-bg-color;
+    overflow: hidden;
+    transition: height 200ms ease;
+
+    &.hidden {
+        height: 2px;
+    }
+}

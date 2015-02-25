@@ -29,7 +29,8 @@
     "react": "react/addons",
     "invariant": "./public/js/libs/invariant",
     "dispatcher": "./public/js/libs/dispatcher",
-    "keys": "./public/js/libs/keys"
+    "keys": "./public/js/libs/keys",
+    "localization": "./public/js/localization/main"
   },
   "engines": {
     "node": "0.10.x"
