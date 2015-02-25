@@ -1,11 +1,12 @@
 "use strict"
 
-var React = require('react');
+var React = require('react'),
+    FormContainer = require('../components/welcome-layout/form-container.jsx');
 
 var Enter = React.createClass({
     render: function () {
         return (
-            <div></div>
+            <FormContainer/>
 
         );
     }

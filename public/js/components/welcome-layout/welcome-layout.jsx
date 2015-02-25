@@ -1,16 +1,17 @@
 "use strict"
 
 var React = require('react'),
-    Header = require('./header.jsx');
+    Header = require('./header.jsx'),
+    FormContainer = require('./form-container.jsx');
 
-var EnterLayout = React.createClass({
+var WelcomeLayout = React.createClass({
     render: function () {
         return (
-
-            <Header />
-
-        );
+            <div>
+                <Header />
+            </div>
+        )
     }
 });
 
-module.exports = EnterLayout;
+module.exports = WelcomeLayout;

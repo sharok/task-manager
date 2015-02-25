@@ -12,12 +12,12 @@ var React = require('react'),
 
 var fillPages = function () {
     var DeskLayout = require('../components/desk-layout.jsx'),
-        EnterLayout = require('../components/welcome-layout/welcome-layout.jsx');
+        WelcomeLayout = require('../components/welcome-layout/welcome-layout.jsx');
 
     pages = {};
 
     pages[PAGES.LOGIN] = {
-        layout: EnterLayout,
+        layout: WelcomeLayout,
         page: require('../pages/login.jsx'),
         name: PAGES.LOGIN,
         title: 'Login to Clevy'

@@ -5,7 +5,7 @@ var React = require('react'),
     TaskManager = React.createFactory(require('./taskManager.jsx'));
 
 React.render(new TaskManager(), document.getElementById('application'));
-}, {"./taskManager.jsx": 204, "react": 10}],
+}, {"./taskManager.jsx": 208, "react": 10}],
   2: [function (require, module, exports) {
 // shim for using process in browser
 
@@ -21479,7 +21479,7 @@ var appActions = {
 };
 
 module.exports = appActions;
-  }, {"../appDispatcher": 172, "../constants/actionTypes": 187}],
+  }, {"../appDispatcher": 172, "../constants/actionTypes": 191}],
   172: [function (require, module, exports) {
 "use strict"
 
@@ -21510,7 +21510,7 @@ var appDispatcher = assign(new Dispatcher(), {
 module.exports = appDispatcher;
 
 
-  }, {"./constants/payloadSources": 189, "dispatcher": 192, "object-assign": 6}],
+  }, {"./constants/payloadSources": 193, "dispatcher": 196, "object-assign": 6}],
   173: [function (require, module, exports) {
 "use strict"
 
@@ -21631,10 +21631,10 @@ var Navigation = React.createClass({displayName: "Navigation",
 
 module.exports = Navigation;
   }, {
-    "../constants/pages": 188,
-    "../mixins/bindToStore": 195,
-    "../mixins/dynamicStyle": 196,
-    "../stores/pageStore": 203,
+    "../constants/pages": 192,
+    "../mixins/bindToStore": 199,
+    "../mixins/dynamicStyle": 200,
+    "../stores/pageStore": 207,
     "react": 10
   }],
   178: [function (require, module, exports) {
@@ -21687,7 +21687,7 @@ var PageTitle = React.createClass({displayName: "PageTitle",
 });
 
 module.exports = PageTitle;
-  }, {"../mixins/bindToStore": 195, "../stores/pageStore": 203, "react": 10}],
+  }, {"../mixins/bindToStore": 199, "../stores/pageStore": 207, "react": 10}],
   180: [function (require, module, exports) {
 "use strict"
 
@@ -21938,6 +21938,37 @@ var UpcomingTask = React.createClass({displayName: "UpcomingTask",
 module.exports = UpcomingTask;
 },{"react":10}],184:[function(require,module,exports){
     var React = require('react'),
+        ProjectTitle = require('./project-title.jsx');
+
+    var FormContainer = React.createClass({
+      displayName: "FormContainer",
+      render: function () {
+        return (
+            React.createElement("div", {className: "login-container"},
+                React.createElement(ProjectTitle, null)
+            )
+        );
+      }
+    });
+
+    module.exports = FormContainer;
+  }, {"./project-title.jsx": 189, "react": 10}],
+  185: [function (require, module, exports) {
+    var React = require('react');
+
+    var FormTitle = React.createClass({
+      displayName: "FormTitle",
+      render: function () {
+        return (
+            React.createElement("div", {class: "form-title"}, "login")
+        );
+      }
+    });
+
+    module.exports = FormTitle;
+  }, {"react": 10}],
+  186: [function (require, module, exports) {
+    var React = require('react'),
         dynamicStyle = require('../../mixins/dynamicStyle'),
         bindToStore = require('../../mixins/bindToStore'),
         pageStore = require('../../stores/pageStore'),
@@ -21948,7 +21979,7 @@ module.exports = UpcomingTask;
     var getNavigationState = function () {
       return {
         activePageName: pageStore.currentPageName()
-      };
+    };
     };
 
     var HeaderLinks = React.createClass({
@@ -21968,15 +21999,15 @@ module.exports = UpcomingTask;
       render: function () {
         return (
             React.createElement("ul", null,
-                React.createElement("li", null,
+                React.createElement("li", null, 
                     React.createElement("a", {href: "/about"}, "About")
                 ),
-                React.createElement("li", null,
+                React.createElement("li", null, 
                     React.createElement("a", {href: "/login"}, "Login")
                 ),
-                React.createElement("li", null,
+                React.createElement("li", null, 
                     React.createElement("a", {href: "/signup"}, "Signup")
-                ),
+                ), 
                 React.createElement("div", {className: "underline"})
             )
         );
@@ -21985,13 +22016,13 @@ module.exports = UpcomingTask;
 
     module.exports = HeaderLinks;
   }, {
-    "../../constants/pages": 188,
-    "../../mixins/bindToStore": 195,
-    "../../mixins/dynamicStyle": 196,
-    "../../stores/pageStore": 203,
+    "../../constants/pages": 192,
+    "../../mixins/bindToStore": 199,
+    "../../mixins/dynamicStyle": 200,
+    "../../stores/pageStore": 207,
     "react": 10
   }],
-  185: [function (require, module, exports) {
+  187: [function (require, module, exports) {
     var React = require('react'),
         HeaderLinks = require('./header-links.jsx');
 
@@ -22000,7 +22031,7 @@ module.exports = UpcomingTask;
       render: function () {
         return (
             React.createElement("div", {className: "header"},
-                React.createElement("nav", {className: "header-menu"},
+                React.createElement("nav", {className: "header-menu"}, 
                     React.createElement(HeaderLinks, null)
                 )
             )
@@ -22009,27 +22040,64 @@ module.exports = UpcomingTask;
     });
 
     module.exports = Header;
-  }, {"./header-links.jsx": 184, "react": 10}],
-  186: [function (require, module, exports) {
-"use strict"
+  }, {"./header-links.jsx": 186, "react": 10}],
+  188: [function (require, module, exports) {
+    var React = require('react');
 
-    var React = require('react'),
-        Header = require('./header.jsx');
-
-    var EnterLayout = React.createClass({
-      displayName: "EnterLayout",
+    var Logo = React.createClass({
+      displayName: "Logo",
       render: function () {
         return (
-
-            React.createElement(Header, null)
-
+            React.createElement("div", {class: "title-description"},
+                React.createElement("p", {class: "title"}, "clevy"),
+                React.createElement("p", {class: "description"}, "the cleverest task manager")
+            )
         );
       }
     });
 
-    module.exports = EnterLayout;
-  }, {"./header.jsx": 185, "react": 10}],
-  187: [function (require, module, exports) {
+    module.exports = Logo;
+  }, {"react": 10}],
+  189: [function (require, module, exports) {
+    var React = require('react'),
+        Logo = require('./logo.jsx'),
+        FormTitle = require('./form-title.jsx');
+
+    var ProjectTitle = React.createClass({
+      displayName: "ProjectTitle",
+      render: function () {
+        return (
+            React.createElement("div", {className: "title-container"},
+                React.createElement(Logo, null),
+                React.createElement(FormTitle, null)
+            )
+        );
+      }
+    });
+
+    module.exports = ProjectTitle;
+  }, {"./form-title.jsx": 185, "./logo.jsx": 188, "react": 10}],
+  190: [function (require, module, exports) {
+    "use strict"
+
+    var React = require('react'),
+        Header = require('./header.jsx'),
+        FormContainer = require('./form-container.jsx');
+
+    var WelcomeLayout = React.createClass({
+      displayName: "WelcomeLayout",
+      render: function () {
+        return (
+            React.createElement("div", null,
+                React.createElement(Header, null)
+            )
+        )
+      }
+    });
+
+    module.exports = WelcomeLayout;
+  }, {"./form-container.jsx": 184, "./header.jsx": 187, "react": 10}],
+  191: [function (require, module, exports) {
     "use strict"
 
 var keys = require('keys'),
@@ -22040,8 +22108,8 @@ var keys = require('keys'),
 
 module.exports = actionTypes;
 
-  }, {"keys": 194}],
-  188: [function (require, module, exports) {
+  }, {"keys": 198}],
+  192: [function (require, module, exports) {
 "use strict"
 
 var keys = require('keys'),
@@ -22057,8 +22125,8 @@ var keys = require('keys'),
 
 module.exports = pages;
 
-  }, {"keys": 194}],
-  189: [function (require, module, exports) {
+  }, {"keys": 198}],
+  193: [function (require, module, exports) {
 "use strict"
 
 var keys = require('keys'),
@@ -22070,8 +22138,8 @@ var keys = require('keys'),
 
 module.exports = payloadSources;
 
-  }, {"keys": 194}],
-  190: [function (require, module, exports) {
+  }, {"keys": 198}],
+  194: [function (require, module, exports) {
 "use strict"
 
 //TODO: сделать как то нормально)
@@ -22094,7 +22162,7 @@ var api = {
 
 module.exports = api;
   }, {"component-ajax": 3}],
-  191: [function (require, module, exports) {
+  195: [function (require, module, exports) {
 "use strict"
 
 var api = require('./api'),
@@ -22114,8 +22182,8 @@ var authorizer = {
 };
 
 module.exports = authorizer;
-  }, {"./api": 190}],
-  192: [function (require, module, exports) {
+  }, {"./api": 194}],
+  196: [function (require, module, exports) {
 "use strict";
 
 var invariant = require('invariant'),
@@ -22219,8 +22287,8 @@ assign(Dispatcher.prototype, {
 });
 
 module.exports = Dispatcher;
-  }, {"invariant": 193, "object-assign": 6}],
-  193: [function (require, module, exports) {
+  }, {"invariant": 197, "object-assign": 6}],
+  197: [function (require, module, exports) {
 "use strict";
 
 var invariant = function() {
@@ -22247,7 +22315,7 @@ var invariant = function() {
 
 module.exports = invariant;
   }, {}],
-  194: [function (require, module, exports) {
+  198: [function (require, module, exports) {
 "use strict"
 
 var keys = function(obj) {
@@ -22267,7 +22335,7 @@ var keys = function(obj) {
 
 module.exports = keys;
   }, {}],
-  195: [function (require, module, exports) {
+  199: [function (require, module, exports) {
 "use strict"
 
 var bindToStore = {
@@ -22286,7 +22354,7 @@ var bindToStore = {
 
 module.exports = bindToStore;
   }, {}],
-  196: [function (require, module, exports) {
+  200: [function (require, module, exports) {
 var React = require('react');
 
 var dynamicStyle = {
@@ -22311,24 +22379,25 @@ var dynamicStyle = {
 
 module.exports = dynamicStyle;
   }, {"react": 10}],
-  197: [function (require, module, exports) {
+  201: [function (require, module, exports) {
 "use strict"
 
-    var React = require('react');
+    var React = require('react'),
+        FormContainer = require('../components/welcome-layout/form-container.jsx');
 
     var Enter = React.createClass({
       displayName: "Enter",
       render: function () {
         return (
-            React.createElement("div", null)
+            React.createElement(FormContainer, null)
 
         );
       }
     });
 
     module.exports = Enter;
-  }, {"react": 10}],
-  198: [function (require, module, exports) {
+  }, {"../components/welcome-layout/form-container.jsx": 184, "react": 10}],
+  202: [function (require, module, exports) {
     "use strict"
 
 var React = require('react'),
@@ -22344,7 +22413,7 @@ var Main = React.createClass({displayName: "Main",
 
 module.exports = Main;
   }, {"../components/page-title.jsx": 179, "react": 10}],
-  199: [function (require, module, exports) {
+  203: [function (require, module, exports) {
 "use strict"
 
 var React = require('react'),
@@ -22360,7 +22429,7 @@ var Profile = React.createClass({displayName: "Profile",
 
 module.exports = Profile;
   }, {"../components/page-title.jsx": 179, "react": 10}],
-  200: [function (require, module, exports) {
+  204: [function (require, module, exports) {
 "use strict"
 
 var React = require('react'),
@@ -22376,7 +22445,7 @@ var Tasks = React.createClass({displayName: "Tasks",
 
 module.exports = Tasks;
   }, {"../components/page-title.jsx": 179, "react": 10}],
-  201: [function (require, module, exports) {
+  205: [function (require, module, exports) {
 "use strict"
 
 var route = require('page'),
@@ -22398,7 +22467,7 @@ var onlyForAuthorized = function (ctx, next) {
       }
       else {
         route('/')
-      }
+    }
     }
 
 var routeMap = function () {
@@ -22436,8 +22505,8 @@ var routeMap = function () {
 module.exports = routeMap;
 
 
-  }, {"./actions/appActions": 171, "./constants/pages": 188, "./libs/authorizer": 191, "page": 7}],
-  202: [function (require, module, exports) {
+  }, {"./actions/appActions": 171, "./constants/pages": 192, "./libs/authorizer": 195, "page": 7}],
+  206: [function (require, module, exports) {
 "use strict"
 
 var EventEmitter = require('events').EventEmitter,
@@ -22486,8 +22555,8 @@ var BaseStore = function (store) {
 };
 
 module.exports = BaseStore;
-  }, {"../appDispatcher": 172, "events": 5, "invariant": 193, "object-assign": 6}],
-  203: [function (require, module, exports) {
+  }, {"../appDispatcher": 172, "events": 5, "invariant": 197, "object-assign": 6}],
+  207: [function (require, module, exports) {
 "use strict"
 
 var React = require('react'),
@@ -22502,12 +22571,12 @@ var React = require('react'),
 
 var fillPages = function () {
   var DeskLayout = require('../components/desk-layout.jsx'),
-      EnterLayout = require('../components/welcome-layout/welcome-layout.jsx');
+      WelcomeLayout = require('../components/welcome-layout/welcome-layout.jsx');
 
     pages = {};
 
   pages[PAGES.LOGIN] = {
-    layout: EnterLayout,
+    layout: WelcomeLayout,
     page: require('../pages/login.jsx'),
     name: PAGES.LOGIN,
     title: 'Login to Clevy'
@@ -22570,17 +22639,17 @@ var pageStore = BaseStore({
 module.exports = pageStore;
   }, {
     "../components/desk-layout.jsx": 174,
-    "../components/welcome-layout/welcome-layout.jsx": 186,
-    "../constants/actionTypes": 187,
-    "../constants/pages": 188,
-    "../pages/login.jsx": 197,
-    "../pages/main.jsx": 198,
-    "../pages/profile.jsx": 199,
-    "../pages/tasks.jsx": 200,
-    "./baseStore": 202,
+    "../components/welcome-layout/welcome-layout.jsx": 190,
+    "../constants/actionTypes": 191,
+    "../constants/pages": 192,
+    "../pages/login.jsx": 201,
+    "../pages/main.jsx": 202,
+    "../pages/profile.jsx": 203,
+    "../pages/tasks.jsx": 204,
+    "./baseStore": 206,
     "react": 10
   }],
-  204: [function (require, module, exports) {
+  208: [function (require, module, exports) {
 "use strict"
 
 var React = require('react'),
@@ -22622,5 +22691,5 @@ var TaskManager = React.createClass({displayName: "TaskManager",
 
 module.exports = TaskManager;
 
-  }, {"./mixins/bindToStore": 195, "./route": 201, "./stores/pageStore": 203, "react": 10}]
+  }, {"./mixins/bindToStore": 199, "./route": 205, "./stores/pageStore": 207, "react": 10}]
 }, {}, [1]);
