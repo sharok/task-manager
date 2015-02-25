@@ -24,7 +24,7 @@ var onlyForNotAuthorized = function (ctx, next) {
 
 var routeMap = function () {
 
-    route('/', onlyForAuthorized, function () {
+    route('/', onlyForNotAuthorized, function () {
         appActions.changePage(PAGES.DESK);
     });
 

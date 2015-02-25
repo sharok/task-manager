@@ -3,9 +3,9 @@ var React = require('react');
 var Logo = React.createClass({
     render: function () {
         return (
-            <div class="title-description">
-                <p class="title">clevy</p>
-                <p class="description">the cleverest task manager</p>
+            <div className="title-description">
+                <p className="title">clevy</p>
+                <p className="description">the cleverest task manager</p>
             </div>
         );
     }

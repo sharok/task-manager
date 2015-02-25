@@ -1,0 +1,38 @@
+.title-container {
+  height: 275px;
+  color: #ffffff;
+
+  & > {
+
+    .form-title {
+      height: 60px;
+      background-color: #2b5465;
+      text-transform: uppercase;
+      font-size: 18px;
+      text-align: center;
+      line-height: 60px;
+    }
+
+    .title-description {
+      height: 215px;
+      background-color: #244856;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      & > {
+        .title {
+          font-family: 'Bauhanus', Arial;
+          text-transform: uppercase;
+          font-size: 73px;
+        }
+
+        .description {
+          font-size: 14px;
+        }
+      }
+    }
+
+  }
+}

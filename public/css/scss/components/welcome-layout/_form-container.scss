@@ -1,0 +1,76 @@
+.form-container {
+  margin: 30px auto 0;
+  width: 443px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.02);
+}
+
+.form-content {
+  background-color: #ffffff;
+  height: 430px;
+  margin: 0 auto;
+}
+
+.input-label {
+  text-align: center;
+  font-family: DINPro-Medium;
+  font-size: 14px;
+  color: #383938;
+  text-transform: uppercase;
+}
+
+.input-container {
+  margin: 23px 54px;
+}
+
+.form-controls {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 300px;
+  border-bottom: 1px solid #e2ebea;
+}
+
+.form-margin {
+  margin: 50px 0;
+}
+
+input[type="email"], input[type="password"] {
+  width: 100%;
+  border: 1px solid #d9d9d9;
+  line-height: 45px;
+  font-size: 14px;
+  color: #383938;
+  padding: 0 13px;
+  transition: border-color 200ms ease;
+}
+
+input[type="email"]:focus, input[type="password"]:focus {
+  outline: none;
+  border-color: #2b5465
+}
+
+.form-submit {
+  text-align: center;
+  /*height: 130px;*/
+}
+
+.submit-button {
+  margin-top: 41px;
+  margin-bottom: 41px;
+  width: 122px;
+  height: 45px;
+  background-color: #ffffff;
+  border: 1px solid #254957;
+  font-size: 14px;
+  color: #383938;
+  cursor: pointer;
+  transition: all 100ms ease;
+  transition-property: background-color, color;
+  text-transform: uppercase;
+  font-family: DINPro-Medium;
+}
+
+.submit-button:hover {
+  background-color: #2b5465;
+  color: #ffffff;
+}

@@ -3,7 +3,7 @@ var React = require('react');
 var FormTitle = React.createClass({
     render: function () {
         return (
-            <div class="form-title">login</div>
+            <div className='form-title'>login</div>
         );
     }
 });
