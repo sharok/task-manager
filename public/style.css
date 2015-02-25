@@ -767,6 +767,11 @@ input:focus {
   height: 100%;
   width: 100%; }
 
+* {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
 body, html {
   background: #f4f4f5;
   font-family: DINPro-Regular, Tahoma, Helvetica, sans-serif;
@@ -1114,3 +1119,56 @@ body, html {
         transition: fill 200ms ease; }
     .task-priority > section > i.active svg {
       fill: #d55074; }
+
+.header {
+  background-color: #ebf7f5;
+  border-bottom: 1px solid #e0dfe0;
+  height: 56px;
+  padding: 0 10px;
+}
+
+.header-menu {
+  color: #ebf7f5;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+.header-menu ul {
+  line-height: 57px;
+}
+
+.header-menu ul li:nth-child(1):hover ~ .underline {
+  left: 10px;
+}
+
+.header-menu ul li:nth-child(2):hover ~ .underline {
+  left: 142px;
+}
+
+.header-menu ul li:nth-child(3):hover ~ .underline {
+  left: 274px;
+}
+
+.header-menu ul > li {
+  cursor: pointer;
+  display: inline-block;
+  padding: 0 15px;
+  text-align: center;
+  width: 129px;
+}
+
+.header-menu ul > li > a {
+  color: #6a6a6b;
+  text-decoration: none;
+}
+
+.header-menu ul > .underline {
+  background: #134b62;
+  height: 3px;
+  left: -130px;
+  margin-top: -5px;
+  position: absolute;
+  -webkit-transition: 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
+  width: 129px;
+}

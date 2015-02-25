@@ -20,14 +20,12 @@ var onlyForNotAuthorized = function (ctx, next) {
     else {
         route('/')
     }
-}
+};
 
 var routeMap = function () {
+
     route('/', onlyForAuthorized, function () {
         appActions.changePage(PAGES.DESK);
-
-    route('/', onlyForNotAuthorized, function () {
-        appActions.changePage(PAGES.MAIN);
     });
 
     route('/login', onlyForNotAuthorized, function () {
@@ -54,6 +52,7 @@ var routeMap = function () {
     authorizer.init(function () {
         route.start()
     });
+
 };
 
 module.exports = routeMap;

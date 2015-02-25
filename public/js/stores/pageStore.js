@@ -12,8 +12,8 @@ var React = require('react'),
     currentPage = null;
 
 var fillPages = function () {
-    var DeskLayout = require('components/desk-layout.jsx');
-        WelcomeLayout = require(/components/welcome-layout/welcome-layout.jsx');
+    var DeskLayout = require('components/desk-layout.jsx'),
+        WelcomeLayout = require('components/welcome-layout/welcome-layout.jsx');
 
     pages = {};
 
