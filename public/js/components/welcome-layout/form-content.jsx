@@ -5,6 +5,12 @@ var React = require('react'),
 var FormContent = React.createClass({
     render: function () {
         return (
+            /*
+            *   Тут можно все в этом блоке и вывести: вместе с кнопкой и инпутами
+            *   потом будет проще собирать данные ввода,
+            *   отлавливать клик и отправлять на сервер
+            *   щас надо еще какой то связующий между ними копмоеннт, мароки много
+            * */
             <div className="form-content">
                 <div className="form-controls">
                     <LoginForm />
