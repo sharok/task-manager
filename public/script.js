@@ -5,7 +5,7 @@ var React = require('react'),
     TaskManager = React.createFactory(require('taskManager.jsx'));
 
 React.render(new TaskManager(), document.getElementById('application'));
-},{"react":10,"taskManager.jsx":224}],2:[function(require,module,exports){
+},{"react":10,"taskManager.jsx":223}],2:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -21478,7 +21478,7 @@ var appActions = {
 };
 
 module.exports = appActions;
-},{"appDispatcher":173,"constants/actionTypes":203}],172:[function(require,module,exports){
+},{"appDispatcher":173,"constants/actionTypes":202}],172:[function(require,module,exports){
 "use strict"
 
 var appDispatcher = require('appDispatcher'),
@@ -21499,7 +21499,7 @@ var quickTaskAddActions = {
 };
 
 module.exports = quickTaskAddActions;
-},{"appDispatcher":173,"constants/actionTypes":203}],173:[function(require,module,exports){
+},{"appDispatcher":173,"constants/actionTypes":202}],173:[function(require,module,exports){
 "use strict"
 
 var Dispatcher = require('dispatcher'),
@@ -21529,7 +21529,7 @@ var appDispatcher = assign(new Dispatcher(), {
 module.exports = appDispatcher;
 
 
-},{"constants/payloadSources":206,"dispatcher":209,"object-assign":6}],174:[function(require,module,exports){
+},{"constants/payloadSources":205,"dispatcher":208,"object-assign":6}],174:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
@@ -21583,7 +21583,7 @@ var PageTitle = React.createClass({displayName: "PageTitle",
 });
 
 module.exports = PageTitle;
-},{"../mixins/bindToStore":214,"../stores/pageStore":222,"react":10}],176:[function(require,module,exports){
+},{"../mixins/bindToStore":213,"../stores/pageStore":221,"react":10}],176:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
@@ -21636,7 +21636,7 @@ var TaskExtraAdd = React.createClass({displayName: "TaskExtraAdd",
 });
 
 module.exports = TaskExtraAdd;
-},{"./task-priority.jsx":178,"mixins/bindToStore":214,"mixins/dynamicStyle":215,"react":10,"stores/quickTaskAddStore":223}],178:[function(require,module,exports){
+},{"./task-priority.jsx":178,"mixins/bindToStore":213,"mixins/dynamicStyle":214,"react":10,"stores/quickTaskAddStore":222}],178:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
@@ -21661,7 +21661,7 @@ var TaskPriority = React.createClass({displayName: "TaskPriority",
 });
 
 module.exports = TaskPriority;
-},{"../svg-ico.jsx":188,"localization":213,"react":10}],179:[function(require,module,exports){
+},{"../svg-ico.jsx":188,"localization":212,"react":10}],179:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
@@ -21708,7 +21708,7 @@ var TaskTextBox = React.createClass({displayName: "TaskTextBox",
 });
 
 module.exports = TaskTextBox;
-},{"actions/quickTaskAddActions":172,"localization":213,"react":10}],181:[function(require,module,exports){
+},{"actions/quickTaskAddActions":172,"localization":212,"react":10}],181:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
@@ -21747,7 +21747,7 @@ var SelectDate = React.createClass({displayName: "SelectDate",
 
 module.exports = SelectDate;
 
-},{"./then.jsx":182,"./today.jsx":183,"mixins/bindToStore":214,"mixins/dynamicStyle":215,"react":10,"stores/quickTaskAddStore":223}],182:[function(require,module,exports){
+},{"./then.jsx":182,"./today.jsx":183,"mixins/bindToStore":213,"mixins/dynamicStyle":214,"react":10,"stores/quickTaskAddStore":222}],182:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
@@ -21762,7 +21762,7 @@ var Then = React.createClass({displayName: "Then",
 });
 
 module.exports = Then;
-},{"localization":213,"react":10}],183:[function(require,module,exports){
+},{"localization":212,"react":10}],183:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
@@ -21777,7 +21777,7 @@ var Today = React.createClass({displayName: "Today",
 });
 
 module.exports = Today;
-},{"localization":213,"react":10}],184:[function(require,module,exports){
+},{"localization":212,"react":10}],184:[function(require,module,exports){
 "use strict"
 
 var React = require('react');
@@ -21845,7 +21845,7 @@ var Navigation = React.createClass({displayName: "Navigation",
 });
 
 module.exports = Navigation;
-},{"constants/pages":205,"localization":213,"mixins/bindToStore":214,"mixins/dynamicStyle":215,"react":10,"stores/pageStore":222}],186:[function(require,module,exports){
+},{"constants/pages":204,"localization":212,"mixins/bindToStore":213,"mixins/dynamicStyle":214,"react":10,"stores/pageStore":221}],186:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
@@ -21905,7 +21905,7 @@ var UpcomingTask = React.createClass({displayName: "UpcomingTask",
 });
 
 module.exports = UpcomingTask;
-},{"localization":213,"react":10}],188:[function(require,module,exports){
+},{"localization":212,"react":10}],188:[function(require,module,exports){
 "use strict"
 
 var React = require('react');
@@ -22194,66 +22194,48 @@ var FormContainer = React.createClass({displayName: "FormContainer",
     render: function () {
         return (
             React.createElement("div", {className: "form-container"}, 
-                React.createElement(ProjectTitle, null), 
-                React.createElement(FormBox, null)
+                this.props.children
             )
         );
     }
 });
 
 module.exports = FormContainer;
-},{"./form-content.jsx":194,"./project-title.jsx":201,"react":10}],194:[function(require,module,exports){
-var React = require('react'),
-    LoginForm = require('./login-form.jsx'),
-    FormSubmit = require('./form-submit.jsx');
+},{"./form-content.jsx":194,"./project-title.jsx":200,"react":10}],194:[function(require,module,exports){
+var React = require('react');
 
 var FormContent = React.createClass({displayName: "FormContent",
     render: function () {
         return (
-            /*
-            *   Тут можно все в этом блоке и вывести: вместе с кнопкой и инпутами
-            *   потом будет проще собирать данные ввода,
-            *   отлавливать клик и отправлять на сервер
-            *   щас надо еще какой то связующий между ними копмоеннт, мароки много
-            * */
+            //ты писал чтобы все вынести сюда(инпуты кнопку), но лучше же как щас?
+            // т.к. инпуты будут менятся (login signup)
+
             React.createElement("div", {className: "form-content"}, 
                 React.createElement("div", {className: "form-controls"}, 
-                    React.createElement(LoginForm, null)
+                    this.props.children
                 ), 
-                React.createElement(FormSubmit, null)
+                React.createElement("div", {className: "form-submit"}, 
+                    React.createElement("input", {className: "submit-button", type: "submit", value: "Войти"})
+                )
             )
         );
     }
 });
 
 module.exports = FormContent;
-},{"./form-submit.jsx":195,"./login-form.jsx":199,"react":10}],195:[function(require,module,exports){
-var React = require('react');
-
-var FormSubmit = React.createClass({displayName: "FormSubmit",
-    render: function () {
-        return (
-            React.createElement("div", {className: "form-submit"}, 
-                React.createElement("input", {className: "submit-button", type: "submit", value: "Войти"})
-            )
-        );
-    }
-});
-
-module.exports = FormSubmit;
-},{"react":10}],196:[function(require,module,exports){
+},{"react":10}],195:[function(require,module,exports){
 var React = require('react');
 
 var FormTitle = React.createClass({displayName: "FormTitle",
     render: function () {
         return (
-            React.createElement("div", {className: "form-title"}, "login")
+            React.createElement("div", {className: "form-title"}, this.props.title)
         );
     }
 });
 
 module.exports = FormTitle;
-},{"react":10}],197:[function(require,module,exports){
+},{"react":10}],196:[function(require,module,exports){
 var React = require('react'),
     dynamicStyle = require('../../mixins/dynamicStyle'),
     bindToStore = require('../../mixins/bindToStore'),
@@ -22300,7 +22282,7 @@ var HeaderLinks = React.createClass({displayName: "HeaderLinks",
 });
 
 module.exports = HeaderLinks;
-},{"../../constants/pages":205,"../../mixins/bindToStore":214,"../../mixins/dynamicStyle":215,"../../stores/pageStore":222,"react":10}],198:[function(require,module,exports){
+},{"../../constants/pages":204,"../../mixins/bindToStore":213,"../../mixins/dynamicStyle":214,"../../stores/pageStore":221,"react":10}],197:[function(require,module,exports){
 var React = require('react'),
     HeaderLinks = require('./header-links.jsx');
 
@@ -22317,7 +22299,7 @@ var Header = React.createClass({displayName: "Header",
 });
 
 module.exports = Header;
-},{"./header-links.jsx":197,"react":10}],199:[function(require,module,exports){
+},{"./header-links.jsx":196,"react":10}],198:[function(require,module,exports){
 var React = require('react');
 
 var LoginForm = React.createClass({displayName: "LoginForm",
@@ -22353,7 +22335,7 @@ var LoginForm = React.createClass({displayName: "LoginForm",
 });
 
 module.exports = LoginForm;
-},{"react":10}],200:[function(require,module,exports){
+},{"react":10}],199:[function(require,module,exports){
 var React = require('react');
 
 var Logo = React.createClass({displayName: "Logo",
@@ -22368,7 +22350,7 @@ var Logo = React.createClass({displayName: "Logo",
 });
 
 module.exports = Logo;
-},{"react":10}],201:[function(require,module,exports){
+},{"react":10}],200:[function(require,module,exports){
 var React = require('react'),
     Logo = require('./logo.jsx'),
     FormTitle = require('./form-title.jsx');
@@ -22378,14 +22360,14 @@ var ProjectTitle = React.createClass({displayName: "ProjectTitle",
         return (
             React.createElement("div", {className: "title-container"}, 
                 React.createElement(Logo, null), 
-                React.createElement(FormTitle, null)
+                React.createElement(FormTitle, {title: this.props.title})
             )
         );
     }
 });
 
 module.exports = ProjectTitle;
-},{"./form-title.jsx":196,"./logo.jsx":200,"react":10}],202:[function(require,module,exports){
+},{"./form-title.jsx":195,"./logo.jsx":199,"react":10}],201:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
@@ -22406,7 +22388,7 @@ var WelcomeLayout = React.createClass({displayName: "WelcomeLayout",
 });
 
 module.exports = WelcomeLayout;
-},{"./header.jsx":198,"react":10}],203:[function(require,module,exports){
+},{"./header.jsx":197,"react":10}],202:[function(require,module,exports){
 "use strict"
 
 var keys = require('keys'),
@@ -22419,7 +22401,7 @@ var keys = require('keys'),
 
 module.exports = actionTypes;
 
-},{"keys":211}],204:[function(require,module,exports){
+},{"keys":210}],203:[function(require,module,exports){
 "use strict"
 
 var keys = require('keys');
@@ -22430,7 +22412,7 @@ var languages = keys({
 });
 
 module.exports = languages;
-},{"keys":211}],205:[function(require,module,exports){
+},{"keys":210}],204:[function(require,module,exports){
 "use strict"
 
 var keys = require('keys'),
@@ -22446,7 +22428,7 @@ var keys = require('keys'),
 
 module.exports = pages;
 
-},{"keys":211}],206:[function(require,module,exports){
+},{"keys":210}],205:[function(require,module,exports){
 "use strict"
 
 var keys = require('keys'),
@@ -22458,7 +22440,7 @@ var keys = require('keys'),
 
 module.exports = payloadSources;
 
-},{"keys":211}],207:[function(require,module,exports){
+},{"keys":210}],206:[function(require,module,exports){
 "use strict"
 
 //TODO: сделать как то нормально)
@@ -22480,7 +22462,7 @@ var api = {
 };
 
 module.exports = api;
-},{"component-ajax":3}],208:[function(require,module,exports){
+},{"component-ajax":3}],207:[function(require,module,exports){
 "use strict"
 
 var api = require('./api'),
@@ -22500,7 +22482,7 @@ var authorizer = {
 };
 
 module.exports = authorizer;
-},{"./api":207}],209:[function(require,module,exports){
+},{"./api":206}],208:[function(require,module,exports){
 "use strict";
 
 var invariant = require('invariant'),
@@ -22604,7 +22586,7 @@ assign(Dispatcher.prototype, {
 });
 
 module.exports = Dispatcher;
-},{"invariant":210,"object-assign":6}],210:[function(require,module,exports){
+},{"invariant":209,"object-assign":6}],209:[function(require,module,exports){
 "use strict";
 
 var invariant = function() {
@@ -22630,7 +22612,7 @@ var invariant = function() {
 };
 
 module.exports = invariant;
-},{}],211:[function(require,module,exports){
+},{}],210:[function(require,module,exports){
 "use strict"
 
 var keys = function(obj) {
@@ -22649,7 +22631,7 @@ var keys = function(obj) {
 };
 
 module.exports = keys;
-},{}],212:[function(require,module,exports){
+},{}],211:[function(require,module,exports){
 "use strict"
 
 var localization = {
@@ -22664,7 +22646,7 @@ var localization = {
 };
 
 module.exports = localization;
-},{}],213:[function(require,module,exports){
+},{}],212:[function(require,module,exports){
 "use strict"
 var languages = require('constants/languages'),
     currentLanguage = languages.EN;
@@ -22683,7 +22665,7 @@ var localization = {
 };
 
 module.exports = localization;
-},{"./en":212,"constants/languages":204}],214:[function(require,module,exports){
+},{"./en":211,"constants/languages":203}],213:[function(require,module,exports){
 "use strict"
 
 var bindToStore = {
@@ -22701,7 +22683,7 @@ var bindToStore = {
 };
 
 module.exports = bindToStore;
-},{}],215:[function(require,module,exports){
+},{}],214:[function(require,module,exports){
 var React = require('react');
 
 var dynamicStyle = {
@@ -22757,7 +22739,7 @@ var dynamicStyle = {
 };
 
 module.exports = dynamicStyle;
-},{"react":10}],216:[function(require,module,exports){
+},{"react":10}],215:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
@@ -22775,36 +22757,33 @@ var Main = React.createClass({displayName: "Main",
 });
 
 module.exports = Main;
-},{"components/page-title.jsx":175,"components/quick-add/task-quick-add.jsx":179,"react":10}],217:[function(require,module,exports){
+},{"components/page-title.jsx":175,"components/quick-add/task-quick-add.jsx":179,"react":10}],216:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
-    FormContainer = require('../components/welcome-layout/form-container.jsx');
+    FormContainer = require('../components/welcome-layout/form-container.jsx'),
+    ProjectTitle = require('../components/welcome-layout/project-title.jsx'),
+    FormContent = require('../components/welcome-layout/form-content.jsx'),
+    LoginForm = require('../components/welcome-layout/login-form.jsx');
 
 var Enter = React.createClass({displayName: "Enter",
     render: function () {
         return (
-            //Нужно собирать компоненты, а тут все зашыто в этом FormContainer,
-            //когда будем делать регистрацию все это расковыривать
-            //или параметры прокидывать на основе которых он там будет разные формы выбирать
-            //можно примерно так:
-            /*
-                #MaterialBlock //<FormContainer />
+            //   хотя думаю удалить ProjectTitle. У нас же там имя менятся будет (ВХОД или РЕГИСТРАЦИЯ)
+            //   и лучше вставить div.title-container прям сюда, и в него два компонента <Logo/> и <FormTitle />
 
-                    #ClavyLogo //ну он уже готовый <Logo />
-
-                    #Title  //ща он form-title можно сюда просто это div вынести, в нем врядли какая та динамика будет
-                            //<div className='form-title'>login</div>
-
-                    #LoginForm //и потом можно будет менять только эту часть
-             */
-            React.createElement(FormContainer, null)
+            React.createElement(FormContainer, null, 
+                React.createElement(ProjectTitle, {title: "Login"}), 
+                React.createElement(FormContent, null, 
+                    React.createElement(LoginForm, null)
+                )
+            )
         );
     }
 });
 
 module.exports = Enter;
-},{"../components/welcome-layout/form-container.jsx":193,"react":10}],218:[function(require,module,exports){
+},{"../components/welcome-layout/form-container.jsx":193,"../components/welcome-layout/form-content.jsx":194,"../components/welcome-layout/login-form.jsx":198,"../components/welcome-layout/project-title.jsx":200,"react":10}],217:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
@@ -22819,7 +22798,7 @@ var Profile = React.createClass({displayName: "Profile",
 });
 
 module.exports = Profile;
-},{"components/page-title.jsx":175,"react":10}],219:[function(require,module,exports){
+},{"components/page-title.jsx":175,"react":10}],218:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
@@ -22834,7 +22813,7 @@ var Tasks = React.createClass({displayName: "Tasks",
 });
 
 module.exports = Tasks;
-},{"components/page-title.jsx":175,"react":10}],220:[function(require,module,exports){
+},{"components/page-title.jsx":175,"react":10}],219:[function(require,module,exports){
 "use strict"
 
 var route = require('page'),
@@ -22895,7 +22874,7 @@ var routeMap = function () {
 module.exports = routeMap;
 
 
-},{"actions/appActions":171,"constants/pages":205,"libs/authorizer":208,"page":7}],221:[function(require,module,exports){
+},{"actions/appActions":171,"constants/pages":204,"libs/authorizer":207,"page":7}],220:[function(require,module,exports){
 "use strict"
 
 var EventEmitter = require('events').EventEmitter,
@@ -22944,7 +22923,7 @@ var BaseStore = function (store) {
 };
 
 module.exports = BaseStore;
-},{"appDispatcher":173,"events":5,"invariant":210,"object-assign":6}],222:[function(require,module,exports){
+},{"appDispatcher":173,"events":5,"invariant":209,"object-assign":6}],221:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
@@ -23026,7 +23005,7 @@ var pageStore = BaseStore({
 });
 
 module.exports = pageStore;
-},{"./baseStore":221,"components/desk-layout.jsx":174,"components/welcome-layout/welcome-layout.jsx":202,"constants/actionTypes":203,"constants/pages":205,"localization":213,"pages/desk.jsx":216,"pages/login.jsx":217,"pages/profile.jsx":218,"pages/tasks.jsx":219,"react":10}],223:[function(require,module,exports){
+},{"./baseStore":220,"components/desk-layout.jsx":174,"components/welcome-layout/welcome-layout.jsx":201,"constants/actionTypes":202,"constants/pages":204,"localization":212,"pages/desk.jsx":215,"pages/login.jsx":216,"pages/profile.jsx":217,"pages/tasks.jsx":218,"react":10}],222:[function(require,module,exports){
 "use strict"
 
 var baseStore = require('./baseStore'),
@@ -23051,7 +23030,7 @@ var quickTaskAddStore = baseStore({
 });
 
 module.exports = quickTaskAddStore;
-},{"./baseStore":221,"constants/actionTypes":203}],224:[function(require,module,exports){
+},{"./baseStore":220,"constants/actionTypes":202}],223:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
@@ -23093,4 +23072,4 @@ var TaskManager = React.createClass({displayName: "TaskManager",
 
 module.exports = TaskManager;
 
-},{"mixins/bindToStore":214,"react":10,"route":220,"stores/pageStore":222}]},{},[1]);
+},{"mixins/bindToStore":213,"react":10,"route":219,"stores/pageStore":221}]},{},[1]);

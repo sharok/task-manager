@@ -1,26 +1,23 @@
 "use strict"
 
 var React = require('react'),
-    FormContainer = require('../components/welcome-layout/form-container.jsx');
+    FormContainer = require('../components/welcome-layout/form-container.jsx'),
+    ProjectTitle = require('../components/welcome-layout/project-title.jsx'),
+    FormContent = require('../components/welcome-layout/form-content.jsx'),
+    LoginForm = require('../components/welcome-layout/login-form.jsx');
 
 var Enter = React.createClass({
     render: function () {
         return (
-            //Нужно собирать компоненты, а тут все зашыто в этом FormContainer,
-            //когда будем делать регистрацию все это расковыривать
-            //или параметры прокидывать на основе которых он там будет разные формы выбирать
-            //можно примерно так:
-            /*
-                #MaterialBlock //<FormContainer />
+            //   хотя думаю удалить ProjectTitle. У нас же там имя менятся будет (ВХОД или РЕГИСТРАЦИЯ)
+            //   и лучше вставить div.title-container прям сюда, и в него два компонента <Logo/> и <FormTitle />
 
-                    #ClavyLogo //ну он уже готовый <Logo />
-
-                    #Title  //ща он form-title можно сюда просто это div вынести, в нем врядли какая та динамика будет
-                            //<div className='form-title'>login</div>
-
-                    #LoginForm //и потом можно будет менять только эту часть
-             */
-            <FormContainer/>
+            <FormContainer>
+                <ProjectTitle title='Login'/>
+                <FormContent>
+                    <LoginForm/>
+                </FormContent>
+            </FormContainer>
         );
     }
 });

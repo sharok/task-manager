@@ -6,8 +6,7 @@ var FormContainer = React.createClass({
     render: function () {
         return (
             <div className='form-container'>
-                <ProjectTitle/>
-                <FormBox />
+               { this.props.children }
             </div>
         );
     }

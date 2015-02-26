@@ -1,21 +1,18 @@
-var React = require('react'),
-    LoginForm = require('./login-form.jsx'),
-    FormSubmit = require('./form-submit.jsx');
+var React = require('react');
 
 var FormContent = React.createClass({
     render: function () {
         return (
-            /*
-            *   Тут можно все в этом блоке и вывести: вместе с кнопкой и инпутами
-            *   потом будет проще собирать данные ввода,
-            *   отлавливать клик и отправлять на сервер
-            *   щас надо еще какой то связующий между ними копмоеннт, мароки много
-            * */
+            //ты писал чтобы все вынести сюда(инпуты кнопку), но лучше же как щас?
+            // т.к. инпуты будут менятся (login signup)
+
             <div className="form-content">
                 <div className="form-controls">
-                    <LoginForm />
+                    {this.props.children}
                 </div>
-                <FormSubmit/>
+                <div className="form-submit">
+                    <input className="submit-button" type="submit" value="Войти"/>
+                </div>
             </div>
         );
     }

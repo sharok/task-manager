@@ -3,7 +3,7 @@ var React = require('react');
 var FormTitle = React.createClass({
     render: function () {
         return (
-            <div className='form-title'>login</div>
+            <div className='form-title'>{this.props.title}</div>
         );
     }
 });

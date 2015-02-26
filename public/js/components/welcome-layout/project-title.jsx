@@ -7,7 +7,7 @@ var ProjectTitle = React.createClass({
         return (
             <div className='title-container'>
                 <Logo/>
-                <FormTitle />
+                <FormTitle title={this.props.title}/>
             </div>
         );
     }
