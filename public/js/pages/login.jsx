@@ -11,9 +11,13 @@ var Enter = React.createClass({
         return (
             //   хотя думаю удалить ProjectTitle. У нас же там имя менятся будет (ВХОД или РЕГИСТРАЦИЯ)
             //   и лучше вставить div.title-container прям сюда, и в него два компонента <Logo/> и <FormTitle />
+            // ^ Ага так лучше
+
+            //FormContainer обозвать лучше как нибудь MaterialBlock там кроме формы еще че нибудь может быть
 
             <FormContainer>
                 <ProjectTitle title='Login'/>
+                //тут будет просто LoginForm
                 <FormContent>
                     <LoginForm/>
                 </FormContent>
