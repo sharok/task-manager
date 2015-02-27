@@ -30,7 +30,8 @@
     "invariant": "./public/js/libs/invariant",
     "dispatcher": "./public/js/libs/dispatcher",
     "keys": "./public/js/libs/keys",
-    "localization": "./public/js/localization/main"
+    "localization": "./public/js/localization/main",
+    "key-switch": "./public/js/libs/keySwitch"
   },
   "engines": {
     "node": "0.10.x"

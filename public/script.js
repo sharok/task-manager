@@ -5,7 +5,7 @@ var React = require('react'),
     TaskManager = React.createFactory(require('taskManager.jsx'));
 
 React.render(new TaskManager(), document.getElementById('application'));
-},{"react":10,"taskManager.jsx":223}],2:[function(require,module,exports){
+},{"react":10,"taskManager.jsx":226}],2:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -21478,28 +21478,51 @@ var appActions = {
 };
 
 module.exports = appActions;
-},{"appDispatcher":173,"constants/actionTypes":202}],172:[function(require,module,exports){
+},{"appDispatcher":173,"constants/actionTypes":203}],172:[function(require,module,exports){
 "use strict"
 
 var appDispatcher = require('appDispatcher'),
     ACTION_TYPES = require('constants/actionTypes');
 
 var quickTaskAddActions = {
-    addingTask: function () {
+    startAddTask: function () {
         appDispatcher.handleViewAction({
-            type: ACTION_TYPES.ADDING_TASK
+            type: ACTION_TYPES.START_ADD_TASK
         });
     },
 
-    leaveAddingTask: function () {
+    stopAddTask: function () {
         appDispatcher.handleViewAction({
-            type: ACTION_TYPES.LEAVE_ADDING_TASK
+            type: ACTION_TYPES.STOP_ADD_TASK
+        });
+    },
+
+    setAdditionTaskForToday: function () {
+        appDispatcher.handleViewAction({
+            type: ACTION_TYPES.SET_ADDITION_TASK_DATE,
+            today: true,
+            date: new Date()
+        });
+    },
+
+    setAdditionTaskForDate: function (date) {
+        appDispatcher.handleViewAction({
+            type: ACTION_TYPES.SET_ADDITION_TASK_DATE,
+            today: false,
+            date: date || null
+        });
+    },
+
+    setAdditionTaskPriority: function (priority) {
+        appDispatcher.handleViewAction({
+            type: ACTION_TYPES.SET_ADDITION_TASK_PRIORITY,
+            priority: priority
         });
     }
 };
 
 module.exports = quickTaskAddActions;
-},{"appDispatcher":173,"constants/actionTypes":202}],173:[function(require,module,exports){
+},{"appDispatcher":173,"constants/actionTypes":203}],173:[function(require,module,exports){
 "use strict"
 
 var Dispatcher = require('dispatcher'),
@@ -21529,7 +21552,7 @@ var appDispatcher = assign(new Dispatcher(), {
 module.exports = appDispatcher;
 
 
-},{"constants/payloadSources":205,"dispatcher":208,"object-assign":6}],174:[function(require,module,exports){
+},{"constants/payloadSources":206,"dispatcher":209,"object-assign":6}],174:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
@@ -21549,7 +21572,7 @@ var Layout = React.createClass({displayName: "Layout",
 });
 
 module.exports = Layout;
-},{"./side-bar/side-block.jsx":186,"react":10}],175:[function(require,module,exports){
+},{"./side-bar/side-block.jsx":187,"react":10}],175:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
@@ -21583,7 +21606,7 @@ var PageTitle = React.createClass({displayName: "PageTitle",
 });
 
 module.exports = PageTitle;
-},{"../mixins/bindToStore":213,"../stores/pageStore":221,"react":10}],176:[function(require,module,exports){
+},{"../mixins/bindToStore":215,"../stores/pageStore":224,"react":10}],176:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
@@ -21600,68 +21623,91 @@ var AddBox = React.createClass({displayName: "AddBox",
 });
 
 module.exports = AddBox;
-},{"../select-date/select-date.jsx":181,"./task-text-box.jsx":180,"react":10}],177:[function(require,module,exports){
+},{"../select-date/select-date.jsx":182,"./task-text-box.jsx":181,"react":10}],177:[function(require,module,exports){
+"use strict"
+
+var React = require('react'),
+    SvgIco = require('../svg-ico.jsx');
+
+var TaskAddButton = React.createClass({displayName: "TaskAddButton",
+    render: function () {
+        return (React.createElement("button", {className: "task-add-button"}, "Добавить", React.createElement("i", null, React.createElement(SvgIco, {name: "plus"}))));
+    }
+});
+
+module.exports = TaskAddButton;
+},{"../svg-ico.jsx":189,"react":10}],178:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
     quickAddStore = require('stores/quickTaskAddStore'),
-    bindToStore = require('mixins/bindToStore'),
-    dynamicStyle = require('mixins/dynamicStyle'),
-    TaskPriority = require('./task-priority.jsx');
-
-var getTaskExtraAddState = function () {
-    return {
-        display: quickAddStore.isAdding()
-    }
-};
+    mixins = require('mixins/main'),
+    TaskPriority = require('./task-priority.jsx'),
+    TaskAddButton = require('./task-add-button.jsx');
 
 var TaskExtraAdd = React.createClass({displayName: "TaskExtraAdd",
-    mixins: [bindToStore, dynamicStyle],
+    mixins: mixins('bindToStore', 'dynamicStyle'),
+    bindingStores: [quickAddStore],
 
     getInitialState: function () {
-        return getTaskExtraAddState();
-    },
-
-    componentWillMount: function () {
-        this.onStoreChange(quickAddStore, function () {
-            this.setState(getTaskExtraAddState());
-        }.bind(this));
+        return {
+            display: quickAddStore.startedAdd()
+        };
     },
 
     render: function () {
         return (React.createElement("div", {className:  this.cs({ 'task-extra-add': true, 'hidden': !this.state.display }) }, 
-            React.createElement(TaskPriority, null)
+            React.createElement(TaskPriority, null), 
+            React.createElement(TaskAddButton, null)
         ));
     }
 });
 
 module.exports = TaskExtraAdd;
-},{"./task-priority.jsx":178,"mixins/bindToStore":213,"mixins/dynamicStyle":214,"react":10,"stores/quickTaskAddStore":222}],178:[function(require,module,exports){
+},{"./task-add-button.jsx":177,"./task-priority.jsx":179,"mixins/main":217,"react":10,"stores/quickTaskAddStore":225}],179:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
     lz = require('localization').get(),
+    mixins = require('mixins/main'),
+    quickTaskAddStore = require('stores/quickTaskAddStore'),
+    quickTaskAddActions = require('actions/quickTaskAddActions'),
     SvgIco = require('../svg-ico.jsx');
 
 var TaskPriority = React.createClass({displayName: "TaskPriority",
+    mixins: mixins('dynamicStyle', 'bindToStore'),
+    bindingStores: [quickTaskAddStore],
 
+    getInitialState: function () {
+        return {
+            priority: quickTaskAddStore.priority()
+        }
+    },
+
+    handleStarClick: function (priority) {
+        quickTaskAddActions.setAdditionTaskPriority(priority);
+    },
+
+    createStar: function (priority) {
+        return (React.createElement("i", {onClick:  this.handleStarClick.bind(this, priority), className:  this.cs({ 'active': priority <= this.state.priority }) }, 
+            React.createElement(SvgIco, {name: "star"})
+        ));
+    },
 
     render: function () {
+        var priorities = [1,2,3,4,5];
+
         return (React.createElement("div", {className: "task-priority"}, 
             React.createElement("strong", null,  lz.PRIORITY), 
             React.createElement("section", null, 
-                React.createElement("i", {className: "active"}, React.createElement(SvgIco, {name: "star"})), 
-                React.createElement("i", {className: "active"}, React.createElement(SvgIco, {name: "star"})), 
-                React.createElement("i", null, React.createElement(SvgIco, {name: "star"})), 
-                React.createElement("i", null, React.createElement(SvgIco, {name: "star"})), 
-                React.createElement("i", null, React.createElement(SvgIco, {name: "star"}))
+                 priorities.map(this.createStar) 
             )
         ));
     }
 });
 
 module.exports = TaskPriority;
-},{"../svg-ico.jsx":188,"localization":212,"react":10}],179:[function(require,module,exports){
+},{"../svg-ico.jsx":189,"actions/quickTaskAddActions":172,"localization":214,"mixins/main":217,"react":10,"stores/quickTaskAddStore":225}],180:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
@@ -21678,63 +21724,94 @@ var TaskQuickAdd = React.createClass({displayName: "TaskQuickAdd",
 });
 
 module.exports = TaskQuickAdd;
-},{"./task-add-box.jsx":176,"./task-extra-add.jsx":177,"react":10}],180:[function(require,module,exports){
+},{"./task-add-box.jsx":176,"./task-extra-add.jsx":178,"react":10}],181:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
     quickAddActions = require('actions/quickTaskAddActions'),
+    quickAddStore = require('stores/quickTaskAddStore'),
+    keySwitch = require('key-switch'),
     lz = require('localization').get();
 
 var TaskTextBox = React.createClass({displayName: "TaskTextBox",
-    _handleKeyDown: function (syntheticEvent) {
-        var textBoxNode = this.refs.textBox.getDOMNode();
+    componentWillMount: function () {
+        this.currentArrowAction = 'date'
+    },
 
-        if (syntheticEvent.keyCode == 27) {
-            textBoxNode.value = '';
-            quickAddActions.leaveAddingTask();
-            return;
-        }
+    handleKeyDown: function (syntheticEvent) {
+        var textBoxNode = this.refs.textBox.getDOMNode(),
+        that = this;
 
-        if (textBoxNode.value.trim() !== '') {
-            quickAddActions.addingTask();
-        } else {
-            quickAddActions.leaveAddingTask();
-        }
+        keySwitch(syntheticEvent.keyCode, {
+            'esc': function () {
+                textBoxNode.value = '';
+                quickAddActions.stopAddTask();
+            },
+
+            'upArrow': function () {
+                that.currentArrowAction = 'date';
+            },
+
+            'downArrow': function () {
+                that.currentArrowAction = 'priority';
+            },
+
+            'leftArrow': function () {
+                switch (that.currentArrowAction) {
+                    case 'date':
+                        quickAddActions.setAdditionTaskForToday();
+                        break;
+                    case 'priority':
+                        var newPriority = quickAddStore.priority() - 1;
+                        quickAddActions.setAdditionTaskPriority(newPriority);
+                        break;
+                }
+            },
+
+            'rightArrow': function () {
+                switch (that.currentArrowAction) {
+                    case 'date':
+                        quickAddActions.setAdditionTaskForDate();
+                        break;
+                    case 'priority':
+                        var newPriority = quickAddStore.priority() + 1;
+                        quickAddActions.setAdditionTaskPriority(newPriority);
+                        break;
+                }
+            },
+
+            'other': function () {
+                if (textBoxNode.value.trim() !== '')
+                    quickAddActions.startAddTask();
+                else
+                    quickAddActions.stopAddTask();
+            }
+        });
     },
 
     render: function () {
-        return React.createElement("input", {ref: "textBox", onKeyUp:  this._handleKeyDown, className: "task-text-box", type: "text", placeholder:  lz.ADD_TASK});
+        return React.createElement("input", {ref: "textBox", onKeyUp:  this.handleKeyDown, className: "task-text-box", type: "text", placeholder:  lz.ADD_TASK});
     }
 });
 
 module.exports = TaskTextBox;
-},{"actions/quickTaskAddActions":172,"localization":212,"react":10}],181:[function(require,module,exports){
+},{"actions/quickTaskAddActions":172,"key-switch":211,"localization":214,"react":10,"stores/quickTaskAddStore":225}],182:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
     quickAddStore = require('stores/quickTaskAddStore'),
-    bindToStore = require('mixins/bindToStore'),
-    dynamicStyle = require('mixins/dynamicStyle'),
+    mixins = require('mixins/main'),
     Today = require('./today.jsx'),
     Then = require('./then.jsx');
 
-var getSelectDateState = function () {
-    return {
-        display: quickAddStore.isAdding()
-    }
-};
-
 var SelectDate = React.createClass({displayName: "SelectDate",
-    mixins: [bindToStore, dynamicStyle],
+    mixins: mixins('dynamicStyle', 'bindToStore'),
+    bindingStores: [quickAddStore],
 
     getInitialState: function () {
-        return getSelectDateState();
-    },
-
-    componentWillMount: function () {
-        this.onStoreChange(quickAddStore, function (payload) {
-            this.setState(getSelectDateState());
-        }.bind(this));
+        return {
+            display: quickAddStore.startedAdd()
+        }
     },
 
     render: function () {
@@ -21747,37 +21824,69 @@ var SelectDate = React.createClass({displayName: "SelectDate",
 
 module.exports = SelectDate;
 
-},{"./then.jsx":182,"./today.jsx":183,"mixins/bindToStore":213,"mixins/dynamicStyle":214,"react":10,"stores/quickTaskAddStore":222}],182:[function(require,module,exports){
+},{"./then.jsx":183,"./today.jsx":184,"mixins/main":217,"react":10,"stores/quickTaskAddStore":225}],183:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
+    mixins = require('mixins/main'),
+    quickTaskAddActions = require('actions/quickTaskAddActions'),
+    quickTaskAddStore = require('stores/quickTaskAddStore'),
     lz = require('localization').get();
 
 var Then = React.createClass({displayName: "Then",
+    mixins: mixins('dynamicStyle', 'bindToStore'),
+    bindingStores: [quickTaskAddStore],
+
+    getInitialState: function () {
+        return {
+            active: !quickTaskAddStore.forToday()
+        }
+    },
+
+    handleClick: function () {
+        quickTaskAddActions.setAdditionTaskForDate();
+    },
+
     render: function () {
-        return (React.createElement("div", {className: "select-date-variant"}, 
+        return (React.createElement("div", {onClick:  this.handleClick, className:  this.cs({ 'select-date-variant': true, 'active': this.state.active }) }, 
              lz.THEN
         ));
     }
 });
 
 module.exports = Then;
-},{"localization":212,"react":10}],183:[function(require,module,exports){
+},{"actions/quickTaskAddActions":172,"localization":214,"mixins/main":217,"react":10,"stores/quickTaskAddStore":225}],184:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
+    mixins = require('mixins/main'),
+    quickTaskAddActions = require('actions/quickTaskAddActions'),
+    quickTaskAddStore = require('stores/quickTaskAddStore'),
     lz = require('localization').get();
 
 var Today = React.createClass({displayName: "Today",
+    mixins: mixins('dynamicStyle', 'bindToStore'),
+    bindingStores: [quickTaskAddStore],
+
+    getInitialState: function () {
+        return {
+            active: quickTaskAddStore.forToday()
+        }
+    },
+
+    handleClick: function () {
+        quickTaskAddActions.setAdditionTaskForToday();
+    },
+
     render: function () {
-        return (React.createElement("div", {className: "select-date-variant active"}, 
+        return (React.createElement("div", {onClick:  this.handleClick, className:  this.cs({ 'select-date-variant': true, 'active': this.state.active }) }, 
              lz.TODAY
         ));
     }
 });
 
 module.exports = Today;
-},{"localization":212,"react":10}],184:[function(require,module,exports){
+},{"actions/quickTaskAddActions":172,"localization":214,"mixins/main":217,"react":10,"stores/quickTaskAddStore":225}],185:[function(require,module,exports){
 "use strict"
 
 var React = require('react');
@@ -21792,33 +21901,23 @@ var Clock = React.createClass({displayName: "Clock",
 });
 
 module.exports = Clock;
-},{"react":10}],185:[function(require,module,exports){
+},{"react":10}],186:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
     lz = require('localization').get(),
-    dynamicStyle = require('mixins/dynamicStyle'),
-    bindToStore = require('mixins/bindToStore'),
     pageStore = require('stores/pageStore'),
+    mixins = require('mixins/main'),
     PAGES = require('constants/pages');
 
-var getNavigationState = function () {
-    return {
-        activePageName: pageStore.currentPageName()
-    };
-};
-
 var Navigation = React.createClass({displayName: "Navigation",
-    mixins: [dynamicStyle, bindToStore],
+    mixins: mixins('dynamicStyle', 'bindToStore'),
+    bindingStores: [pageStore],
 
     getInitialState: function () {
-        return getNavigationState();
-    },
-
-    componentWillMount: function () {
-        this.onStoreChange(pageStore, function () {
-            this.setState(getNavigationState());
-        }.bind(this));
+        return {
+            activePageName: pageStore.currentPageName()
+        };
     },
 
     createLink: function (link) {
@@ -21830,22 +21929,22 @@ var Navigation = React.createClass({displayName: "Navigation",
     },
 
     render: function () {
+        var links = [
+
+            { title: lz.DESK, pageName: PAGES.DESK, href: '/' },
+            { title: lz.ALL_TASKS, pageName: PAGES.TASKS, href: '/tasks' },
+            { title: lz.PROFILE, pageName: PAGES.PROFILE, href: '/profile' }
+
+        ];
+
         return (React.createElement("ul", {className: "navigation"}, 
-            
-                [
-
-                    { title: lz.DESK, pageName: PAGES.DESK, href: '/' },
-                    { title: lz.ALL_TASKS, pageName: PAGES.TASKS, href: '/tasks' },
-                    { title: lz.PROFILE, pageName: PAGES.PROFILE, href: '/profile' }
-
-                ].map(this.createLink)
-            
+             links.map(this.createLink) 
         ))
     }
 });
 
 module.exports = Navigation;
-},{"constants/pages":204,"localization":212,"mixins/bindToStore":213,"mixins/dynamicStyle":214,"react":10,"stores/pageStore":221}],186:[function(require,module,exports){
+},{"constants/pages":205,"localization":214,"mixins/main":217,"react":10,"stores/pageStore":224}],187:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
@@ -21877,7 +21976,7 @@ var SideBlock = React.createClass({displayName: "SideBlock",
 });
 
 module.exports = SideBlock;
-},{"../tool-bar/tool-bar.jsx":192,"./clock.jsx":184,"./navigation.jsx":185,"./upcoming-tasks.jsx":187,"react":10}],187:[function(require,module,exports){
+},{"../tool-bar/tool-bar.jsx":193,"./clock.jsx":185,"./navigation.jsx":186,"./upcoming-tasks.jsx":188,"react":10}],188:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
@@ -21905,7 +22004,7 @@ var UpcomingTask = React.createClass({displayName: "UpcomingTask",
 });
 
 module.exports = UpcomingTask;
-},{"localization":212,"react":10}],188:[function(require,module,exports){
+},{"localization":214,"react":10}],189:[function(require,module,exports){
 "use strict"
 
 var React = require('react');
@@ -22106,6 +22205,46 @@ var icons = {
             React.createElement("g", null
             )
         )
+    ),
+
+    'plus': (
+        React.createElement("svg", {viewBox: "0 0 32 32"}, 
+            React.createElement("g", null, 
+                React.createElement("g", {id: "plus"}, 
+                    React.createElement("polygon", {points: "32,12 20,12 20,0 12,0 12,12 0,12 0,20 12,20 12,32 20,32 20,20 32,20   "})
+                )
+            ), 
+            React.createElement("g", null
+            ), 
+            React.createElement("g", null
+            ), 
+            React.createElement("g", null
+            ), 
+            React.createElement("g", null
+            ), 
+            React.createElement("g", null
+            ), 
+            React.createElement("g", null
+            ), 
+            React.createElement("g", null
+            ), 
+            React.createElement("g", null
+            ), 
+            React.createElement("g", null
+            ), 
+            React.createElement("g", null
+            ), 
+            React.createElement("g", null
+            ), 
+            React.createElement("g", null
+            ), 
+            React.createElement("g", null
+            ), 
+            React.createElement("g", null
+            ), 
+            React.createElement("g", null
+            )
+        )
     )
 };
 
@@ -22117,7 +22256,7 @@ var SvgIco = React.createClass({displayName: "SvgIco",
 
 module.exports = SvgIco;
 
-},{"react":10}],189:[function(require,module,exports){
+},{"react":10}],190:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
@@ -22133,7 +22272,7 @@ var IncomingFriends = React.createClass({displayName: "IncomingFriends",
 
 module.exports = IncomingFriends;
 
-},{"../svg-ico.jsx":188,"react":10}],190:[function(require,module,exports){
+},{"../svg-ico.jsx":189,"react":10}],191:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
@@ -22149,7 +22288,7 @@ var IncomingTasks = React.createClass({displayName: "IncomingTasks",
 
 module.exports = IncomingTasks;
 
-},{"../svg-ico.jsx":188,"react":10}],191:[function(require,module,exports){
+},{"../svg-ico.jsx":189,"react":10}],192:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
@@ -22165,7 +22304,7 @@ var Notifications = React.createClass({displayName: "Notifications",
 
 module.exports = Notifications;
 
-},{"../svg-ico.jsx":188,"react":10}],192:[function(require,module,exports){
+},{"../svg-ico.jsx":189,"react":10}],193:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
@@ -22185,7 +22324,7 @@ var ToolBar = React.createClass({displayName: "ToolBar",
 
 module.exports = ToolBar;
 
-},{"./incoming-friends.jsx":189,"./incoming-tasks.jsx":190,"./notifications.jsx":191,"react":10}],193:[function(require,module,exports){
+},{"./incoming-friends.jsx":190,"./incoming-tasks.jsx":191,"./notifications.jsx":192,"react":10}],194:[function(require,module,exports){
 var React = require('react'),
     ProjectTitle = require('./project-title.jsx'),
     FormBox = require('./form-content.jsx');
@@ -22201,7 +22340,7 @@ var FormContainer = React.createClass({displayName: "FormContainer",
 });
 
 module.exports = FormContainer;
-},{"./form-content.jsx":194,"./project-title.jsx":200,"react":10}],194:[function(require,module,exports){
+},{"./form-content.jsx":195,"./project-title.jsx":201,"react":10}],195:[function(require,module,exports){
 var React = require('react');
 
 var FormContent = React.createClass({displayName: "FormContent",
@@ -22209,6 +22348,16 @@ var FormContent = React.createClass({displayName: "FormContent",
         return (
             //ты писал чтобы все вынести сюда(инпуты кнопку), но лучше же как щас?
             // т.к. инпуты будут менятся (login signup)
+
+            //кнопка тож будет меняться: название, и обработчик
+            /*
+            *примерно такое
+            * <SmthWithLabel label="login"><input /></SmthWithLabel>
+            * <SmthWithLabel label="password"><input /></SmthWithLabel>
+            * <div className="text-center border-top padding">
+            *   <button onClick={ this._handleEnter }>Enter</button>
+            * </div>
+            * */
 
             React.createElement("div", {className: "form-content"}, 
                 React.createElement("div", {className: "form-controls"}, 
@@ -22223,19 +22372,21 @@ var FormContent = React.createClass({displayName: "FormContent",
 });
 
 module.exports = FormContent;
-},{"react":10}],195:[function(require,module,exports){
+},{"react":10}],196:[function(require,module,exports){
 var React = require('react');
 
 var FormTitle = React.createClass({displayName: "FormTitle",
     render: function () {
         return (
+            //FormTitle надо с ProjectTitle в одну, я так подумал, просто
+            //этот зеленый заголовок негде использоваться не будет
             React.createElement("div", {className: "form-title"}, this.props.title)
         );
     }
 });
 
 module.exports = FormTitle;
-},{"react":10}],196:[function(require,module,exports){
+},{"react":10}],197:[function(require,module,exports){
 var React = require('react'),
     dynamicStyle = require('../../mixins/dynamicStyle'),
     bindToStore = require('../../mixins/bindToStore'),
@@ -22282,7 +22433,7 @@ var HeaderLinks = React.createClass({displayName: "HeaderLinks",
 });
 
 module.exports = HeaderLinks;
-},{"../../constants/pages":204,"../../mixins/bindToStore":213,"../../mixins/dynamicStyle":214,"../../stores/pageStore":221,"react":10}],197:[function(require,module,exports){
+},{"../../constants/pages":205,"../../mixins/bindToStore":215,"../../mixins/dynamicStyle":216,"../../stores/pageStore":224,"react":10}],198:[function(require,module,exports){
 var React = require('react'),
     HeaderLinks = require('./header-links.jsx');
 
@@ -22299,7 +22450,7 @@ var Header = React.createClass({displayName: "Header",
 });
 
 module.exports = Header;
-},{"./header-links.jsx":196,"react":10}],198:[function(require,module,exports){
+},{"./header-links.jsx":197,"react":10}],199:[function(require,module,exports){
 var React = require('react');
 
 var LoginForm = React.createClass({displayName: "LoginForm",
@@ -22335,7 +22486,7 @@ var LoginForm = React.createClass({displayName: "LoginForm",
 });
 
 module.exports = LoginForm;
-},{"react":10}],199:[function(require,module,exports){
+},{"react":10}],200:[function(require,module,exports){
 var React = require('react');
 
 var Logo = React.createClass({displayName: "Logo",
@@ -22350,7 +22501,7 @@ var Logo = React.createClass({displayName: "Logo",
 });
 
 module.exports = Logo;
-},{"react":10}],200:[function(require,module,exports){
+},{"react":10}],201:[function(require,module,exports){
 var React = require('react'),
     Logo = require('./logo.jsx'),
     FormTitle = require('./form-title.jsx');
@@ -22367,7 +22518,7 @@ var ProjectTitle = React.createClass({displayName: "ProjectTitle",
 });
 
 module.exports = ProjectTitle;
-},{"./form-title.jsx":195,"./logo.jsx":199,"react":10}],201:[function(require,module,exports){
+},{"./form-title.jsx":196,"./logo.jsx":200,"react":10}],202:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
@@ -22388,20 +22539,22 @@ var WelcomeLayout = React.createClass({displayName: "WelcomeLayout",
 });
 
 module.exports = WelcomeLayout;
-},{"./header.jsx":197,"react":10}],202:[function(require,module,exports){
+},{"./header.jsx":198,"react":10}],203:[function(require,module,exports){
 "use strict"
 
-var keys = require('keys'),
+var keys = require('keys');
 
-    actionTypes = keys({
-        CHANGE_PAGE: null,
-        ADDING_TASK: null,
-        LEAVE_ADDING_TASK: null
-    });
+var actionTypes = keys({
+    CHANGE_PAGE: null,
+    START_ADD_TASK: null,
+    STOP_ADD_TASK: null,
+    SET_ADDITION_TASK_PRIORITY: null,
+    SET_ADDITION_TASK_DATE: null
+});
 
 module.exports = actionTypes;
 
-},{"keys":210}],203:[function(require,module,exports){
+},{"keys":212}],204:[function(require,module,exports){
 "use strict"
 
 var keys = require('keys');
@@ -22412,35 +22565,35 @@ var languages = keys({
 });
 
 module.exports = languages;
-},{"keys":210}],204:[function(require,module,exports){
+},{"keys":212}],205:[function(require,module,exports){
 "use strict"
 
-var keys = require('keys'),
+var keys = require('keys');
 
-    pages = keys({
-        LOGIN: null,
-        SIGNUP: null,
-        WELCOME: null,       
-        DESK: null,
-        TASKS: null,
-        PROFILE: null
-    });
+var pages = keys({
+    LOGIN: null,
+    SIGNUP: null,
+    WELCOME: null,
+    DESK: null,
+    TASKS: null,
+    PROFILE: null
+});
 
 module.exports = pages;
 
-},{"keys":210}],205:[function(require,module,exports){
+},{"keys":212}],206:[function(require,module,exports){
 "use strict"
 
-var keys = require('keys'),
+var keys = require('keys');
 
-    payloadSources = keys({
-        VIEW_ACTION: null,
-        SERVER_ACTION: null
-    });
+var payloadSources = keys({
+    VIEW_ACTION: null,
+    SERVER_ACTION: null
+});
 
 module.exports = payloadSources;
 
-},{"keys":210}],206:[function(require,module,exports){
+},{"keys":212}],207:[function(require,module,exports){
 "use strict"
 
 //TODO: сделать как то нормально)
@@ -22462,7 +22615,7 @@ var api = {
 };
 
 module.exports = api;
-},{"component-ajax":3}],207:[function(require,module,exports){
+},{"component-ajax":3}],208:[function(require,module,exports){
 "use strict"
 
 var api = require('./api'),
@@ -22482,8 +22635,10 @@ var authorizer = {
 };
 
 module.exports = authorizer;
-},{"./api":206}],208:[function(require,module,exports){
+},{"./api":207}],209:[function(require,module,exports){
 "use strict";
+
+//Took from Facebook/flux
 
 var invariant = require('invariant'),
     assign = require('object-assign'),
@@ -22586,7 +22741,7 @@ assign(Dispatcher.prototype, {
 });
 
 module.exports = Dispatcher;
-},{"invariant":209,"object-assign":6}],209:[function(require,module,exports){
+},{"invariant":210,"object-assign":6}],210:[function(require,module,exports){
 "use strict";
 
 var invariant = function() {
@@ -22612,7 +22767,38 @@ var invariant = function() {
 };
 
 module.exports = invariant;
-},{}],210:[function(require,module,exports){
+},{}],211:[function(require,module,exports){
+"use strict"
+
+var assign = require('object-assign'),
+    invariant = require('invariant');
+
+var keysCodes = {
+    27: 'esc',
+    37: 'leftArrow',
+    39: 'rightArrow',
+    38: 'upArrow',
+    40: 'downArrow'
+};
+
+var keySwitch = function (keyCode, actions) {
+    actions = assign({
+        other: function () {
+
+        }
+    }, actions);
+
+    var actionKey = keysCodes[keyCode],
+    action = actions[actionKey];
+
+    if (typeof action === 'undefined')
+        actions.other();
+    else
+        action();
+};
+
+module.exports = keySwitch;
+},{"invariant":210,"object-assign":6}],212:[function(require,module,exports){
 "use strict"
 
 var keys = function(obj) {
@@ -22631,7 +22817,7 @@ var keys = function(obj) {
 };
 
 module.exports = keys;
-},{}],211:[function(require,module,exports){
+},{}],213:[function(require,module,exports){
 "use strict"
 
 var localization = {
@@ -22646,7 +22832,7 @@ var localization = {
 };
 
 module.exports = localization;
-},{}],212:[function(require,module,exports){
+},{}],214:[function(require,module,exports){
 "use strict"
 var languages = require('constants/languages'),
     currentLanguage = languages.EN;
@@ -22665,8 +22851,10 @@ var localization = {
 };
 
 module.exports = localization;
-},{"./en":211,"constants/languages":203}],213:[function(require,module,exports){
+},{"./en":213,"constants/languages":204}],215:[function(require,module,exports){
 "use strict"
+
+var invariant = require('invariant');
 
 var bindToStore = {
     onStoreChange: function (store, callback) {
@@ -22679,11 +22867,23 @@ var bindToStore = {
         }.bind(this);
 
         store.addChangeListener(changeCallback);
+    },
+
+    componentWillMount: function () {
+        var that = this,
+            stores = that.bindingStores || [];
+
+        stores.forEach(function (store) {
+            that.onStoreChange(store, function () {
+                invariant(that.getInitialState, 'initial state must be defined in binding to store component');
+                that.setState(that.getInitialState());
+            });
+        })
     }
 };
 
 module.exports = bindToStore;
-},{}],214:[function(require,module,exports){
+},{"invariant":210}],216:[function(require,module,exports){
 var React = require('react');
 
 var dynamicStyle = {
@@ -22739,7 +22939,28 @@ var dynamicStyle = {
 };
 
 module.exports = dynamicStyle;
-},{"react":10}],215:[function(require,module,exports){
+},{"react":10}],217:[function(require,module,exports){
+"use strict"
+
+var invariant = require('invariant');
+
+var mixins = {
+    dynamicStyle: require('./dynamicStyle'),
+    bindToStore: require('./bindToStore')
+};
+
+var main = function () {
+    var keys = Array.prototype.slice.apply(arguments);
+
+    return keys.map(function (key) {
+        invariant(mixins[key], 'unknown mixin: `%s`', key);
+
+        return mixins[key];
+    });
+};
+
+module.exports = main;
+},{"./bindToStore":215,"./dynamicStyle":216,"invariant":210}],218:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
@@ -22757,7 +22978,7 @@ var Main = React.createClass({displayName: "Main",
 });
 
 module.exports = Main;
-},{"components/page-title.jsx":175,"components/quick-add/task-quick-add.jsx":179,"react":10}],216:[function(require,module,exports){
+},{"components/page-title.jsx":175,"components/quick-add/task-quick-add.jsx":180,"react":10}],219:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
@@ -22771,9 +22992,13 @@ var Enter = React.createClass({displayName: "Enter",
         return (
             //   хотя думаю удалить ProjectTitle. У нас же там имя менятся будет (ВХОД или РЕГИСТРАЦИЯ)
             //   и лучше вставить div.title-container прям сюда, и в него два компонента <Logo/> и <FormTitle />
+            // ^ Ага так лучше
+
+            //FormContainer обозвать лучше как нибудь MaterialBlock там кроме формы еще че нибудь может быть
 
             React.createElement(FormContainer, null, 
                 React.createElement(ProjectTitle, {title: "Login"}), 
+                "//тут будет просто LoginForm", 
                 React.createElement(FormContent, null, 
                     React.createElement(LoginForm, null)
                 )
@@ -22783,7 +23008,7 @@ var Enter = React.createClass({displayName: "Enter",
 });
 
 module.exports = Enter;
-},{"../components/welcome-layout/form-container.jsx":193,"../components/welcome-layout/form-content.jsx":194,"../components/welcome-layout/login-form.jsx":198,"../components/welcome-layout/project-title.jsx":200,"react":10}],217:[function(require,module,exports){
+},{"../components/welcome-layout/form-container.jsx":194,"../components/welcome-layout/form-content.jsx":195,"../components/welcome-layout/login-form.jsx":199,"../components/welcome-layout/project-title.jsx":201,"react":10}],220:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
@@ -22798,7 +23023,7 @@ var Profile = React.createClass({displayName: "Profile",
 });
 
 module.exports = Profile;
-},{"components/page-title.jsx":175,"react":10}],218:[function(require,module,exports){
+},{"components/page-title.jsx":175,"react":10}],221:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
@@ -22813,7 +23038,7 @@ var Tasks = React.createClass({displayName: "Tasks",
 });
 
 module.exports = Tasks;
-},{"components/page-title.jsx":175,"react":10}],219:[function(require,module,exports){
+},{"components/page-title.jsx":175,"react":10}],222:[function(require,module,exports){
 "use strict"
 
 var route = require('page'),
@@ -22874,7 +23099,7 @@ var routeMap = function () {
 module.exports = routeMap;
 
 
-},{"actions/appActions":171,"constants/pages":204,"libs/authorizer":207,"page":7}],220:[function(require,module,exports){
+},{"actions/appActions":171,"constants/pages":205,"libs/authorizer":208,"page":7}],223:[function(require,module,exports){
 "use strict"
 
 var EventEmitter = require('events').EventEmitter,
@@ -22923,7 +23148,7 @@ var BaseStore = function (store) {
 };
 
 module.exports = BaseStore;
-},{"appDispatcher":173,"events":5,"invariant":209,"object-assign":6}],221:[function(require,module,exports){
+},{"appDispatcher":173,"events":5,"invariant":210,"object-assign":6}],224:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
@@ -23005,32 +23230,73 @@ var pageStore = BaseStore({
 });
 
 module.exports = pageStore;
-},{"./baseStore":220,"components/desk-layout.jsx":174,"components/welcome-layout/welcome-layout.jsx":201,"constants/actionTypes":202,"constants/pages":204,"localization":212,"pages/desk.jsx":215,"pages/login.jsx":216,"pages/profile.jsx":217,"pages/tasks.jsx":218,"react":10}],222:[function(require,module,exports){
+},{"./baseStore":223,"components/desk-layout.jsx":174,"components/welcome-layout/welcome-layout.jsx":202,"constants/actionTypes":203,"constants/pages":205,"localization":214,"pages/desk.jsx":218,"pages/login.jsx":219,"pages/profile.jsx":220,"pages/tasks.jsx":221,"react":10}],225:[function(require,module,exports){
 "use strict"
 
-var baseStore = require('./baseStore'),
+var assign = require('object-assign'),
+    baseStore = require('./baseStore'),
     ACTIONS = require('constants/actionTypes'),
 
-    addingTask = false;
+    startAdd = false,
+    task = {};
+
+var defaultTask = {
+    today: true,
+    date: null,
+    priority: 2
+};
+
+task = defaultTask;
 
 var quickTaskAddStore = baseStore({
-    isAdding: function () {
-        return addingTask;
+    startedAdd: function () {
+        return startAdd;
+    },
+
+    priority: function () {
+        return task.priority;
+    },
+
+    forToday: function () {
+        return task.today;
     },
 
     setupActions: function (mapAction) {
-        mapAction(ACTIONS.ADDING_TASK, function (payload) {
-            addingTask = true;
+        mapAction(ACTIONS.START_ADD_TASK, function (payload) {
+            startAdd = true;
         });
 
-        mapAction(ACTIONS.LEAVE_ADDING_TASK, function (payload) {
-            addingTask = false;
+        mapAction(ACTIONS.STOP_ADD_TASK, function (payload) {
+            startAdd = false;
+            task = defaultTask;
+        });
+
+        mapAction(ACTIONS.SET_ADDITION_TASK_DATE, function (payload) {
+            assign(task, {
+                today: payload.action.today,
+                date: payload.action.date
+            });
+        });
+
+        mapAction(ACTIONS.SET_ADDITION_TASK_PRIORITY, function (payload) {
+            var priority = payload.action.priority;
+
+            console.log(priority);
+
+            priority = priority > 5 ? 5 : priority;
+            priority = priority < 0 ? 0 : priority;
+
+            console.log(priority);
+
+            assign(task, {
+                priority: priority
+            });
         });
     }
 });
 
 module.exports = quickTaskAddStore;
-},{"./baseStore":220,"constants/actionTypes":202}],223:[function(require,module,exports){
+},{"./baseStore":223,"constants/actionTypes":203,"object-assign":6}],226:[function(require,module,exports){
 "use strict"
 
 var React = require('react'),
@@ -23072,4 +23338,4 @@ var TaskManager = React.createClass({displayName: "TaskManager",
 
 module.exports = TaskManager;
 
-},{"mixins/bindToStore":213,"react":10,"route":219,"stores/pageStore":221}]},{},[1]);
+},{"mixins/bindToStore":215,"react":10,"route":222,"stores/pageStore":224}]},{},[1]);

@@ -4,15 +4,38 @@ var appDispatcher = require('appDispatcher'),
     ACTION_TYPES = require('constants/actionTypes');
 
 var quickTaskAddActions = {
-    addingTask: function () {
+    startAddTask: function () {
         appDispatcher.handleViewAction({
-            type: ACTION_TYPES.ADDING_TASK
+            type: ACTION_TYPES.START_ADD_TASK
         });
     },
 
-    leaveAddingTask: function () {
+    stopAddTask: function () {
         appDispatcher.handleViewAction({
-            type: ACTION_TYPES.LEAVE_ADDING_TASK
+            type: ACTION_TYPES.STOP_ADD_TASK
+        });
+    },
+
+    setAdditionTaskForToday: function () {
+        appDispatcher.handleViewAction({
+            type: ACTION_TYPES.SET_ADDITION_TASK_DATE,
+            today: true,
+            date: new Date()
+        });
+    },
+
+    setAdditionTaskForDate: function (date) {
+        appDispatcher.handleViewAction({
+            type: ACTION_TYPES.SET_ADDITION_TASK_DATE,
+            today: false,
+            date: date || null
+        });
+    },
+
+    setAdditionTaskPriority: function (priority) {
+        appDispatcher.handleViewAction({
+            type: ACTION_TYPES.SET_ADDITION_TASK_PRIORITY,
+            priority: priority
         });
     }
 };

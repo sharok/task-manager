@@ -16,6 +16,7 @@
 
             & > {
                 i {
+                    cursor: pointer;
                     height: $task-extra-height;
                     @include flex-box(center, flex-start);
                     margin-right: 5px;

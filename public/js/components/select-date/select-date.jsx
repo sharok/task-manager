@@ -2,28 +2,18 @@
 
 var React = require('react'),
     quickAddStore = require('stores/quickTaskAddStore'),
-    bindToStore = require('mixins/bindToStore'),
-    dynamicStyle = require('mixins/dynamicStyle'),
+    mixins = require('mixins/main'),
     Today = require('./today.jsx'),
     Then = require('./then.jsx');
 
-var getSelectDateState = function () {
-    return {
-        display: quickAddStore.isAdding()
-    }
-};
-
 var SelectDate = React.createClass({
-    mixins: [bindToStore, dynamicStyle],
+    mixins: mixins('dynamicStyle', 'bindToStore'),
+    bindingStores: [quickAddStore],
 
     getInitialState: function () {
-        return getSelectDateState();
-    },
-
-    componentWillMount: function () {
-        this.onStoreChange(quickAddStore, function (payload) {
-            this.setState(getSelectDateState());
-        }.bind(this));
+        return {
+            display: quickAddStore.startedAdd()
+        }
     },
 
     render: function () {

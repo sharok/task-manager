@@ -1,11 +1,13 @@
 "use strict"
 
-var keys = require('keys'),
+var keys = require('keys');
 
-    actionTypes = keys({
-        CHANGE_PAGE: null,
-        ADDING_TASK: null,
-        LEAVE_ADDING_TASK: null
-    });
+var actionTypes = keys({
+    CHANGE_PAGE: null,
+    START_ADD_TASK: null,
+    STOP_ADD_TASK: null,
+    SET_ADDITION_TASK_PRIORITY: null,
+    SET_ADDITION_TASK_DATE: null
+});
 
 module.exports = actionTypes;

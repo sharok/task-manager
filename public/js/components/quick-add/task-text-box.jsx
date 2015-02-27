@@ -2,27 +2,68 @@
 
 var React = require('react'),
     quickAddActions = require('actions/quickTaskAddActions'),
+    quickAddStore = require('stores/quickTaskAddStore'),
+    keySwitch = require('key-switch'),
     lz = require('localization').get();
 
 var TaskTextBox = React.createClass({
-    _handleKeyDown: function (syntheticEvent) {
-        var textBoxNode = this.refs.textBox.getDOMNode();
+    componentWillMount: function () {
+        this.currentArrowAction = 'date'
+    },
 
-        if (syntheticEvent.keyCode == 27) {
-            textBoxNode.value = '';
-            quickAddActions.leaveAddingTask();
-            return;
-        }
+    handleKeyDown: function (syntheticEvent) {
+        var textBoxNode = this.refs.textBox.getDOMNode(),
+        that = this;
 
-        if (textBoxNode.value.trim() !== '') {
-            quickAddActions.addingTask();
-        } else {
-            quickAddActions.leaveAddingTask();
-        }
+        keySwitch(syntheticEvent.keyCode, {
+            'esc': function () {
+                textBoxNode.value = '';
+                quickAddActions.stopAddTask();
+            },
+
+            'upArrow': function () {
+                that.currentArrowAction = 'date';
+            },
+
+            'downArrow': function () {
+                that.currentArrowAction = 'priority';
+            },
+
+            'leftArrow': function () {
+                switch (that.currentArrowAction) {
+                    case 'date':
+                        quickAddActions.setAdditionTaskForToday();
+                        break;
+                    case 'priority':
+                        var newPriority = quickAddStore.priority() - 1;
+                        quickAddActions.setAdditionTaskPriority(newPriority);
+                        break;
+                }
+            },
+
+            'rightArrow': function () {
+                switch (that.currentArrowAction) {
+                    case 'date':
+                        quickAddActions.setAdditionTaskForDate();
+                        break;
+                    case 'priority':
+                        var newPriority = quickAddStore.priority() + 1;
+                        quickAddActions.setAdditionTaskPriority(newPriority);
+                        break;
+                }
+            },
+
+            'other': function () {
+                if (textBoxNode.value.trim() !== '')
+                    quickAddActions.startAddTask();
+                else
+                    quickAddActions.stopAddTask();
+            }
+        });
     },
 
     render: function () {
-        return <input ref="textBox" onKeyUp={ this._handleKeyDown } className="task-text-box" type="text" placeholder={ lz.ADD_TASK } />;
+        return <input ref="textBox" onKeyUp={ this.handleKeyDown } className="task-text-box" type="text" placeholder={ lz.ADD_TASK } />;
     }
 });
 

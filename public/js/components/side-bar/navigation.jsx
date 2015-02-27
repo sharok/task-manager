@@ -2,28 +2,18 @@
 
 var React = require('react'),
     lz = require('localization').get(),
-    dynamicStyle = require('mixins/dynamicStyle'),
-    bindToStore = require('mixins/bindToStore'),
     pageStore = require('stores/pageStore'),
+    mixins = require('mixins/main'),
     PAGES = require('constants/pages');
 
-var getNavigationState = function () {
-    return {
-        activePageName: pageStore.currentPageName()
-    };
-};
-
 var Navigation = React.createClass({
-    mixins: [dynamicStyle, bindToStore],
+    mixins: mixins('dynamicStyle', 'bindToStore'),
+    bindingStores: [pageStore],
 
     getInitialState: function () {
-        return getNavigationState();
-    },
-
-    componentWillMount: function () {
-        this.onStoreChange(pageStore, function () {
-            this.setState(getNavigationState());
-        }.bind(this));
+        return {
+            activePageName: pageStore.currentPageName()
+        };
     },
 
     createLink: function (link) {
@@ -35,16 +25,16 @@ var Navigation = React.createClass({
     },
 
     render: function () {
+        var links = [
+
+            { title: lz.DESK, pageName: PAGES.DESK, href: '/' },
+            { title: lz.ALL_TASKS, pageName: PAGES.TASKS, href: '/tasks' },
+            { title: lz.PROFILE, pageName: PAGES.PROFILE, href: '/profile' }
+
+        ];
+
         return (<ul className="navigation">
-            {
-                [
-
-                    { title: lz.DESK, pageName: PAGES.DESK, href: '/' },
-                    { title: lz.ALL_TASKS, pageName: PAGES.TASKS, href: '/tasks' },
-                    { title: lz.PROFILE, pageName: PAGES.PROFILE, href: '/profile' }
-
-                ].map(this.createLink)
-            }
+            { links.map(this.createLink) }
         </ul>)
     }
 });

@@ -44,6 +44,6 @@ table {
   border-spacing: 0;
 }
 
-input:focus {
+input:focus, button:focus {
   outline: none;
 }

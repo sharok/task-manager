@@ -1,5 +1,7 @@
 "use strict";
 
+//Took from Facebook/flux
+
 var invariant = require('invariant'),
     assign = require('object-assign'),
     _lastID = 1,
