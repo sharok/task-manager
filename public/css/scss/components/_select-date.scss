@@ -1,9 +1,9 @@
 .select-date {
     position: relative;
     @include flex-box(flext-start, flex-start);
+    $variant-transition: background 200ms ease, color 200ms ease;
 
     & {
-        $variant-transition: background 200ms ease, color 200ms ease;
 
         .select-date-variant:nth-child(1) {
             transform: translateX(0);

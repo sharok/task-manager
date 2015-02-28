@@ -986,6 +986,7 @@ body, html {
     .task-add-box > .task-text-box input[type="text"] {
       -moz-box-sizing: border-box;
       box-sizing: border-box;
+      width: 100%;
       border: none;
       padding: 0 14px;
       color: #545454;
@@ -1121,13 +1122,13 @@ body, html {
   .select-date.hidden .select-date-variant:nth-child(1) {
     -webkit-transform: translateX(200%);
     transform: translateX(200%);
-    -webkit-transition: background 200ms ease, -webkit-transform 180ms ease;
-    transition: background 200ms ease, transform 180ms ease; }
+    -webkit-transition: background 200ms ease, color 200ms ease, -webkit-transform 180ms ease;
+    transition: background 200ms ease, color 200ms ease, transform 180ms ease; }
   .select-date.hidden .select-date-variant:nth-child(2) {
     -webkit-transform: translateX(100%);
     transform: translateX(100%);
-    -webkit-transition: background 200ms ease, -webkit-transform 180ms ease 50ms;
-    transition: background 200ms ease, transform 180ms ease 50ms; }
+    -webkit-transition: background 200ms ease, color 200ms ease, -webkit-transform 180ms ease 50ms;
+    transition: background 200ms ease, color 200ms ease, transform 180ms ease 50ms; }
 
 .task-priority {
   position: relative;
