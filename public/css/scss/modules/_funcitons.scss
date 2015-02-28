@@ -7,6 +7,11 @@
   margin-top: -($height / 2);
 }
 
+@mixin pseudo {
+  content: "";
+  display: block;
+}
+
 @mixin position($position, $width, $height: null) {
   position: $position;
 

@@ -8,7 +8,9 @@ var keysCodes = {
     37: 'leftArrow',
     39: 'rightArrow',
     38: 'upArrow',
-    40: 'downArrow'
+    40: 'downArrow',
+    9: 'tab',
+    13: 'enter'
 };
 
 var keySwitch = function (keyCode, actions) {

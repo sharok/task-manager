@@ -979,38 +979,50 @@ body, html {
   height: 34px;
   overflow: hidden; }
   .task-add-box > .task-text-box {
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+    position: relative;
     -webkit-flex-grow: 1;
     -moz-box-flex: 1;
-    flex-grow: 1;
-    border: none;
-    padding: 0 14px;
-    color: #545454; }
-  .task-add-box > .task-text-box:-moz-placeholder {
+    flex-grow: 1; }
+    .task-add-box > .task-text-box input[type="text"] {
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+      border: none;
+      padding: 0 14px;
+      color: #545454;
+      height: 34px; }
+  .task-add-box > .task-text-box.active:before {
+    content: "";
+    display: block;
+    position: absolute;
+    height: 100%;
+    width: 1px;
+    background: #5a7fbf;
+    top: 0;
+    left: 0; }
+  .task-add-box > .task-text-box input[type="text"]:-moz-placeholder {
     text-transform: uppercase;
     color: #999999;
     transition: color 200ms ease; }
-  .task-add-box > .task-text-box:-ms-input-placeholder {
+  .task-add-box > .task-text-box input[type="text"]:-ms-input-placeholder {
     text-transform: uppercase;
     color: #999999;
     transition: color 200ms ease; }
-  .task-add-box > .task-text-box::-webkit-input-placeholder {
+  .task-add-box > .task-text-box input[type="text"]::-webkit-input-placeholder {
     text-transform: uppercase;
     color: #999999;
     -webkit-transition: color 200ms ease;
     transition: color 200ms ease; }
-  .task-add-box > .task-text-box::-moz-placeholder {
+  .task-add-box > .task-text-box input[type="text"]::-moz-placeholder {
     text-transform: uppercase;
     color: #999999;
     transition: color 200ms ease; }
-  .task-add-box > .task-text-box:focus:-moz-placeholder {
+  .task-add-box > .task-text-box input[type="text"]:focus:-moz-placeholder {
     color: #e2e2e2; }
-  .task-add-box > .task-text-box:focus:-ms-input-placeholder {
+  .task-add-box > .task-text-box input[type="text"]:focus:-ms-input-placeholder {
     color: #e2e2e2; }
-  .task-add-box > .task-text-box:focus::-webkit-input-placeholder {
+  .task-add-box > .task-text-box input[type="text"]:focus::-webkit-input-placeholder {
     color: #e2e2e2; }
-  .task-add-box > .task-text-box:focus::-moz-placeholder {
+  .task-add-box > .task-text-box input[type="text"]:focus::-moz-placeholder {
     color: #e2e2e2; }
 
 .task-extra-add {
@@ -1060,6 +1072,7 @@ body, html {
       fill: #4a6374; }
 
 .select-date {
+  position: relative;
   display: -webkit-flex;
   display: -moz-box;
   display: flex;
@@ -1078,15 +1091,13 @@ body, html {
   .select-date .select-date-variant:nth-child(1) {
     -webkit-transform: translateX(0);
     transform: translateX(0);
-    -webkit-transition: -webkit-transform 180ms ease;
-    transition: transform 180ms ease;
-    -webkit-transition-delay: 50ms;
-    transition-delay: 50ms; }
+    -webkit-transition: background 200ms ease, color 200ms ease, -webkit-transform 180ms ease 50ms;
+    transition: background 200ms ease, color 200ms ease, transform 180ms ease 50ms; }
   .select-date .select-date-variant:nth-child(2) {
     -webkit-transform: translateX(0);
     transform: translateX(0);
-    -webkit-transition: -webkit-transform 180ms ease;
-    transition: transform 180ms ease; }
+    -webkit-transition: background 200ms ease, color 200ms ease, -webkit-transform 180ms ease;
+    transition: background 200ms ease, color 200ms ease, transform 180ms ease; }
   .select-date .select-date-variant {
     cursor: pointer;
     padding: 0 15px;
@@ -1098,24 +1109,39 @@ body, html {
   .select-date .select-date-variant.active {
     background: #3d5666;
     color: #fff; }
+  .select-date.active:before {
+    content: "";
+    display: block;
+    position: absolute;
+    height: 100%;
+    width: 1px;
+    background: #5a7fbf;
+    top: 0;
+    left: -2px; }
   .select-date.hidden .select-date-variant:nth-child(1) {
     -webkit-transform: translateX(200%);
     transform: translateX(200%);
-    -webkit-transition: -webkit-transform 180ms ease;
-    transition: transform 180ms ease;
-    -webkit-transition-delay: 0ms;
-    transition-delay: 0ms; }
+    -webkit-transition: background 200ms ease, -webkit-transform 180ms ease;
+    transition: background 200ms ease, transform 180ms ease; }
   .select-date.hidden .select-date-variant:nth-child(2) {
     -webkit-transform: translateX(100%);
     transform: translateX(100%);
-    -webkit-transition: -webkit-transform 180ms ease;
-    transition: transform 180ms ease;
-    -webkit-transition-delay: 50ms;
-    transition-delay: 50ms; }
+    -webkit-transition: background 200ms ease, -webkit-transform 180ms ease 50ms;
+    transition: background 200ms ease, transform 180ms ease 50ms; }
 
 .task-priority {
+  position: relative;
   display: inline-block;
   height: 35px; }
+  .task-priority.active:before {
+    content: "";
+    display: block;
+    position: absolute;
+    height: 100%;
+    width: 1px;
+    background: #5a7fbf;
+    top: 0;
+    left: 0; }
   .task-priority > strong {
     float: left;
     padding: 0 14px;

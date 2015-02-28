@@ -9,12 +9,16 @@ var EventEmitter = require('events').EventEmitter,
 var BaseStore = function (store) {
     invariant(store.setupActions, 'you must setup actions to store');
 
-    var actions = {},
-        mapAction = function (actionName, callback) {
-            actions[actionName] = callback;
-        };
+    var actions = {};
+    var mapAction = function (actionName, callback) {
+        actions[actionName] = callback;
+    };
+    var invokeAction = function (actionName, payload) {
+        invariant(actions[actionName], 'undefined store action `%s`', actionName);
+        actions[actionName](payload);
+    };
 
-    store.setupActions(mapAction);
+    store.setupActions(mapAction, invokeAction);
     delete store.setupActions;
 
     var childrenStore = assign({

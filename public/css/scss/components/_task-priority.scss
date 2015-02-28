@@ -1,6 +1,15 @@
 .task-priority {
+    position: relative;
     display: inline-block;
     height: $task-extra-height;
+
+    &.active:before {
+        @include pseudo;
+        @include position(absolute, 1px, 100%);
+        background: #5a7fbf;
+        top: 0;
+        left: 0;
+    }
 
     & > {
         strong {
