@@ -1,6 +1,7 @@
 "use strict"
 
 var React = require('react'),
+    lz = require('localization').get(),
     quickTaskAddActions = require('actions/quickTaskAddActions'),
     SvgIco = require('../svg-ico.jsx');
 

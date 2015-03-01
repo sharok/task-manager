@@ -1,5 +1,5 @@
 /node_modules
 /.idea
 /.sass-cache
-./public/script.js
-./public/style.css
+/public/script.js
+/public/style.css
