@@ -7,6 +7,9 @@ var localization = {
         if (currentLanguage == languages.EN)
             return require('./en');
 
+        if (currentLanguage == languages.RU)
+            return require('./ru');
+
         throw new Error('unknown localization');
     },
 

@@ -1,45 +1,11 @@
 .task-extra-add {
-    @include flex-box(stretch, space-between);
+    @include flex-box(flex-start, space-between);
     height: $task-extra-height;
     background: $secondary-block-bg-color;
     overflow: hidden;
     transition: height 200ms ease;
 
     &.hidden {
-        height: 2px;
-    }
-
-    & {
-        .task-add-button {
-            cursor: pointer;
-            height: 100%;
-            padding: 0 14px;
-            background: none;
-            border: none;
-            color: #c4c4c4;
-            font-size: 12px;
-            transition: color 200ms ease;
-
-            i {
-                margin-left: 10px;
-
-                svg {
-                    vertical-align: middle;
-                    height: 11px;
-                    fill: #d3d2d2;
-                    transition: fill 200ms ease;
-                }
-            }
-        }
-
-        .task-add-button:hover {
-            color: #4a6374;
-
-            i {
-                svg {
-                    fill: #4a6374;
-                }
-            }
-        }
+        height: 0;
     }
 }

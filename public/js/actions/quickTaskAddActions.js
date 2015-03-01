@@ -1,6 +1,8 @@
 "use strict"
 
 var appDispatcher = require('appDispatcher'),
+    api = require('api'),
+    quickTaskAddStore = require('stores/quickTaskAddStore'),
     ACTION_TYPES = require('constants/actionTypes');
 
 var quickTaskAddActions = {
@@ -47,8 +49,17 @@ var quickTaskAddActions = {
     },
 
     saveAdditionTask: function () {
+        var additionTask = quickTaskAddStore.getTask();
+
         appDispatcher.handleViewAction({
             type: ACTION_TYPES.SAVE_ADDITION_TASK
+        });
+
+        api.tasks.save(additionTask).then(function (savedTask) {
+            appDispatcher.handleViewAction({
+                type: ACTION_TYPES.SAVED_TASK,
+                task: savedTask
+            });
         });
     },
 

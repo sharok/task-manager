@@ -8,7 +8,8 @@ var localization = {
     TODAY: 'today',
     ADD_TASK: 'add task',
     THEN: 'then',
-    PRIORITY: 'priority'
+    PRIORITY: 'priority',
+    EXIT: 'extit'
 };
 
 module.exports = localization;

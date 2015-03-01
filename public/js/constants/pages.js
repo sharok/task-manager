@@ -8,7 +8,8 @@ var pages = keys({
     WELCOME: null,
     DESK: null,
     TASKS: null,
-    PROFILE: null
+    PROFILE: null,
+    NONE: null
 });
 
 module.exports = pages;

@@ -24,7 +24,7 @@ var SelectDate = React.createClass({
     },
 
     render: function () {
-        return (<div onClick={ this.handleClick } className={ this.cs({ 'select-date': true, 'hidden': !this.state.display, 'active': this.state.active & this.state.display }) }>
+        return (<div ref="selectDate" onClick={ this.handleClick } className={ this.cs({ 'select-date': true, 'hidden': !this.state.display, 'active': this.state.active & this.state.display }) }>
             <Today />
             <Then />
         </div>);

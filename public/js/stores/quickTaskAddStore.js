@@ -2,7 +2,6 @@
 
 var assign = require('object-assign'),
     baseStore = require('./baseStore'),
-    quickTaskAddActions = require('actions/quickTaskAddActions'),
     ACTIONS = require('constants/actionTypes'),
     QUICK_ADD_BLOCKS = require('constants/quickTaskAddBlocks'),
 
@@ -12,7 +11,7 @@ var assign = require('object-assign'),
 var defaultTask = {
     title: '',
     today: true,
-    date: null,
+    date: new Date(),
     priority: 2
 };
 
@@ -21,6 +20,10 @@ var task = assign({}, defaultTask);
 var quickTaskAddStore = baseStore({
     startedAdd: function () {
         return startAdd;
+    },
+
+    getTask: function () {
+        return assign({}, task);
     },
 
     activeBlock: function () {
@@ -64,7 +67,7 @@ var quickTaskAddStore = baseStore({
         });
 
         mapAction(ACTIONS.CHANGE_QUICK_ADD_BLOCK, function (payload) {
-            if (!startAdd) return;
+            if (!startAdd && payload.action.block) return;
             activeBlock = payload.action.block;
         });
 
@@ -79,9 +82,7 @@ var quickTaskAddStore = baseStore({
         });
 
         mapAction(ACTIONS.SAVE_ADDITION_TASK, function (payload) {
-            var savingTask = assign({}, task);
             invokeAction(ACTIONS.STOP_ADD_TASK);
-            console.log('saved ' + savingTask.title);
         });
     }
 });

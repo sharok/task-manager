@@ -6,8 +6,32 @@
   display: inline-block;
   box-sizing: border-box;
   padding: 0 15px;
-  font-size: 13px;
+  font-size: 12px;
   line-height: $button-height;
-  border-radius: 2px;
   border: none;
+  background: none;
+}
+
+.tall-button {
+  @extend %button;
+  height: inherit;
+}
+
+.material-button {
+  @extend %button;
+  color: #b0b0b0;
+  transition: color 200ms ease;
+
+  svg {
+    fill: #d3d2d2;
+    transition: fill 200ms ease;
+  }
+
+  &:hover {
+    color: #4b6576;
+
+    svg {
+      fill: #4b6576;
+    }
+  }
 }

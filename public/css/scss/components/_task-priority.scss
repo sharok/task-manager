@@ -3,45 +3,44 @@
     display: inline-block;
     height: $task-extra-height;
 
-    &.active:before {
+    &:after {
         @include pseudo;
-        @include position(absolute, 1px, 100%);
-        background: #5a7fbf;
-        top: 0;
-        left: 0;
+        @extend .select-line;
+        @extend .select-line.hidden;
+    }
+
+    &.active:after {
+        @include pseudo;
+        @extend .select-line;
     }
 
     & > {
         strong {
             float: left;
-            padding: 0 14px;
-            color: $base-font-color;
+            padding-left: 14px;
+            padding-right: 10px;
+            color: #8f8f8f;
             font-size: 12px;
             line-height: $task-extra-height;
         }
 
         section {
-            @include flex-box(flex-start, flex-start);
+            display: inline-block;
+            height: inherit;
 
-            & > {
-                i {
-                    cursor: pointer;
-                    height: $task-extra-height;
-                    @include flex-box(center, flex-start);
-                    margin-right: 5px;
+            .ico {
+                cursor: pointer;
 
-                    svg {
-                        vertical-align: middle;
-                        height: 14px;
-                        fill: #dfdedf;
-                        transition: fill 200ms ease;
-                    }
+                svg {
+                    fill: #eaeaea;
+                    height: 14px;
+                    transition: fill 180ms;
                 }
+            }
 
-                i.active {
-                    svg {
-                        fill: #d55074;
-                    }
+            .ico.active {
+                svg {
+                    fill: #ffd76e;
                 }
             }
         }

@@ -6,6 +6,8 @@
 @import "partial/animations";
 @import "partial/layout";
 @import "partial/buttons";
+@import "partial/blocks";
+@import "partial/icons";
 
 //components
 @import "components/side-block";
@@ -15,11 +17,12 @@
 @import "components/navigation";
 @import "components/page-title";
 @import "components/tool-bar";
-@import "components/task-quick-add";
 @import "components/task-add-box";
 @import "components/task-extra-add";
+@import "components/task-text-box";
 @import "components/select-date";
 @import "components/task-priority";
+
 //welcome layout
 @import "components/welcome-layout/header";
 @import "components/welcome-layout/header-menu";

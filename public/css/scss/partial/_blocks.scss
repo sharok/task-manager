@@ -1,0 +1,26 @@
+.material-block {
+    background: $base-block-bg-color;
+    box-shadow: $base-block-shadow;
+}
+
+.material-block-shadow {
+    @extend .material-block;
+}
+
+.select-block {
+    background: #2dd5ea;
+}
+
+.select-line {
+    @extend .select-block;
+    @include position(absolute, 2px, 100%);
+
+    left: 0;
+    top: 0;
+    opacity: 1;
+    transition: opacity 200ms ease;
+
+    &.hidden {
+        opacity: 0;
+    }
+}

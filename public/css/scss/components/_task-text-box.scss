@@ -1,0 +1,36 @@
+.task-text-box {
+    position: relative;
+    flex-grow: 1;
+
+    &:after {
+        @include pseudo;
+        @extend .select-line;
+        @extend .select-line.hidden;
+    }
+
+    &.active:after {
+        @include pseudo;
+        @extend .select-line;
+    }
+
+    input[type="text"] {
+        box-sizing: border-box;
+        width: 100%;
+        border: none;
+        padding: 0 14px;
+        color: $base-font-color;
+        height: $task-add-box-height;
+    }
+}
+
+
+
+@include placeholder('.task-text-box input[type="text"]') {
+    text-transform: uppercase;
+    color: #999999;
+    transition: color 200ms ease;
+}
+
+@include placeholder('.task-text-box input[type="text"]:focus') {
+    color: #e2e2e2;
+}

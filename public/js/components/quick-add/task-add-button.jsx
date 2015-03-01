@@ -10,7 +10,10 @@ var TaskAddButton = React.createClass({
     },
 
     render: function () {
-        return (<button onClick={this.handleClick} button className="task-add-button">Добавить<i><SvgIco name="plus" /></i></button>);
+        return (<button onClick={this.handleClick} button className="tall-button material-button">
+            <span>Добавить</span>
+            <i className="margin-left ico"><SvgIco name="plus" /></i>
+        </button>);
     }
 });
 

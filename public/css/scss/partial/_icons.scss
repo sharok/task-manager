@@ -1,0 +1,23 @@
+.ico {
+    @include flex-box-inline(center, flex-start);
+    $margin: 7px;
+    height: inherit;
+
+    svg {
+        height: 11px;
+    }
+
+    &.margin {
+        margin: 0 $margin;
+    }
+
+    &.margin-left {
+        margin-left: $margin;
+    }
+
+    &.margin-right {
+        margin-right: $margin;
+    }
+}
+
+
