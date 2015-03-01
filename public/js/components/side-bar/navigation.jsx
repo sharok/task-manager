@@ -28,8 +28,8 @@ var Navigation = React.createClass({
         var links = [
 
             { title: lz.DESK, pageName: PAGES.DESK, href: '/' },
-            { title: lz.ALL_TASKS, pageName: PAGES.TASKS, href: '/tasks' },
-            { title: lz.PROFILE, pageName: PAGES.PROFILE, href: '/profile' }
+            { title: lz.PROFILE, pageName: PAGES.PROFILE, href: '/profile' },
+            { title: lz.EXIT, pageName: PAGES.NONE, href: '/logout' }
 
         ];
 

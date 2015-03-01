@@ -31,12 +31,16 @@
         }
     }
 
-    &.active:before {
+    &:after {
         @include pseudo;
-        @include position(absolute, 1px, 100%);
-        background: #5a7fbf;
-        top: 0;
-        left: -2px;
+        @extend .select-line;
+        @extend .select-line.hidden;
+    }
+
+    &.active:after {
+        @include pseudo;
+        @extend .select-line;
+        left: -3px;
     }
 
     &.hidden {

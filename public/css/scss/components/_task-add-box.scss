@@ -2,38 +2,4 @@
     @include flex-box(flext-start, stretch);
     height: $task-add-box-height;
     overflow: hidden;
-
-    & > {
-        .task-text-box {
-            position: relative;
-            flex-grow: 1;
-
-            input[type="text"] {
-                box-sizing: border-box;
-                width: 100%;
-                border: none;
-                padding: 0 14px;
-                color: $base-font-color;
-                height: $task-add-box-height;
-            }
-        }
-
-        .task-text-box.active:before {
-            @include pseudo;
-            @include position(absolute, 1px, 100%);
-            background: #5a7fbf;
-            top: 0;
-            left: 0;
-        }
-
-        @include placeholder('.task-text-box input[type="text"]') {
-            text-transform: uppercase;
-            color: #999999;
-            transition: color 200ms ease;
-        }
-
-        @include placeholder('.task-text-box input[type="text"]:focus') {
-            color: #e2e2e2;
-        }
-    }
 }

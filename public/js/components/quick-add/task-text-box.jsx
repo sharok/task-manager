@@ -25,7 +25,7 @@ var TaskTextBox = React.createClass({
         this.blocks = new linkedList(QUICK_ADD_BLOCKS.TEXT_BOX, QUICK_ADD_BLOCKS.SELECT_DATE, QUICK_ADD_BLOCKS.PRIORITY);
     },
 
-    handleFocus: function () {
+    handleClick: function () {
         quickAddActions.changeAdditionBlock(QUICK_ADD_BLOCKS.TEXT_BOX);
         this.blocks.reset();
     },
@@ -107,7 +107,7 @@ var TaskTextBox = React.createClass({
             <input ref="textBox"
                 onChange={ this.handleChange }
                 onKeyDown={ this.handleKeyDown }
-                onClick={ this.handleFocus }
+                onClick={ this.handleClick }
                 value={ this.state.taskTitle }
                 type="text" placeholder={ lz.ADD_TASK } />
         </div>);

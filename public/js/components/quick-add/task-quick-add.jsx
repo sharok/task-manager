@@ -6,7 +6,7 @@ var React = require('react'),
 
 var TaskQuickAdd = React.createClass({
     render: function () {
-        return (<div className="task-quick-add">
+        return (<div className="material-block">
             <TaskAddBox />
             <TaskExtraAdd />
         </div>);

@@ -1,6 +1,7 @@
 "use strict"
 
 var React = require('react'),
+    lz = require('localization').get(),
     quickTaskAddActions = require('actions/quickTaskAddActions'),
     SvgIco = require('../svg-ico.jsx');
 
@@ -10,7 +11,10 @@ var TaskAddButton = React.createClass({
     },
 
     render: function () {
-        return (<button onClick={this.handleClick} button className="task-add-button">Добавить<i><SvgIco name="plus" /></i></button>);
+        return (<button onClick={this.handleClick} button className="tall-button material-button">
+            <span>{ lz.ADD }</span>
+            <i className="margin-left ico"><SvgIco name="plus" /></i>
+        </button>);
     }
 });
 

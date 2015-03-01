@@ -1,11 +1,14 @@
-@mixin flex-box($vertical-align, $horizontal-align, $flex-wrap: nowrap, $row-align: null) {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: $flex-wrap;
-  justify-content: $horizontal-align;
+@mixin flex-property($display, $vertical-align, $horizontal-align, $direction) {
+  display: $display;
+  flex-direction: $direction;
   align-items: $vertical-align;
+  justify-content: $horizontal-align;
+}
 
-  @if ($row-align != null) {
-    align-content: $row-align;
-  }
+@mixin flex-box($vertical-align, $horizontal-align) {
+  @include flex-property(flex, $vertical-align, $horizontal-align, row);
+}
+
+@mixin flex-box-inline($vertical-align, $horizontal-align) {
+  @include flex-property(inline-flex, $vertical-align, $horizontal-align, row);
 }
