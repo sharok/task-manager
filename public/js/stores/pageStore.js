@@ -22,7 +22,7 @@ var fillPages = function () {
         page: require('pages/login.jsx'),
         name: PAGES.LOGIN,
         title: 'Login to Clevy'
-    }
+    };
 
     pages[PAGES.DESK] = {
         layout: DeskLayout,

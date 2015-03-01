@@ -1,0 +1,19 @@
+#modal {
+    .modal-overlay {
+        @extend .layer;
+        @include flex-box-inline(center, center);
+
+        background: rgba(0,0,0,0.32);
+        overflow: auto;
+        opacity: 1;
+        visibility: visible;
+        transition: opacity 200ms ease, visibility 200ms ease;
+    }
+
+    .modal-overlay.hidden {
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 200ms ease, visibility 200ms ease 200ms;
+    }
+}
+

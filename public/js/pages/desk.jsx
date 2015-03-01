@@ -12,7 +12,6 @@ var Main = React.createClass({
                 <TaskQuickAdd />
             </div>
             <div className="content-section">
-                <TodayTasks />
             </div>
         </div>);
     }

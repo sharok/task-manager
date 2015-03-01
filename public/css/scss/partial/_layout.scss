@@ -13,27 +13,32 @@ body, html {
     color: $base-font-color;
 }
 
+#application {
+    @extend .layer;
+    overflow: auto;
+}
+
 .content-section {
     padding: 30px;
 }
 
 .desk {
     width: 900px;
+    min-height: 100%;
     margin: 0 auto;
+    @include flex-box(stretch, flex-start);
 
     & > {
         $side-block-width: 239px;
 
         .side-block {
-            @include position(absolute, $side-block-width, 100%);
+            width:  $side-block-width;
+            flex-shrink: 0;
+            min-height: inherit;
         }
 
         .content-block {
-            position: relative;
-            min-height: 100%;
-            margin-left: $side-block-width;
-
-            background: $base-bg-color;
+            flex-grow: 1;
         }
     }
 }

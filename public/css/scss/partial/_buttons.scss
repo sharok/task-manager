@@ -1,24 +1,24 @@
-%button {
-  $button-height: 25px;
+@mixin button($height:25px, $font-size: 12px) {
+  $button-height: $height;
 
   cursor: pointer;
   height: $button-height;
   display: inline-block;
   box-sizing: border-box;
   padding: 0 15px;
-  font-size: 12px;
+  font-size: $font-size;
   line-height: $button-height;
   border: none;
   background: none;
 }
 
 .tall-button {
-  @extend %button;
+  @include button;
   height: inherit;
 }
 
 .material-button {
-  @extend %button;
+  @include button;
   color: #b0b0b0;
   transition: color 200ms ease;
 
@@ -33,5 +33,23 @@
     svg {
       fill: #4b6576;
     }
+  }
+}
+
+.modal-button {
+  @include button(37px, 14px);
+  border-radius: 2px;
+  text-transform: uppercase;
+  border: 1px solid #92a8b5;
+  margin: 0 5px;
+  font-family: DINPro-Medium;
+  color: #92a8b5;
+  transition: background 200ms ease, color 200ms ease, border-color 200ms ease;
+
+
+  &:hover, &:focus {
+    background: $modal-color;
+    color: #fff;
+    border-color: $modal-color;
   }
 }

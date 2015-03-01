@@ -1,6 +1,8 @@
 .material-block {
     background: $base-block-bg-color;
     box-shadow: $base-block-shadow;
+    border-radius: 1px;
+    overflow: hidden;
 }
 
 .material-block-shadow {

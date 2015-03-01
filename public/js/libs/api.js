@@ -33,7 +33,7 @@ var api = {
         get: function () {
             var tasks = JSON.parse(localStorage.getItem('tasks')) || [];
 
-            return new Promise(function (resolve, tasks) {
+            return new Promise(function (resolve, reject) {
                 setTimeout(function () {
                     resolve(tasks);
                 }, 0);

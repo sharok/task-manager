@@ -66,6 +66,18 @@
     }
 }
 
+@include animation-class(reduce-out, 300ms ease, both) {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(0.75);
+    }
+}
+
 @include animation-class(reduce, 300ms ease, both) {
     0% {
         opacity: 0;

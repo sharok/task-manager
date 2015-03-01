@@ -2,6 +2,7 @@
 
 var appDispatcher = require('appDispatcher'),
     api = require('api'),
+    modal = require('./modalActions'),
     quickTaskAddStore = require('stores/quickTaskAddStore'),
     ACTION_TYPES = require('constants/actionTypes');
 
@@ -50,16 +51,15 @@ var quickTaskAddActions = {
 
     saveAdditionTask: function () {
         var additionTask = quickTaskAddStore.getTask();
-
-        appDispatcher.handleViewAction({
-            type: ACTION_TYPES.SAVE_ADDITION_TASK
-        });
-
-        api.tasks.save(additionTask).then(function (savedTask) {
-            appDispatcher.handleViewAction({
-                type: ACTION_TYPES.SAVED_TASK,
-                task: savedTask
-            });
+        modal.confirm({
+            title: 'set the date for the task?',
+            defaultValue: false,
+            detail: 'choose "no" if you want to leave the task later',
+            yes: 'set the date'
+        }).then(function(setDate) {
+            modal.confirm({
+                title: 'here will be calendar'
+            })
         });
     },
 
