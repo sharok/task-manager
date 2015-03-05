@@ -9,7 +9,7 @@
 
         .section {
             padding: 32px 14px;
-            border-top: 1px solid #30414c;
+            border-top: 1px solid darken($secondary-bg-color, 2%);
 
             & > {
                 .part {

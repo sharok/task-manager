@@ -12,11 +12,6 @@
   background: none;
 }
 
-.tall-button {
-  @include button;
-  height: inherit;
-}
-
 .material-button {
   @include button;
   color: #b0b0b0;
@@ -42,7 +37,6 @@
   text-transform: uppercase;
   border: 1px solid #92a8b5;
   margin: 0 5px;
-  font-family: DINPro-Medium;
   color: #92a8b5;
   transition: background 200ms ease, color 200ms ease, border-color 200ms ease;
 
@@ -52,4 +46,9 @@
     color: #fff;
     border-color: $modal-color;
   }
+}
+
+.tall-button {
+  @include button;
+  height: inherit;
 }
