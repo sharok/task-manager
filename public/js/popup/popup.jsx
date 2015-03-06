@@ -2,8 +2,8 @@
 
 var React = require('react'),
     mixins = require('mixins/main'),
-    windowFactory = require('./windowFactory'),
-    modalStore = require('./modalStore');
+    popupFactory = require('./popupFactory'),
+    modalStore = require('./store');
 
 var Modal = React.createClass({
     mixins: mixins('bindToStore', 'dynamicStyle'),
@@ -17,10 +17,10 @@ var Modal = React.createClass({
     },
 
     render: function () {
-        var modal = this.state.display ? windowFactory.create(this.state.modal.type, this.state.modal.resolve, this.state.modal.popup) : '';
+        var popup = this.state.display ? popupFactory.create(this.state.modal.type, this.state.modal.resolve, this.state.modal.popup) : '';
 
         return (<div className={ this.cs({ 'modal-overlay': true, 'hidden': !this.state.display }) }>
-            { modal }
+            { popup }
         </div>);
     }
 });

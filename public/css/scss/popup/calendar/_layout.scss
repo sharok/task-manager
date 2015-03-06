@@ -1,0 +1,14 @@
+.calendar {
+    width: 268px;
+
+    & > {
+        h1 {
+            background: darken($modal-color, 3%);
+            text-align: center;
+            font-size: 12px;
+            text-transform: uppercase;
+            line-height: 35px;
+            color: #fff;
+        }
+    }
+}

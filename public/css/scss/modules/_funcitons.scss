@@ -2,9 +2,14 @@
   @return $partialSize / $fullSize * 100%;
 }
 
-@mixin top-center($height) {
+@mixin vertical-center($height) {
   top: 50%;
   margin-top: -($height / 2);
+}
+
+@mixin horizontal-center($width) {
+  left: 50%;
+  margin-left: -($width / 2);
 }
 
 @mixin pseudo {

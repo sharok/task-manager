@@ -2,8 +2,7 @@
 
 var appDispatcher = require('appDispatcher'),
     api = require('api'),
-    modal = require('./modalActions'),
-    quickTaskAddStore = require('stores/quickTaskAddStore'),
+    popup = require('../popup/main'),
     ACTION_TYPES = require('constants/actionTypes');
 
 var quickTaskAddActions = {
@@ -50,16 +49,16 @@ var quickTaskAddActions = {
     },
 
     saveAdditionTask: function () {
-        var additionTask = quickTaskAddStore.getTask();
-        modal.confirm({
+        popup.confirm({
             title: 'set the date for the task?',
-            defaultValue: false,
             detail: 'choose "no" if you want to leave the task later',
+            defaultValue: false,
             yes: 'set the date'
-        }).then(function(setDate) {
-            modal.confirm({
-                title: 'here will be calendar'
-            })
+        }).then(function (setDate) {
+            if (!setDate) return;
+            return popup.calendar();
+        }).then(function (selectDate) {
+            console.log('task date ' + selectDate);
         });
     },
 

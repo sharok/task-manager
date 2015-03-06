@@ -1,0 +1,36 @@
+.popup {
+    background: #fff;
+    border-radius: 0 0 2px 2px;
+    min-height: 10px;
+    box-shadow: 0 14px 16px rgba(0,0,0,0.21);
+    overflow: hidden;
+
+    & > {
+        header {
+            background: $modal-color;
+            color: #fff;
+            padding: 30px 20px;
+
+            & > {
+                strong {
+                    font-family: DINPro-Medium;
+                    display: block;
+                    font-size: 18px;
+                    text-transform: uppercase;
+                }
+
+                small {
+                    display: block;
+                    margin-top: 8px;
+                    font-family: DINPro-Medium;
+                    font-size: 14px;
+                    color: #76a2ae;
+                }
+            }
+        }
+
+        section {
+            padding: 20px 20px;
+        }
+    }
+}

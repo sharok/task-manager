@@ -1,0 +1,66 @@
+.calendar-days {
+    & {
+        h1 {
+            font-size: 14px;
+            text-align: center;
+            color: #4e4e4e;
+            line-height: 32px;
+            text-transform: capitalize;
+            font-family: DINPro-Medium;
+        }
+
+        section {
+            margin: 0 10px;
+
+            table {
+                width: 100%;
+
+                th {
+                    color: #848483;
+                    cursor: default;
+                }
+
+                td {
+                    position: relative;
+                    color: #5b5b5b;
+                    cursor: pointer;
+
+                    &.select {
+                        color: #fff;
+                    }
+
+                    &:before {
+                        @include pseudo;
+                        @include position(absolute, 28px);
+                        @include vertical-center(28px);
+                        @include horizontal-center(28px);
+
+                        background: #efefef;
+                        border-radius: 50%;
+                        transform: scale(0);
+                        transition: background 200ms ease, transform 200ms ease;
+                    }
+
+                    &:hover:before {
+                        transform: scale(1);
+                    }
+
+                    &.select:before {
+                        background: $modal-color;
+                        transform: scale(1);
+                    }
+
+                    span {
+                        position: relative;
+                    }
+                }
+
+                td , th {
+                    padding: 10px 0;
+                    text-align: center;
+                    font-size: 12px;
+                }
+            }
+        }
+    }
+}

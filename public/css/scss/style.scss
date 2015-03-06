@@ -24,9 +24,8 @@
 @import "components/select-date";
 @import "components/task-priority";
 
-//modal
-@import "modal/layout";
-@import "modal/popups";
+//popups
+@import "popup/main";
 
 //welcome layout
 @import "components/welcome-layout/header";

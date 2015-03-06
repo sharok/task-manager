@@ -2,6 +2,7 @@
 
 var React = require('react'),
     assign = require('object-assign'),
+    lz = require('localization').get(),
     mixins = require('mixins/main');
 
 var Confirm = React.createClass({
@@ -19,24 +20,18 @@ var Confirm = React.createClass({
         setTimeout(cb, 200);
     },
 
-    clickNo: function () {
+    handleClick: function (ans) {
         this.fadeOut(function () {
-            this.props.resolve(false);
-        }.bind(this));
-    },
-
-    clickYes: function () {
-        this.fadeOut(function () {
-            this.props.resolve(true);
+            this.props.resolve(ans);
         }.bind(this));
     },
 
     render: function () {
         var popup = this.popup = assign({
-            title: 'confirm?',
+            title: lz.CONFIRM + '?',
             detail: null,
-            no: 'no',
-            yes: 'yes',
+            no: lz.NO,
+            yes: lz.YES,
             defaultValue: true
         }, this.props.popup);
 
@@ -48,8 +43,8 @@ var Confirm = React.createClass({
                 { detail }
             </header>
             <section className="text-right">
-                <button className="modal-button" onClick={ this.clickNo } autoFocus={ !popup.defaultValue }>{ popup.no }</button>
-                <button className="modal-button" onClick={ this.clickYes } autoFocus={ popup.defaultValue }>{ popup.yes }</button>
+                <button className="modal-button" onClick={ this.handleClick.bind(this, false) } autoFocus={ !popup.defaultValue }>{ popup.no }</button>
+                <button className="modal-button" onClick={ this.handleClick.bind(this, true)  } autoFocus={ popup.defaultValue }>{ popup.yes }</button>
             </section>
         </div>);
     }

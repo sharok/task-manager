@@ -10,7 +10,10 @@ var localization = {
     THEN: 'then',
     PRIORITY: 'priority',
     EXIT: 'exit',
-    ADD: 'add'
+    ADD: 'add',
+    NO: 'no',
+    YES: 'yes',
+    CONFIRM: 'confirm'
 };
 
 module.exports = localization;
