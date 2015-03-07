@@ -3,10 +3,10 @@
 var calendar = {
     generateDays: function (month, year) {
         var i, days = [],
-            daysCount = new Date(year, month, 0).getDate();
+            daysCount = new Date(year, month + 1, 0).getDate();
 
         for (i = 1; i <= daysCount; i++) {
-            days.push(new Date(year, month-1, i));
+            days.push(new Date(year, month, i));
         }
 
         return days;

@@ -1,6 +1,7 @@
 "use strict"
 
 var React = require('react'),
+    SvgIco = require('components/svg-ico'),
     calendar = require('libs/calendar'),
     assign = require('object-assign'),
     mixins = require('mixins/main'),
@@ -11,15 +12,15 @@ var Calendar = React.createClass({
     mixins: mixins('dynamicStyle'),
 
     getInitialState: function () {
+        var today = new Date();
+
         return {
-            selectDate: new Date(),
+            month: today.getMonth(),
+            year: today.getFullYear(),
+            days: calendar.generateDays(today.getMonth(), today.getFullYear()),
+            selectDate: today,
             display: 'fadeIn'
         };
-    },
-
-    componentWillMount: function () {
-        var today = new Date();
-        this.days = calendar.generateDays(today.getMonth() + 1, today.getFullYear());
     },
 
     fadeOut: function (cb) {
@@ -41,8 +42,31 @@ var Calendar = React.createClass({
         }.bind(this));
     },
 
+    changeMonth: function (forward) {
+        var month = forward ? this.state.month + 1 : this.state.month - 1,
+            year = this.state.year, days;
+
+        if (month > 11) {
+            month = 0;
+            year += 1;
+        }
+
+        if (month < 0) {
+            month = 11;
+            year -= 1;
+        }
+
+        days =  calendar.generateDays(month, year);
+        this.setState({
+            month: month,
+            year: year,
+            days: days,
+            selectDate: forward ? days[0] : days[days.length - 1]
+        });
+    },
+
     render: function () {
-        var days = this.days,
+        var days = this.state.days,
             selectDate = this.state.selectDate,
             day = days[0], i, j,
             dayOfWeek, rows = [[]];
@@ -76,22 +100,26 @@ var Calendar = React.createClass({
                 <p className="year">{ selectDate.getFullYear() }</p>
             </div>
             <div className="calendar-days">
-                <h1>{ monthLz[selectDate.getMonth()] + ' ' + selectDate.getFullYear() }</h1>
+                <h1>
+                    <i className="ico left" onClick={ this.changeMonth.bind(this, false) }><SvgIco name="left-arrow" /></i>
+                    <span>{ monthLz[this.state.month] + ' ' + this.state.year }</span>
+                    <i className="ico right" onClick={ this.changeMonth.bind(this, true) }><SvgIco name="right-arrow" /></i>
+                </h1>
                 <section>
-                    <table>
+                    <table><tbody>
                         <tr>
-                            <th>S</th>
-                            <th>M</th>
-                            <th>T</th>
-                            <th>W</th>
-                            <th>T</th>
-                            <th>F</th>
-                            <th>S</th>
+                            <th>{ weekLz[0][0] }</th>
+                            <th>{ weekLz[1][0] }</th>
+                            <th>{ weekLz[2][0] }</th>
+                            <th>{ weekLz[3][0] }</th>
+                            <th>{ weekLz[4][0] }</th>
+                            <th>{ weekLz[5][0] }</th>
+                            <th>{ weekLz[6][0] }</th>
                         </tr>
                         { rows.map(function (row) {
                             return <tr>{ row }</tr>
                         }) }
-                    </table>
+                    </tbody></table>
                 </section>
             </div>
             <section className="text-right">

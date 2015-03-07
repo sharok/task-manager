@@ -1,12 +1,37 @@
 .calendar-days {
     & {
         h1 {
+            @include flex-box(stretch, space-between);
+            padding: 0 15px;
             font-size: 14px;
             text-align: center;
             color: #4e4e4e;
             line-height: 32px;
             text-transform: capitalize;
             font-family: DINPro-Medium;
+
+            .ico {
+                cursor: pointer;
+                padding: 0 10px;
+
+                svg {
+                    fill: $modal-color;
+                    transition: transform 200ms ease;
+                    transform: translateX(0);
+                }
+
+                &.left:hover {
+                    svg {
+                        transform: translateX(-5px);
+                    }
+                }
+
+                &.right:hover {
+                    svg {
+                        transform: translateX(5px);
+                    }
+                }
+            }
         }
 
         section {
@@ -16,6 +41,7 @@
                 width: 100%;
 
                 th {
+                    text-transform: uppercase;
                     color: #848483;
                     cursor: default;
                 }
