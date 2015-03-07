@@ -7,7 +7,8 @@ var assign = require('object-assign'),
 var tasksStore = baseStore({
     setupActions: function (mapAction, invokeAction) {
         mapAction(ACTIONS.SAVED_TASK, function (payload) {
-
+            var savedTask = payload.action.task;
+            console.log(savedTask);
         });
     }
 });

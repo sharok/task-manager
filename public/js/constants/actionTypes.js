@@ -10,7 +10,7 @@ var actionTypes = keys({
     SET_ADDITION_TASK_DATE: null,
     SET_ADDITION_TASK_TITLE: null,
     CHANGE_QUICK_ADD_BLOCK: null,
-    SAVE_ADDITION_TASK: null,
+    SAVING_ADDITION_TASK: null,
     SAVED_TASK: null
 });
 

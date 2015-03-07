@@ -81,7 +81,7 @@ var quickTaskAddStore = baseStore({
             });
         });
 
-        mapAction(ACTIONS.SAVE_ADDITION_TASK, function (payload) {
+        mapAction(ACTIONS.SAVING_ADDITION_TASK, function (payload) {
             invokeAction(ACTIONS.STOP_ADD_TASK);
         });
     }

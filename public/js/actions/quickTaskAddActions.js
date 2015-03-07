@@ -2,6 +2,7 @@
 
 var appDispatcher = require('appDispatcher'),
     api = require('api'),
+    quickTaskAddStore = require('stores/quickTaskAddStore'),
     popup = require('../popup/main'),
     ACTION_TYPES = require('constants/actionTypes');
 
@@ -49,6 +50,13 @@ var quickTaskAddActions = {
     },
 
     saveAdditionTask: function () {
+        var savingTask = quickTaskAddStore.getTask();
+
+        if (savingTask.today) {
+            quickTaskAddActions.saveTask(savingTask);
+            return;
+        }
+
         popup.confirm({
             title: 'set the date for the task?',
             detail: 'choose "no" if you want to leave the task later',
@@ -58,7 +66,22 @@ var quickTaskAddActions = {
             if (!setDate) return;
             return popup.calendar();
         }).then(function (selectDate) {
-            console.log('task date ' + selectDate);
+            savingTask.date = selectDate || null;
+            quickTaskAddActions.saveTask(savingTask);
+        });
+    },
+
+    saveTask: function (task) {
+        appDispatcher.handleViewAction({
+            type: ACTION_TYPES.SAVING_ADDITION_TASK,
+            task: task
+        });
+        
+        api.tasks.save(task).then(function (savedTask) {
+            appDispatcher.handleViewAction({
+                type: ACTION_TYPES.SAVED_TASK,
+                task: savedTask
+            });
         });
     },
 

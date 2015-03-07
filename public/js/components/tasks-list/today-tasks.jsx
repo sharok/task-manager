@@ -1,6 +1,7 @@
 "use strict"
 
-var React = require('react');
+var React = require('react'),
+    tasksStore = require('stores/tasksStore');
 
 var TodayTasks = React.createClass({
     render: function () {
