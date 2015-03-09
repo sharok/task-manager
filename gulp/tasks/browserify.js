@@ -1,30 +1,45 @@
 var gulp = require('gulp'),
+    assign = require('object-assign'),
     browserify = require('browserify'),
     streamify = require('gulp-streamify'),
     uglify = require('gulp-uglify'),
     source = require("vinyl-source-stream");
 
 module.exports = function (params) {
-    params = params || {
-        minify: false
-    };
+    params = assign({
+        minify: false,
+        entry: '',
+        name: 'script.js',
+        dest: './public/',
+        external: [],
+        transform: []
+    }, params);
 
     return function () {
-        var task = browserify({
-            entries: ['./public/js/app.js'],
+        var b = browserify({
+            entries: [params.entry],
             extensions: ['.jsx'],
             paths: ['./node_modules','./public/js']
-        })
-            .bundle()
+        });
+
+        params.external.forEach(function (id) {
+            b.external(id);
+        });
+
+        params.transform.forEach(function (tr) {
+            b.transform(tr);
+        });
+
+        var bs = b.bundle()
             .on('error', function (err) {
                 console.log(err.message);
             })
-            .pipe(source('script.js'));
+            .pipe(source(params.name));
 
         if (params.minify) {
-            task.pipe(streamify(uglify()));
+            bs.pipe(streamify(uglify()));
         }
 
-        task.pipe(gulp.dest('./public/'));
+        bs.pipe(gulp.dest('./public/'));
     };
 };
