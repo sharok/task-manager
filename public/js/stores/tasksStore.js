@@ -8,7 +8,7 @@ var tasksStore = baseStore({
     setupActions: function (mapAction, invokeAction) {
         mapAction(ACTIONS.SAVED_TASK, function (payload) {
             var savedTask = payload.action.task;
-            console.log(savedTask);
+            console.log('tasks store -> setup actions: ', savedTask);
         });
     }
 });

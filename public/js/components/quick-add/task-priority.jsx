@@ -27,8 +27,8 @@ var TaskPriority = React.createClass({
         quickTaskAddActions.changeAdditionBlock(QUICK_ADD_BLOCKS.PRIORITY);
     },
 
-    createStar: function (priority) {
-        return (<i onClick={ this.handleStarClick.bind(this, priority) }  className={ this.cs({ 'ico margin-right': true, 'active': priority <= this.state.priority }) }>
+    createStar: function (priority, index) {
+        return (<i key={ index } onClick={ this.handleStarClick.bind(this, priority) }  className={ this.cs({ 'ico margin-right': true, 'active': priority <= this.state.priority }) }>
             <SvgIco name="star" />
         </i>);
     },

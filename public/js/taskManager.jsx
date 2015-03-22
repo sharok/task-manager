@@ -2,28 +2,21 @@
 
 var React = require('react'),
     route = require('route'),
-    pageStore = require('stores/pageStore'),
-    bindToStore = require('mixins/bindToStore');
-
-var taskManagerState = function () {
-    return {
-        page: pageStore.currentPage(),
-        layout: pageStore.currentPageLayout()
-    }
-};
+    mixins = require('mixins/main'),
+    pageStore = require('stores/pageStore');
 
 var TaskManager = React.createClass({
-    mixins: [bindToStore],
+    mixins: mixins('bindToStore'),
+    bindingStores: [pageStore],
 
     getInitialState: function () {
-        return taskManagerState();
+        return {
+            page: pageStore.currentPage(),
+            layout: pageStore.currentPageLayout()
+        }
     },
 
     componentWillMount: function () {
-        this.onStoreChange(pageStore, function () {
-            this.setState(taskManagerState());
-        }.bind(this));
-
         route();
     },
     

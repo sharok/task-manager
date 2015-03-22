@@ -1,14 +1,33 @@
 "use strict"
 
 var React = require('react'),
-    TaskAddBox = require('./task-add-box.jsx'),
-    TaskExtraAdd = require('./task-extra-add.jsx');
+    mixins = require('mixins/main'),
+    quickTaskAddStore = require('stores/quickTaskAddStore'),
+    TaskTextBox = require('./task-text-box.jsx'),
+    TaskSelectDate = require('./task-select-date.jsx'),
+    TaskPriority = require('./task-priority.jsx'),
+    TaskAddButton = require('./task-add-button.jsx');
 
 var TaskQuickAdd = React.createClass({
+    mixins: mixins('dynamicStyle', 'bindToStore'),
+    bindingStores: [quickTaskAddStore],
+
+    getInitialState: function () {
+        return {
+            displayExtra: quickTaskAddStore.startedAdd()
+        }
+    },
+    
     render: function () {
         return (<div className="material-block">
-            <TaskAddBox />
-            <TaskExtraAdd />
+            <div className="task-base-add">
+                <TaskTextBox />
+                <TaskSelectDate />
+            </div>
+            <div className={ this.cs({ 'task-extra-add': true, 'hidden': !this.state.displayExtra }) }>
+                <TaskPriority />
+                <TaskAddButton />
+            </div>
         </div>);
     }
 });

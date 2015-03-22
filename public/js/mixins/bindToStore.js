@@ -3,7 +3,7 @@
 var invariant = require('invariant');
 
 var bindToStore = {
-    onStoreChange: function (store, callback) {
+    _listenStore: function (store, callback) {
         var changeCallback = function () {
             if (this.isMounted()) {
                 callback();
@@ -20,11 +20,15 @@ var bindToStore = {
             stores = that.bindingStores || [];
 
         stores.forEach(function (store) {
-            that.onStoreChange(store, function () {
+            that._listenStore(store, function () {
                 invariant(that.getInitialState, 'initial state must be defined in binding to store component');
                 that.setState(that.getInitialState());
+
+                if (typeof that.onStoreChange !== 'undefined'){
+                    that.onStoreChange();
+                }
             });
-        })
+        });
     }
 };
 

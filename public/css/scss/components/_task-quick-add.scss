@@ -1,0 +1,40 @@
+.task-base-add {
+    @include flex-box(flext-start, stretch);
+    height: $task-add-box-height;
+    overflow: hidden;
+}
+
+.task-extra-add {
+    @include flex-box(flex-start, space-between);
+    height: $task-extra-height;
+    background: $secondary-block-bg-color;
+    overflow: hidden;
+    transition: height 200ms ease;
+
+    &.hidden {
+        height: 0;
+    }
+}
+
+.task-select-date {
+    position: relative;
+    transition: opacity 300ms ease, transform 300ms ease;
+
+    &:after {
+        @include pseudo;
+        @extend .select-line;
+        @extend .select-line.hidden;
+
+        left: -3px !important;
+    }
+
+    &.active:after {
+        @include pseudo;
+        @extend .select-line;
+    }
+
+    &.hidden {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}

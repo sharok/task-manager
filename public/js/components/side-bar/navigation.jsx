@@ -16,12 +16,12 @@ var Navigation = React.createClass({
         };
     },
 
-    createLink: function (link) {
+    createLink: function (link, index) {
         var className = this.cs({
             'active': link.pageName == this.state.activePageName
         });
 
-        return <li className={className}><a href={ link.href }>{ link.title }<i className="underline"></i></a></li>
+        return <li key={index} className={className}><a href={ link.href }>{ link.title }<i className="underline"></i></a></li>
     },
 
     render: function () {

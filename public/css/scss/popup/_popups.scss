@@ -13,7 +13,7 @@
 
             & > {
                 strong {
-                    font-family: DINPro-Medium;
+                    font-family: $title-font-family;
                     display: block;
                     font-size: 18px;
                     text-transform: uppercase;
@@ -22,7 +22,7 @@
                 small {
                     display: block;
                     margin-top: 8px;
-                    font-family: DINPro-Medium;
+                    font-family: $title-font-family;
                     font-size: 14px;
                     color: #76a2ae;
                 }

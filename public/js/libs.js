@@ -16,7 +16,9 @@ var globalLibs = require('../../package.json')['browserify-shim'],
 
 Object.keys(globalLibs).forEach(function (libKey) {
     var nameSpaces = globalLibs[libKey].split('.');
-    if (nameSpaces[0] !== 'global:libs') return;
+    if (nameSpaces[0] !== 'global:libs') {
+        return;
+    }
     libs[nameSpaces[1]] = map[libKey];
 });
 

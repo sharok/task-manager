@@ -4,9 +4,9 @@ var React = require('react'),
     lz = require('localization').get();
 
 var UpcomingTask = React.createClass({
-    renderUpcomingTask: function (task) {
+    renderUpcomingTask: function (task, index) {
         return (
-            <section>
+            <section key={ index }>
                 <strong>{ task.time }</strong>
                 <small>{ task.title }</small>
             </section>

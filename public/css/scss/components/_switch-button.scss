@@ -1,0 +1,22 @@
+.switch-button {
+    position: relative;
+    @include flex-box(flext-start, flex-start);
+
+    & > {
+        button {
+            cursor: pointer;
+            padding: 0 15px;
+            background: #4b6576;
+            text-transform: uppercase;
+            font-size: 12px;
+            line-height: $task-add-box-height;
+            color: #2f404b;
+            transition: backgorund 200ms ease, color 200ms ease;
+        }
+
+        button.active {
+            background: $third-bg-color;
+            color: #fff;
+        }
+    }
+}

@@ -8,7 +8,7 @@
 @import "partial/buttons";
 @import "partial/blocks";
 @import "partial/icons";
-@import "partial/text";
+@import "partial/_text";
 
 //components
 @import "components/side-block";
@@ -18,11 +18,10 @@
 @import "components/navigation";
 @import "components/page-title";
 @import "components/tool-bar";
-@import "components/task-add-box";
-@import "components/task-extra-add";
+@import "components/task-quick-add";
 @import "components/task-text-box";
-@import "components/select-date";
 @import "components/task-priority";
+@import "components/switch-button";
 
 //popups
 @import "popup/main";
