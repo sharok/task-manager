@@ -15,6 +15,8 @@ user.model.methods.generateHash = function (password) {
 };
 
 user.model.methods.validPassword = function (password) {
+    console.log(this.local.password);
+    console.log(password);
     return bcrypt.compareSync(password, this.local.password);
 };
 

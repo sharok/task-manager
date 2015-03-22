@@ -1,0 +1,21 @@
+.project-logo {
+    padding: 74px 0 55px 0;
+    background: radial-gradient(ellipse at center, $third-bg-color 1%, $secondary-bg-color 100%);
+    color: $secondary-font-color;
+
+    & > {
+        strong {
+            display: block;
+            font-family: $project-font-family;
+            font-size: 73px;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        small {
+            display: block;
+            text-align: center;
+            font-size: 14px;
+        }
+    }
+}

@@ -1,0 +1,12 @@
+.public-form {
+    & > {
+        section {
+            padding: 41px 54px;
+            border-top: 1px solid #e4eae9;
+
+            &:first-child {
+                border-top: none;
+            }
+        }
+    }
+}

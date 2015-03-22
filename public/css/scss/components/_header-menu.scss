@@ -1,0 +1,39 @@
+.header-menu {
+    $menu-height: 56px;
+    position: relative;
+    height:  $menu-height;
+    border-bottom: 1px solid #dfdedf;
+    padding: 0 10px;
+
+    & > {
+        li {
+            display: inline-block;
+            height: inherit;
+            font-size: 14px;
+            color: #98999a;
+            line-height: $menu-height;
+            text-align: center;
+            text-transform: uppercase;
+            transition: color 400ms ease;
+
+            &.active {
+                color: $third-bg-color;
+            }
+
+            a {
+                display: block;
+                padding: 0 15px;
+                height: inherit;
+                color: inherit;
+                text-decoration: none;
+            }
+        }
+
+        .underline {
+            @include position(absolute, auto, 3px);
+            bottom: -1px;
+            background: $third-bg-color;
+            transition: left 300ms ease, width 300ms ease;
+        }
+    }
+}

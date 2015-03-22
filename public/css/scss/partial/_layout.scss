@@ -29,10 +29,12 @@ body, html {
     @include flex-box(stretch, flex-start);
 
     & > {
-        $side-block-width: 239px;
+        $left-block-width: 239px;
 
-        .side-block {
-            width:  $side-block-width;
+        .left-block {
+            @include flex-box(stretch, flex-start);
+
+            width:  $left-block-width;
             flex-shrink: 0;
             min-height: inherit;
         }
@@ -42,10 +44,3 @@ body, html {
         }
     }
 }
-
-.welcome-content-block {
-    background-color: #ebf7f5;
-    position: relative;
-    min-height: 100%;
-}
-

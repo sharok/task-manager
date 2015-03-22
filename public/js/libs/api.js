@@ -14,7 +14,11 @@ var sendRequest = function (url, callback) {
 var api = {
     account: {
         isAuthorized: function (callback) {
-            sendRequest('account/isAuthorized', callback);
+            return new Promise(function (resolve) {
+                sendRequest('account/isAuthorized', function (result) {
+                    resolve(result);
+                });
+            });
         }
     },
     tasks: {

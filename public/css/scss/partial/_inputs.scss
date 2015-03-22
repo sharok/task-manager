@@ -1,0 +1,31 @@
+@mixin input ($height: 30px) {
+    display: block;
+    height: $height;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 15px;
+}
+
+.public-input {
+    @include input(44px);
+    border: 1px solid #d8d7d7;
+    transition: border-color 200ms ease;
+
+    &:focus {
+        border-color: $secondary-bg-color;
+    }
+}
+
+.public-label {
+    display: block;
+    font-size: 14px;
+    color: $base-font-color;
+    text-transform: uppercase;
+    text-align: center;
+    height: 40px;
+    line-height: 40px;
+
+    &.margin-top {
+        margin-top: 20px;
+    }
+}

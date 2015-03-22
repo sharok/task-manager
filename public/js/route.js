@@ -24,7 +24,7 @@ var onlyForNotAuthorized = function (ctx, next) {
 
 var routeMap = function () {
 
-    route('/', onlyForNotAuthorized, function () {
+    route('/', onlyForAuthorized, function () {
         appActions.changePage(PAGES.DESK);
     });
 
@@ -33,7 +33,7 @@ var routeMap = function () {
     });
 
     route('/signup', onlyForNotAuthorized, function () {
-        appActions.changePage(PAGES.SIGNUP);
+        appActions.changePage(PAGES.SIGN_UP);
     });
 
     route('/welcome', onlyForNotAuthorized, function () {
@@ -49,10 +49,9 @@ var routeMap = function () {
         appActions.changePage(PAGES.PROFILE);
     });
 
-    authorizer.init(function () {
-        route.start()
+    authorizer.init().then(function () {
+        route.start();
     });
-
 };
 
 module.exports = routeMap;

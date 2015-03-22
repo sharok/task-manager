@@ -1,5 +1,7 @@
 //modules and variables
 @import "partial/_base";
+@import "popup/main";
+
 ////partials
 @import "partial/reset";
 @import "partial/font";
@@ -8,7 +10,9 @@
 @import "partial/buttons";
 @import "partial/blocks";
 @import "partial/icons";
-@import "partial/_text";
+@import "partial/text";
+@import "partial/forms";
+@import "partial/inputs";
 
 //components
 @import "components/side-block";
@@ -16,19 +20,12 @@
 @import "components/upcoming-tasks";
 @import "components/progress-bar";
 @import "components/navigation";
-@import "components/page-title";
 @import "components/tool-bar";
 @import "components/task-quick-add";
 @import "components/task-text-box";
 @import "components/task-priority";
 @import "components/switch-button";
+@import "components/header-menu";
+@import "components/project-logo";
 
-//popups
-@import "popup/main";
-
-//welcome layout
-@import "components/welcome-layout/header";
-@import "components/welcome-layout/header-menu";
-@import "components/welcome-layout/title-container";
-@import "components/welcome-layout/form-container";
 

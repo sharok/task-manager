@@ -21,11 +21,9 @@ app
     .set('views', __dirname + '/server/views')
     .set('view engine', 'jade');
 
-db.init(path.join(__dirname, '/server/models'), function () {
-});
-
-require('./server/routes/routes.js')(app, passport);
+db.init(path.join(__dirname, '/server/models'));
 require('./server/config/passport')(passport);
+require('./server/routes/routes.js')(app, passport);
 
 app.listen(8080, function () {
     console.log('server running on port 8080');

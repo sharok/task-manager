@@ -12,16 +12,30 @@ var React = require('react'),
     currentPage = null;
 
 var fillPages = function () {
-    var DeskLayout = require('components/desk-layout.jsx'),
-        WelcomeLayout = require('components/welcome-layout/welcome-layout.jsx');
+    var DeskLayout = require('components/layouts/desk-layout.jsx'),
+        WelcomeLayout = require('components/layouts/welcome-layout.jsx');
 
     pages = {};
+
+    pages[PAGES.WELCOME] = {
+        layout: WelcomeLayout,
+        page: require('pages/about.jsx'),
+        name: PAGES.WELCOME,
+        title: lz.ABOUT_PROJECT
+    };
+
+    pages[PAGES.SIGN_UP] = {
+        layout: WelcomeLayout,
+        page: require('pages/signup.jsx'),
+        name: PAGES.SIGN_UP,
+        title: lz.SIGN_UP
+    };
 
     pages[PAGES.LOGIN] = {
         layout: WelcomeLayout,
         page: require('pages/login.jsx'),
         name: PAGES.LOGIN,
-        title: 'Login to Clevy'
+        title: lz.LOGIN
     };
 
     pages[PAGES.DESK] = {

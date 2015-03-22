@@ -4,16 +4,13 @@ var homeController = require('../controllers/home'),
     accountController = require('../apiControllers/accountController');
 
 var routes = function (app, passport) {
-
-    app.get('/', homeController.index({title: 'Task Manager'}));
-
     app.post('/auth/signup', passport.authenticate('local-signup', {
-        successRedirect: '/profile',
+        successRedirect: '/',
         failureRedirect: '/signup'
     }));
 
     app.post('/auth/login', passport.authenticate('local-login', {
-        successRedirect: '/profile',
+        successRedirect: '/',
         failureRedirect: '/login'
     }));
 
@@ -26,8 +23,12 @@ var routes = function (app, passport) {
 
     app.get('/api/account/isAuthorized', accountController.isAuthorized);
 
-    //TODO: this line is only for testing
-    app.get('/:no', homeController.index({title: 'Task Manager'}));
+    app.get('/', homeController.index());
+    app.get('/about', homeController.index());
+    app.get('/login', homeController.index());
+    app.get('/signup', homeController.index());
+    app.get('/tasks', homeController.index());
+    app.get('/profile', homeController.index());
 };
 
 module.exports = routes;

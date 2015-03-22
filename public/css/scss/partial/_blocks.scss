@@ -1,11 +1,24 @@
 .material-block {
+    margin: 0 auto;
     background: $base-block-bg-color;
     box-shadow: $base-block-shadow;
     overflow: hidden;
 }
 
-.material-block-shadow {
-    @extend .material-block;
+.material-block.mini {
+    width: 442px;
+}
+
+.welcome-title {
+    display: block;
+    text-align: center;
+    background: $third-bg-color;
+    font-size: 18px;
+    color: $secondary-font-color;
+    text-transform: uppercase;
+    height: 59px;
+    line-height: 59px;
+    text-align: center;
 }
 
 .select-block {

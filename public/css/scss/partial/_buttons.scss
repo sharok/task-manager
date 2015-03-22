@@ -12,6 +12,20 @@
   background: none;
 }
 
+.base-button {
+  @include button(44px, 14px);
+
+  text-transform: uppercase;
+  border: 1px solid $secondary-bg-color;
+  color: $base-font-color;
+  transition: color 200ms ease, background 200ms ease;
+
+  &:hover {
+    background: $secondary-bg-color;
+    color: $secondary-font-color;
+  }
+}
+
 .material-button {
   @include button;
   color: #b0b0b0;

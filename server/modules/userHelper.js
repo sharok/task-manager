@@ -11,24 +11,19 @@ var userHelper = {
 
         switch (strategy) {
             case 'local':
-            {
                 newUser.local = {
                     email: email,
                     password: newUser.generateHash(password)
                 };
                 break;
-            }
 
             default:
-            {
                 throw new Error('Invalid strategy.')
-            }
         }
-
 
         return newUser;
     }
 
-}
+};
 
 module.exports = userHelper;

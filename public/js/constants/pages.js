@@ -4,7 +4,7 @@ var keys = require('keys');
 
 var pages = keys({
     LOGIN: null,
-    SIGNUP: null,
+    SIGN_UP: null,
     WELCOME: null,
     DESK: null,
     TASKS: null,

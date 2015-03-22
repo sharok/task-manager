@@ -1,12 +1,10 @@
 "use strict"
 
-var React = require('react'),
-    PageTitle = require('components/page-title.jsx');
+var React = require('react');
 
 var Tasks = React.createClass({
     render: function () {
         return (<div>
-            <PageTitle />
         </div>)
     }
 });

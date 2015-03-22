@@ -1,12 +1,12 @@
 "use strict"
 
 var React = require('react'),
-    SideBlock = require('./side-bar/side-block.jsx');
+    SideBlock = require('./../side-bar/side-block.jsx');
 
-var Layout = React.createClass({
+var DeskLayout = React.createClass({
     render: function () {
         return (<div className="desk">
-            <div className="side-block">
+            <div className="left-block">
                 <SideBlock />
             </div>
             <div className="content-block">
@@ -16,4 +16,4 @@ var Layout = React.createClass({
     }
 });
 
-module.exports = Layout;
+module.exports = DeskLayout;
