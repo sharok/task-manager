@@ -1,48 +1,35 @@
 "use strict"
 var languages = require('constants/languages'),
-    currentLanguage = languages.EN;
+    invariant = require('invariant'),
+    defaultLanguage = languages.EN,
+    currentLz = null,
+    lz = {};
+
+lz[languages.EN] = {
+    words: require('./words/en'),
+    sentences: require('./sentences/en')
+};
+
+lz[languages.RU] = {
+    words: require('./words/ru'),
+    sentences: require('./sentences/en')
+};
+
+currentLz = lz[defaultLanguage];
 
 var localization = {
-    get: function () {
-        if (currentLanguage == languages.EN)
-            return require('./en');
-
-        if (currentLanguage == languages.RU)
-            return require('./ru');
-
-        throw new Error('unknown localization');
-    },
-
-    date: function (type) {
-        var dateLz;
-
-        if (currentLanguage == languages.EN)
-            dateLz = require('./date/en');
-        else
-            throw new Error('unknown localization');
-
-        if (type === 'month') {
-            return [
-                dateLz.JANUARY, dateLz.FEBRUARY, dateLz.MARCH,
-                dateLz.APRIL, dateLz.MAY, dateLz.JUNE,
-                dateLz.JULY, dateLz.AUGUST, dateLz.SEPTEMBER,
-                dateLz.OCTOBER, dateLz.NOVEMBER, dateLz.DECEMBER
-            ];
+    get: function (type) {
+        if (type === 'sentences') {
+            return currentLz.sentences;
         }
 
-        if (type === 'week') {
-            return [
-                dateLz.SUNDAY, dateLz.MONDAY, dateLz.TUESDAY,
-                dateLz.WEDNESDAY, dateLz.THURSDAY, dateLz.FRIDAY,
-                dateLz.SATURDAY
-            ];
-        }
-
-        return dateLz;
+        return currentLz.words;
     },
 
     change: function (language) {
-        currentLanguage = language;
+        invariant(lz[language], 'unknown localization `%s`', language);
+
+        currentLz = lz[language];
     }
 };
 

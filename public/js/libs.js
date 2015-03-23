@@ -10,7 +10,9 @@ var globalLibs = require('../../package.json')['browserify-shim'],
         'object-assign': require('object-assign'),
         'component-ajax': require('component-ajax'),
         'es6-promise': require('es6-promise'),
-        'events': require('events')
+        'events': require('events'),
+        'moment': require('moment'),
+        'moment-range': require('moment-range')
     },
     libs = {};
 

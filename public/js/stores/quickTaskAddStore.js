@@ -67,7 +67,10 @@ var quickTaskAddStore = baseStore({
         });
 
         mapAction(ACTIONS.CHANGE_QUICK_ADD_BLOCK, function (payload) {
-            if (!startAdd && payload.action.block) return;
+            if (!startAdd) {
+                return;
+            }
+
             activeBlock = payload.action.block;
         });
 

@@ -51,8 +51,20 @@
                     color: #5b5b5b;
                     cursor: pointer;
 
-                    &.select {
+                    &.active {
                         color: #fff;
+
+                        &:before {
+                            background: $modal-color;
+                            transform: scale(1);
+                        }
+                    }
+
+                    &.disable {
+                        cursor: default;
+                        &:before {
+                            display: none !important;
+                        }
                     }
 
                     &:before {
@@ -68,11 +80,6 @@
                     }
 
                     &:hover:before {
-                        transform: scale(1);
-                    }
-
-                    &.select:before {
-                        background: $modal-color;
                         transform: scale(1);
                     }
 

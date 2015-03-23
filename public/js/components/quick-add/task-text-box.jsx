@@ -17,7 +17,8 @@ var TaskTextBox = React.createClass({
         return {
             active: quickAddStore.activeBlock() == QUICK_ADD_BLOCKS.TEXT_BOX,
             taskTitle: quickAddStore.title(),
-            activeBlock: quickAddStore.activeBlock()
+            activeBlock: quickAddStore.activeBlock(),
+            allowKeyCommand: quickAddStore.startedAdd()
         }
     },
 
@@ -43,8 +44,9 @@ var TaskTextBox = React.createClass({
     },
 
     handleKeyDown: function (syntheticEvent) {
-        if (!quickAddStore.startedAdd())
+        if (!this.state.allowKeyCommand) {
             return;
+        }
 
         var that = this;
 

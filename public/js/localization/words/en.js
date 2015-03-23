@@ -20,6 +20,7 @@ var localization = {
     ADD: 'add',
     NO: 'no',
     YES: 'yes',
+    OK: 'ok',
     CONFIRM: 'confirm'
 };
 
