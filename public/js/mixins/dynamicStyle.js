@@ -1,9 +1,28 @@
-var React = require('react');
+var React = require('react'),
+    Promise = require('es6-promise').Promise;
 
 var dynamicStyle = {
     componentWillUpdate: function (props) {
         if (props.display === 'fadeOut' && typeof this.componentWillFadeOut !== 'undefined') {
             this.componentWillFadeOut();
+        }
+    },
+
+    componentWillMount: function () {
+        var that = this;
+
+        if (typeof this.fadeOutDuration === 'number') {
+            that._fadeOut = function () {
+                that.setState({
+                    display: 'fadeOut'
+                });
+
+                return new Promise(function (resolve) {
+                    setTimeout(function () {
+                        resolve();
+                    }, that.fadeOutDuration);
+                });
+            }
         }
     },
 

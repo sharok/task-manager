@@ -25,6 +25,10 @@
     background: #2dd5ea;
 }
 
+.overflow-hidden {
+    overflow: hidden;
+}
+
 .select-line {
     @extend .select-block;
     @include position(absolute, 2px, 100%);

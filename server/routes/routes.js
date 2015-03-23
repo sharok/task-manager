@@ -24,7 +24,7 @@ var routes = function (app, passport) {
     app.get('/api/account/isAuthorized', accountController.isAuthorized);
 
     app.get('/', homeController.index());
-    app.get('/about', homeController.index());
+    app.get('/welcome', homeController.index());
     app.get('/login', homeController.index());
     app.get('/signup', homeController.index());
     app.get('/tasks', homeController.index());

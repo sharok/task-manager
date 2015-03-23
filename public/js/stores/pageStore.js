@@ -19,6 +19,7 @@ var fillPages = function () {
 
     pages[PAGES.WELCOME] = {
         layout: WelcomeLayout,
+        animate: true,
         page: require('pages/about.jsx'),
         name: PAGES.WELCOME,
         title: lz.ABOUT_PROJECT
@@ -26,6 +27,7 @@ var fillPages = function () {
 
     pages[PAGES.SIGN_UP] = {
         layout: WelcomeLayout,
+        animate: true,
         page: require('pages/signup.jsx'),
         name: PAGES.SIGN_UP,
         title: lz.SIGN_UP
@@ -33,6 +35,7 @@ var fillPages = function () {
 
     pages[PAGES.LOGIN] = {
         layout: WelcomeLayout,
+        animate: true,
         page: require('pages/login.jsx'),
         name: PAGES.LOGIN,
         title: lz.LOGIN
@@ -82,6 +85,10 @@ var pageStore = BaseStore({
         if (currentPage == null) return null;
 
         return currentPage.title;
+    },
+
+    currentPageAnimate: function () {
+        return currentPage !== null && currentPage.animate === true;
     },
 
     setupActions: function (mapAction) {

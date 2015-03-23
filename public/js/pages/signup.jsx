@@ -2,19 +2,29 @@
 
 var React = require('react'),
     lz = require('localization').get(),
-    ProjectLogo = require('components/welcome/project-logo.jsx'),
-    SignupForm = require('components/welcome/signup-form.jsx');
+    WelcomeBlock = require('components/welcome/welcome-block.jsx');
 
-var Login = React.createClass({
+var SignUp = React.createClass({
+    init: function (welcome) {
+        this.props.onInit(welcome);
+    },
+
     render: function () {
-        return (<div className="content-section">
-            <div className="material-block mini">
-                <ProjectLogo />
-                <div className="welcome-title">{ lz.SIGN_UP }</div>
-                <SignupForm />
-            </div>
-        </div>);
+        return (<WelcomeBlock  onInit={ this.init } title={ lz.SIGN_UP }>
+            <form className="public-form" action="/auth/signup" method="post">
+                <section>
+                    <label className="public-label">{ lz.LOGIN }</label>
+                    <input name="email" type="text" className="public-input" />
+
+                    <label className="public-label margin-top">{ lz.PASSWORD }</label>
+                    <input name="password" type="password" className="public-input" />
+                </section>
+                <section className="text-center">
+                    <input type="submit" className="base-button" value={ lz.REGISTER } />
+                </section>
+            </form>
+        </WelcomeBlock>);
     }
 });
 
-module.exports = Login;
+module.exports = SignUp;

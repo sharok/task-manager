@@ -4,7 +4,8 @@ var invariant = require('invariant');
 
 var mixins = {
     dynamicStyle: require('./dynamicStyle'),
-    bindToStore: require('./bindToStore')
+    bindToStore: require('./bindToStore'),
+    initialized: require('./initialized')
 };
 
 var main = function () {
@@ -12,7 +13,6 @@ var main = function () {
 
     return keys.map(function (key) {
         invariant(mixins[key], 'unknown mixin: `%s`', key);
-
         return mixins[key];
     });
 };

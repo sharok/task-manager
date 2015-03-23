@@ -5,7 +5,7 @@ var React = require('react'),
 
 var WelcomeLayout = React.createClass({
     render: function () {
-        return (<div>
+        return (<div className="overflow-hidden">
             <HeaderMenu />
             <div>
              { this.props.children }

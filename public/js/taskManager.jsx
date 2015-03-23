@@ -9,24 +9,54 @@ var TaskManager = React.createClass({
     mixins: mixins('bindToStore'),
     bindingStores: [pageStore],
 
+    _initPage: function (page) {
+        this._page = page;
+    },
+
     getInitialState: function () {
         return {
             page: pageStore.currentPage(),
+            animate: pageStore.currentPageAnimate(),
             layout: pageStore.currentPageLayout()
         }
     },
 
     componentWillMount: function () {
+        this._fadeOut = true;
+        this._page = null;
         route();
     },
     
+    componentDidUpdate: function () {
+        this._fadeOut = false;
+    },
+
+    shouldComponentUpdate: function (nextProps, nextState) {
+        var that = this;
+
+        if (this.state.page === null || !this.state.animate) {
+            return true;
+        }
+
+        if (this._fadeOut) {
+            return true;
+        }
+
+        this._page.fadeOut().then(function () {
+            that._fadeOut = true;
+            that.setState(nextState);
+        });
+
+        return false;
+    },
+
     render: function () {
         var CurrentPage = this.state.page,
             Layout = this.state.layout;
 
         if (CurrentPage == null) return <div></div>;
 
-        return <Layout><CurrentPage /></Layout>;
+        return <Layout><CurrentPage onInit={ this._initPage } /></Layout>;
     }
 });
 
