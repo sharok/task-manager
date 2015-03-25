@@ -1,6 +1,7 @@
 "use strict"
 
 var appDispatcher = require('appDispatcher'),
+    lzSn = require('localization').get('sentences'),
     api = require('api'),
     quickTaskAddStore = require('stores/quickTaskAddStore'),
     popup = require('../popup/main'),
@@ -58,10 +59,10 @@ var quickTaskAddActions = {
         }
 
         popup.confirm({
-            title: 'set the date for the task?',
-            detail: 'choose "no" if you want to leave the task later',
-            defaultValue: false,
-            yes: 'set the date'
+            title: lzSn.ASK_SET_DATE,
+            detail: lzSn.ASK_SET_DATE_DETAIL,
+            yes: lzSn.SET_DATE_CONFIRM,
+            defaultValue: false
         }).then(function (setDate) {
             if (!setDate) return;
             return popup.calendar();

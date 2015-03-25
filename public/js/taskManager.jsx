@@ -16,6 +16,7 @@ var TaskManager = React.createClass({
     getInitialState: function () {
         return {
             page: pageStore.currentPage(),
+            pageTitle: pageStore.currentPageTitle(),
             animate: pageStore.currentPageAnimate(),
             layout: pageStore.currentPageLayout()
         }
@@ -28,6 +29,7 @@ var TaskManager = React.createClass({
     },
     
     componentDidUpdate: function () {
+        document.getElementsByTagName('title')[0].innerText = this.state.pageTitle;
         this._fadeOut = false;
     },
 
