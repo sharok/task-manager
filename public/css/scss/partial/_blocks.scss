@@ -42,3 +42,23 @@
         opacity: 0;
     }
 }
+
+.content-section {
+    &.padding-top-none {
+        padding-top: 0;
+    }
+
+    &.padding-bottom-none {
+        padding-bottom: 0;
+    }
+
+    &.padding-top-high {
+        padding-top: 30px;
+    }
+
+    &.padding-top-mini {
+        padding-top: 15px;
+    }
+
+    padding: 20px 30px;
+}

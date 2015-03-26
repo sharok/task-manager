@@ -11,7 +11,8 @@ var actionTypes = keys({
     SET_ADDITION_TASK_TITLE: null,
     CHANGE_QUICK_ADD_BLOCK: null,
     SAVING_ADDITION_TASK: null,
-    SAVED_TASK: null
+    SAVED_TASK: null,
+    TASKS_RECEIVED: null
 });
 
 module.exports = actionTypes;

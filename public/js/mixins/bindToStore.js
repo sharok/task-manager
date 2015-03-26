@@ -5,7 +5,7 @@ var invariant = require('invariant'),
 
 var bindToStore = {
     _listener: function (store) {
-        invariant(this.getInitialState, 'initial state must be defined in binding to store component');
+        invariant(this.getInitialState, '`getInitialState` must be define when component binds to store');
         var that = this;
 
         var listener = function () {

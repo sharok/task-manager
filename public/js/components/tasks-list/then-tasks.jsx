@@ -4,13 +4,13 @@ var React = require('react'),
     tasksStore = require('stores/tasksStore'),
     mixins = require('mixins/main');
 
-var TodayTasks = React.createClass({
+var ThenTasks = React.createClass({
     mixins: mixins('bindToStore'),
     bindingStores: [tasksStore],
-    
+
     getInitialState: function () {
         return {
-            tasks: tasksStore.tasksForToday()
+            tasks: tasksStore.tasksForThen()
         }
     },
 
@@ -27,4 +27,4 @@ var TodayTasks = React.createClass({
     }
 });
 
-module.exports = TodayTasks;
+module.exports = ThenTasks;

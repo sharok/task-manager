@@ -24,6 +24,10 @@ var dater = {
     },
 
     equalDays: function (date1, date2) {
+        if ( date1 == null || date2 == null ) {
+            return false;
+        }
+
         return date1.getFullYear() == date2.getFullYear() &&
                 date1.getMonth() == date2.getMonth() &&
                 date1.getDate() == date2.getDate();
@@ -62,6 +66,10 @@ var dater = {
 
     format: function (formatString, date) {
         return moment(date).format(formatString);
+    },
+
+    parse: function (date) {
+        return moment(date).toDate();
     }
 };
 

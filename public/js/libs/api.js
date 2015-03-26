@@ -2,6 +2,7 @@
 
 //TODO: сделать как то нормально)
 var ajax = require('component-ajax'),
+    dater = require('libs/dater'),
     Promise = require('es6-promise').Promise;
 
 var sendRequest = function (url, callback) {
@@ -36,6 +37,9 @@ var api = {
 
         get: function () {
             var tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+            tasks.forEach(function (task) {
+                task.date = dater.parse(task.date);
+            });
 
             return new Promise(function (resolve, reject) {
                 setTimeout(function () {
