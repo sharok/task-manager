@@ -1,33 +1,46 @@
 "use strict"
 
-var invariant = require('invariant');
+var invariant = require('invariant'),
+    assign = require('object-assign');
 
 var bindToStore = {
-    _listenStore: function (store, callback) {
-        var changeCallback = function () {
-            if (this.isMounted()) {
-                callback();
-            } else {
-                store.removeChangeListener(changeCallback);
-            }
-        }.bind(this);
+    _listener: function (store) {
+        invariant(this.getInitialState, 'initial state must be defined in binding to store component');
+        var that = this;
 
-        store.addChangeListener(changeCallback);
+        var listener = function () {
+            if (that.isMounted()) {
+                that.setState(that.getInitialState());
+            } else {
+                store.removeChangeListener(listener);
+            }
+        };
+
+        return listener;
+    },
+    
+    componentWillUnmount: function () {
+        var i;
+
+        for (i = 0; i < this._bindingStores.length; i++) {
+            this._bindingStores[i].removeChangeListener(this._listeners[i]);
+        }
     },
 
     componentWillMount: function () {
         var that = this,
-            stores = that.bindingStores || [];
+            _listeners = [],
+            _bindingStores = that.bindingStores || [];
 
-        stores.forEach(function (store) {
-            that._listenStore(store, function () {
-                invariant(that.getInitialState, 'initial state must be defined in binding to store component');
-                that.setState(that.getInitialState());
+        _bindingStores.forEach(function (store) {
+            var listener = that._listener(store);
+            store.addChangeListener(listener);
+            _listeners.push(listener)
+        });
 
-                if (typeof that.onStoreChange !== 'undefined'){
-                    that.onStoreChange();
-                }
-            });
+        assign(this, {
+            _listeners: _listeners,
+            _bindingStores: _bindingStores
         });
     }
 };
