@@ -1,6 +1,7 @@
 "use strict"
 
 var React = require('react'),
+    lz = require('localization').get(),
     tasksStore = require('stores/tasksStore'),
     mixins = require('mixins/main'),
     SvgIco = require('../svg-ico.jsx');
@@ -26,7 +27,7 @@ var TodayTasks = React.createClass({
 
     render: function () {
         return (<div className="material-block today-tasks">
-            <div>Today</div>
+            <div>{lz.TODAY}</div>
             <ul>
                  { this.state.tasks.map(this.renderTask) }
             </ul>

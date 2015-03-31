@@ -21,7 +21,8 @@ var localization = {
     NO: 'no',
     YES: 'yes',
     OK: 'ok',
-    CONFIRM: 'confirm'
+    CONFIRM: 'confirm',
+    NODATE: 'no date'
 };
 
 module.exports = localization;
