@@ -5,7 +5,7 @@ var React = require('react'),
     mixins = require('mixins/main');
 
 var ThenTasks = React.createClass({
-    mixins: mixins('bindToStore'),
+    mixins: mixins('bindToStore', 'test'),
     bindingStores: [tasksStore],
 
     getInitialState: function () {
@@ -18,8 +18,13 @@ var ThenTasks = React.createClass({
         return <li>{ task.title }</li>;
     },
 
+    componentDidMount: function () {
+      this.showMessage("Hello world!");
+    },
+
     render: function () {
-        return (<div className="material-block">
+        return (<div className="material-block then-tasks">
+            <div>Then</div>
             <ul>
                 { this.state.tasks.map(this.renderTask) }
             </ul>

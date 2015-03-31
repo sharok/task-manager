@@ -2,7 +2,8 @@
 
 var React = require('react'),
     tasksStore = require('stores/tasksStore'),
-    mixins = require('mixins/main');
+    mixins = require('mixins/main'),
+    SvgIco = require('../svg-ico.jsx');
 
 var TodayTasks = React.createClass({
     mixins: mixins('bindToStore'),
@@ -15,13 +16,19 @@ var TodayTasks = React.createClass({
     },
 
     renderTask: function (task) {
-        return <li>{ task.title }</li>;
+        return <li>
+            <i className="star"><SvgIco name="star" /></i>
+            <i className="check"><SvgIco name="check"/></i>
+            {task.title }
+            <i className="clock"><SvgIco name="clock"/></i>
+        </li>;
     },
 
     render: function () {
-        return (<div className="material-block">
+        return (<div className="material-block today-tasks">
+            <div>Today</div>
             <ul>
-                { this.state.tasks.map(this.renderTask) }
+                 { this.state.tasks.map(this.renderTask) }
             </ul>
         </div>);
     }

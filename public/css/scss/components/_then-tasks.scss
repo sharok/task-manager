@@ -1,0 +1,20 @@
+.then-tasks{
+  padding-bottom: 15px;
+  & > {
+    div {
+      font-family: DINPro-Regular, Tahoma, Helvetica, sans-serif;
+      font-size: 14px;
+      color: #727272;
+      margin: 20px 15px;
+    }
+
+    ul > li{
+      margin-left: 22px;
+      margin-bottom: 20px;
+
+      &:first-letter{
+        text-transform: capitalize;
+      }
+    }
+  }
+}

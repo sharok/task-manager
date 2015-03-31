@@ -1,0 +1,41 @@
+.today-tasks{
+    padding-bottom: 15px;
+    padding-right: 20px;
+
+  & > {
+      div {
+        font-family: DINPro-Regular, Tahoma, Helvetica, sans-serif;
+        font-size: 14px;
+        color: #727272;
+        margin: 20px 15px;
+      }
+
+      ul > li{
+        margin-left: 22px;
+        margin-bottom: 20px;
+
+        &:first-letter {
+          text-transform: capitalize;
+        }
+
+       .clock > svg {
+         float: right;
+        }
+
+        .star > svg {
+          fill: #f9bc51;
+        }
+
+       .star, .check {
+          margin-right: 15px;
+        }
+
+        svg {
+          fill: #d4d4d3;
+          height: 15px;
+          -webkit-transition: fill 180ms;
+          transition: fill 180ms;
+        }
+      }
+    }
+}
