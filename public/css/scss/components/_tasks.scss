@@ -1,0 +1,52 @@
+.tasks{
+    & > {
+        b {
+            font-size: 14px;
+            color: $title-font-color;
+            display: block;
+            text-transform: capitalize;
+            margin-bottom: 10px;
+        }
+
+        li{
+            padding: 0 8px;
+            height: 33px;
+            font-size: 12px;
+            line-height: 33px;
+
+            strong{
+                text-transform: uppercase;
+            }
+
+            & > {
+                .ico >  svg {
+                    fill: #d4d4d3;
+                    height: 15px;
+                    transition: fill 180ms;
+                }
+
+                .clock {
+                    float: right;
+                }
+
+                .date {
+                    color: #adacac;
+
+                    & > {
+                        i{
+                            padding: 0 5px;
+                        }
+                    }
+                }
+
+                .title:first-letter{
+                    text-transform: capitalize;
+                }
+            }
+
+            .star > svg {
+                fill: #f9bc51;
+            }
+        }
+    }
+}

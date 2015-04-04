@@ -1,7 +1,8 @@
 "use strict"
 
-var moment = require('moment');
-require('moment-range');
+var moment = require('moment'),
+    lz = require('localization').get();
+    require('moment-range');
 
 var dater = {
     monthDays: function (month, year) {
@@ -64,7 +65,11 @@ var dater = {
         return moment.weekdays();
     },
 
-    format: function (formatString, date) {
+    format: function (formatString, date, text) {
+        if(!moment(date).isValid()){
+            return text || lz.NO_DATE;
+        }
+
         return moment(date).format(formatString);
     },
 

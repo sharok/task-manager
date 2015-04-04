@@ -3,6 +3,12 @@
     background: $base-block-bg-color;
     box-shadow: $base-block-shadow;
     overflow: hidden;
+
+    & > {
+        section {
+              padding: 20px 14px;
+          }
+    }
 }
 
 .material-block.mini {
