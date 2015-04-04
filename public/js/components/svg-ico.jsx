@@ -356,7 +356,7 @@ var icons = {
                     </g>
                 </svg>
             ),
-    'clock' : (<svg viewBox="0 0 47.001 47.001">
+    'postpone' : (<svg viewBox="0 0 47.001 47.001">
         <g>
             <g id="Layer_1_65_">
                 <g>

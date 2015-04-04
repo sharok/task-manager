@@ -19,14 +19,26 @@ var ThenTasks = React.createClass({
 
     renderTask: function (task) {
         return <li>
-            <i className="ico star margin-right"><SvgIco name="star" /></i>
-            <i className="ico up-arrow margin-left margin-right-wide"><SvgIco name="up-arrow"/></i>
-            <strong>{task.title[0]}</strong>{ task.title.substring(1, task.title.length-1) }<i className="date"><i>|</i>{dater.format('Do MMMM', task.date)}</i>
-            <i className="ico clock"><SvgIco name="clock"/></i>
+            <i className="ico star margin-right">
+                <SvgIco name="star" />
+            </i>
+            <i className="ico up-arrow margin-left margin-right-wide">
+                <SvgIco name="up-arrow"/>
+            </i>
+            <i className="ico postpone">
+                <SvgIco name="postpone"/>
+            </i>
+            <main className="inline-text">
+                <strong>{task.title[0]}</strong>
+                <span>{ task.title.substring(1, task.title.length) }</span> 
+                <small> | {dater.format('Do MMMM', task.date)}</small>
+            </main>
         </li>;
     },
 
     render: function () {
+        var tasksExist = this.state.tasks.length > 0;
+
         return (<div className="material-block">
             <section>
                 <ul className="tasks">

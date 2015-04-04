@@ -35,10 +35,10 @@
     "moment-range": "global:libs.momentRange"
   },
   "browser": {
-    "invariant": "./public/js/libs/invariant",
-    "localization": "./public/js/localization/main",
-    "key-switch": "./public/js/libs/keySwitch",
-    "api": "./public/js/libs/api"
+    "invariant": "./public/js/libs/invariant.js",
+    "localization": "./public/js/localization/main.js",
+    "key-switch": "./public/js/libs/keySwitch.js",
+    "api": "./public/js/libs/api.js"
   },
   "engines": {
     "node": "0.10.x"

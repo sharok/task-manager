@@ -1,6 +1,7 @@
 .tasks{
     & > {
         b {
+            font-family: $title-font-family;
             font-size: 14px;
             color: $title-font-color;
             display: block;
@@ -9,44 +10,43 @@
         }
 
         li{
-            padding: 0 8px;
-            height: 33px;
-            font-size: 12px;
-            line-height: 33px;
+            $task-row-height: 33px;
 
-            strong{
-                text-transform: uppercase;
-            }
+            padding: 0 8px;
+            height: $task-row-height;
+            font-size: 12px;
+            line-height: $task-row-height;
+            color: $base-font-color;
 
             & > {
-                .ico >  svg {
-                    fill: #d4d4d3;
-                    height: 15px;
-                    transition: fill 180ms;
-                }
+                main > {
+                    strong {
+                        text-transform: uppercase;
+                    }
 
-                .clock {
-                    float: right;
-                }
-
-                .date {
-                    color: #adacac;
-
-                    & > {
-                        i{
-                            padding: 0 5px;
-                        }
+                    small {
+                        color: #adacac;
                     }
                 }
 
-                .title:first-letter{
-                    text-transform: capitalize;
-                }
-            }
+                .ico {
+                    cursor: pointer;
 
-            .star > svg {
-                fill: #f9bc51;
-            }
+                    svg {
+                        fill: #d4d4d3;
+                        height: 15px;
+                        transition: fill 180ms;
+                    }
+
+                    &.postpone {
+                        float: right;
+                    }
+
+                    &.star > svg {
+                        fill: #f9bc51;
+                    }
+                }
+            }            
         }
     }
 }

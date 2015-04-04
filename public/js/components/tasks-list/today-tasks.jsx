@@ -18,10 +18,19 @@ var TodayTasks = React.createClass({
 
     renderTask: function (task) {
         return <li>
-            <i className='ico star margin-right'><SvgIco name="star" /></i>
-            <i className='ico check margin-left margin-right-wide'><SvgIco name="check"/></i>
-            <strong>{task.title[0]}</strong>{ task.title.substring(1, task.title.length-1) }
-            <i className="ico clock"><SvgIco name="clock"/></i>
+            <i className="ico star margin-right">
+                <SvgIco name="star" />
+            </i>
+            <i className="ico up-arrow margin-left margin-right-wide">
+                <SvgIco name="up-arrow"/>
+            </i>
+            <i className="ico postpone">
+                <SvgIco name="postpone"/>
+            </i>
+            <main className="inline-text">
+                <strong>{task.title[0]}</strong>
+                <span>{ task.title.substring(1, task.title.length) }</span>
+            </main>
         </li>;
     },
 
