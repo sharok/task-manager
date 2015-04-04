@@ -4,10 +4,10 @@ var React = require('react'),
     lz = require('localization').get(),
     tasksStore = require('stores/tasksStore'),
     mixins = require('mixins/main'),
-    SvgIco = require('../svg-ico.jsx');
+    SvgIco = require('components/svg-ico.jsx');
 
 var TodayTasks = React.createClass({
-    mixins: mixins('bindToStore'),
+    mixins: mixins('bindToStore', 'dynamicStyle'),
     bindingStores: [tasksStore],
     
     getInitialState: function () {
@@ -18,19 +18,21 @@ var TodayTasks = React.createClass({
 
     renderTask: function (task) {
         return <li>
-            <i className="star"><SvgIco name="star" /></i>
-            <i className="check"><SvgIco name="check"/></i>
-            {task.title }
-            <i className="clock"><SvgIco name="clock"/></i>
+            <i className='ico star margin-right'><SvgIco name="star" /></i>
+            <i className='ico check margin-left margin-right-wide'><SvgIco name="check"/></i>
+            <strong>{task.title[0]}</strong>{ task.title.substring(1, task.title.length-1) }
+            <i className="ico clock"><SvgIco name="clock"/></i>
         </li>;
     },
 
     render: function () {
-        return (<div className="material-block today-tasks">
-            <div>{lz.TODAY}</div>
-            <ul>
-                 { this.state.tasks.map(this.renderTask) }
-            </ul>
+        return (<div className="material-block">
+            <section >
+                <ul className="tasks">
+                    <b>{ lz.TODAY }</b>
+                    { this.state.tasks.map(this.renderTask) }
+                </ul>
+            </section>
         </div>);
     }
 });

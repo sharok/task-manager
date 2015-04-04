@@ -18,6 +18,10 @@
     &.margin-right {
         margin-right: $margin;
     }
+
+    &.margin-right-wide {
+        margin-right: ($margin * 2);
+    }
 }
 
 

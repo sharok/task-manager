@@ -4,7 +4,7 @@ var React = require('react'),
     lz = require('localization').get(),
     tasksStore = require('stores/tasksStore'),
     mixins = require('mixins/main'),
-    SvgIco = require('../svg-ico.jsx'),
+    SvgIco = require('components/svg-ico.jsx'),
     dater = require('libs/dater');
 
 var ThenTasks = React.createClass({
@@ -19,19 +19,21 @@ var ThenTasks = React.createClass({
 
     renderTask: function (task) {
         return <li>
-            <i className="star"><SvgIco name="star" /></i>
-            <i className="up-arrow"> <SvgIco name="up-arrow"/></i>
-            <span className="title">{task.title}</span>|<span className="date">{dater.format('Do MMMM', task.date, lz.NODATE)}</span>
-            <i className="clock"><SvgIco name="clock"/></i>
-            </li>;
+            <i className="ico star margin-right"><SvgIco name="star" /></i>
+            <i className="ico up-arrow margin-left margin-right-wide"><SvgIco name="up-arrow"/></i>
+            <strong>{task.title[0]}</strong>{ task.title.substring(1, task.title.length-1) }<i className="date"><i>|</i>{dater.format('Do MMMM', task.date)}</i>
+            <i className="ico clock"><SvgIco name="clock"/></i>
+        </li>;
     },
 
     render: function () {
-        return (<div className="material-block then-tasks">
-            <div>{lz.THEN}</div>
-            <ul>
-                { this.state.tasks.map(this.renderTask) }
-            </ul>
+        return (<div className="material-block">
+            <section>
+                <ul className="tasks">
+                    <b>{ lz.THEN }</b>
+                    { this.state.tasks.map(this.renderTask) }
+                </ul>
+            </section>
         </div>);
     }
 });

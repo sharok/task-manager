@@ -22,7 +22,7 @@ var localization = {
     YES: 'yes',
     OK: 'ok',
     CONFIRM: 'confirm',
-    NODATE: 'no date'
+    NO_DATE: 'no date'
 };
 
 module.exports = localization;

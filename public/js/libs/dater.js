@@ -1,6 +1,7 @@
 "use strict"
 
-var moment = require('moment');
+var moment = require('moment'),
+    lz = require('localization').get();
     require('moment-range');
 
 var dater = {
@@ -65,8 +66,8 @@ var dater = {
     },
 
     format: function (formatString, date, text) {
-        if(text && !moment(date).isValid()){
-            return text;
+        if(!moment(date).isValid()){
+            return text || lz.NO_DATE;
         }
 
         return moment(date).format(formatString);
