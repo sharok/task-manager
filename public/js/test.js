@@ -1,0 +1,1 @@
+var tests = require('./**/__test__/*.js', { hash: 'path', ext: true });

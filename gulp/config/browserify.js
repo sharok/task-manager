@@ -3,10 +3,11 @@
 var assign = require('object-assign'),
     reactify = require('reactify'),
     browserifyShim = require('browserify-shim'),
+    globify = require('require-globify'),
     pckJson = require('../../package.json'),
     shim = pckJson['browserify-shim'],
     external = [],
-    rootJsDir = './public/js/';
+    rootJsDir = pckJson['dirs']['js'];
 
 Object.keys(shim).forEach(function (key) {
     var namespaces = shim[key].split('.');
@@ -28,11 +29,17 @@ var libsBundle = {
     minify: true
 };
 
+var testBundle = {
+    entry: rootJsDir + 'test.js',
+    name: 'test.js',
+    transform: [reactify, globify]
+};
+
 var browserifyConfig = {
-    rootJsDir: rootJsDir,
     jsBundle: jsBundle,
     jsBundleProduction: assign({ minify: true }, jsBundle),
-    libsBundle: libsBundle
+    libsBundle: libsBundle,
+    testBundle: testBundle
 };
 
 module.exports = browserifyConfig;

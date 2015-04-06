@@ -15,7 +15,7 @@ module.exports = function (params) {
         transform: []
     }, params);
 
-    return function () {
+    return function (done) {
         var b = browserify({
             entries: [params.entry],
             extensions: ['.jsx'],
@@ -40,6 +40,9 @@ module.exports = function (params) {
             bs.pipe(streamify(uglify()));
         }
 
-        bs.pipe(gulp.dest('./public/'));
+        bs.pipe(gulp.dest('./public/'))
+            .on('end', function () {
+                done();
+            });
     };
 };
