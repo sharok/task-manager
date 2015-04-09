@@ -5,44 +5,65 @@ var gulp = require('gulp'),
     uglify = require('gulp-uglify'),
     source = require("vinyl-source-stream");
 
-module.exports = function (params) {
-    params = assign({
-        minify: false,
-        entry: '',
-        name: 'script.js',
-        dest: './public/',
-        external: [],
-        transform: []
-    }, params);
+var defaultOptions = {
+    wait: false,
+    minify: false,
+    entry: '',
+    name: 'script.js',
+    dest: './public/',
+    external: [],
+    transform: []
+};
 
-    return function (done) {
-        var b = browserify({
+var trimCallback = function (callback) {
+    return callback || function () {};
+};
+
+var createTask = function (params, callback) {
+    callback = trimCallback(callback);
+    var b = browserify({
             entries: [params.entry],
             extensions: ['.jsx'],
             paths: ['./node_modules','./public/js']
         });
 
-        params.external.forEach(function (id) {
-            b.external(id);
+    params.external.forEach(function (id) {
+        b.external(id);
+    });
+
+    params.transform.forEach(function (tr) {
+        b.transform(tr);
+    });
+
+    var bs = b.bundle()
+        .on('error', function (err) {
+            console.log(err.message);
+        })
+        .pipe(source(params.name));
+
+    if (params.minify) {
+        bs.pipe(streamify(uglify()));
+    }
+
+    bs.pipe(gulp.dest('./public/'))
+        .on('end', function () {
+            callback();
+        })
+        .on('error', function (err) {
+            callback(err);
         });
+};
 
-        params.transform.forEach(function (tr) {
-            b.transform(tr);
-        });
+module.exports = function (params) {
+    params = assign({}, defaultOptions, params);
 
-        var bs = b.bundle()
-            .on('error', function (err) {
-                console.log(err.message);
-            })
-            .pipe(source(params.name));
-
-        if (params.minify) {
-            bs.pipe(streamify(uglify()));
+    if (params.wait) {
+        return function (done) {
+            createTask(params, done);
         }
-
-        bs.pipe(gulp.dest('./public/'))
-            .on('end', function () {
-                done();
-            });
-    };
+    } else {
+        return function () {
+            createTask(params);
+        }
+    }
 };

@@ -30,6 +30,7 @@ var libsBundle = {
 };
 
 var testBundle = {
+    wait: true,
     entry: rootJsDir + 'test.js',
     name: 'test.js',
     transform: [reactify, globify]

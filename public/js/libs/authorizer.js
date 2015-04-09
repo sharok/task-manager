@@ -1,16 +1,13 @@
 "use strict"
 
 var api = require('./api'),
-    Promise = require('es6-promise').Promise,
     isUserAuthorized = false;
 
 var authorizer = {
-    init: function () {
-        return api.account.isAuthorized().then(function (res) {
-            isUserAuthorized = res.result === 1;
-            return new Promise(function (resolve) {
-                resolve(isUserAuthorized);
-            })
+    init: function (callback) {
+        return api.account.isAuthorized(function (res) {
+            isUserAuthorized = res.result;
+            callback(res.result);
         });
     },
 

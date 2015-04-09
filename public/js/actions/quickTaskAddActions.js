@@ -78,7 +78,7 @@ var quickTaskAddActions = {
             task: task
         });
         
-        api.tasks.save(task).then(function (savedTask) {
+        api.tasks.save(task, function (savedTask) {
             appDispatcher.handleViewAction({
                 type: ACTION_TYPES.SAVED_TASK,
                 task: savedTask

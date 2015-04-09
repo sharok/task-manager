@@ -49,7 +49,7 @@ var routeMap = function () {
         appActions.changePage(PAGES.PROFILE);
     });
 
-    authorizer.init().then(function () {
+    authorizer.init(function () {
         route.start();
     });
 };

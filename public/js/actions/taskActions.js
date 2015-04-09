@@ -6,7 +6,7 @@ var appDispatcher = require('appDispatcher'),
 
 var appActions = {
     receiveTasks: function () {
-        api.tasks.get().then(function (tasks) {
+        api.tasks.get(function (tasks) {
             appDispatcher.handleViewAction({
                 type: ACTION_TYPES.TASKS_RECEIVED,
                 tasks: tasks

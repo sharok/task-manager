@@ -2,8 +2,7 @@
 
 //TODO: сделать как то нормально)
 var ajax = require('component-ajax'),
-    dater = require('libs/dater'),
-    Promise = require('es6-promise').Promise;
+    dater = require('libs/dater');
 
 var sendRequest = function (url, callback) {
     ajax.get('/api/' + url, function (res) {
@@ -12,40 +11,40 @@ var sendRequest = function (url, callback) {
     });
 };
 
+var trimCallback = function (callback) {
+    return callback || function () {
+        
+    };
+};
+
 var api = {
     account: {
         isAuthorized: function (callback) {
-            return new Promise(function (resolve) {
-                sendRequest('account/isAuthorized', function (result) {
-                    resolve(result);
-                });
+            sendRequest('account/isAuthorized', function (result) {
+                callback(result);
             });
         }
     },
     tasks: {
-        save: function (task) {
+        save: function (task, callback) {
             var tasks = JSON.parse(localStorage.getItem('tasks')) || [];
             tasks.push(task);
             localStorage.setItem('tasks', JSON.stringify(tasks));
 
-            return new Promise(function (resolve, reject) {
-                setTimeout(function () {
-                    resolve(task);
-                }, 0);
-            });
+            setTimeout(function () {
+                trimCallback(callback)(task);
+            }, 0);
         },
 
-        get: function () {
+        get: function (callback) {
             var tasks = JSON.parse(localStorage.getItem('tasks')) || [];
             tasks.forEach(function (task) {
                 task.date = dater.parse(task.date);
             });
 
-            return new Promise(function (resolve, reject) {
-                setTimeout(function () {
-                    resolve(tasks);
-                }, 0);
-            });
+            setTimeout(function () {
+                trimCallback(callback)(tasks);
+            }, 0);
         }
     }
 };
