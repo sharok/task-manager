@@ -17,15 +17,15 @@ var ThenTasks = React.createClass({
         }
     },
 
-    renderTask: function (task) {
-        return <li>
-            <i className="ico star margin-right">
-                <SvgIco name="star" />
+    renderTask: function (task, index) {
+        return <li key={ index }>
+            <i className="ico partial-star margin-right">
+                <SvgIco name="partial-star" value={ task.precedence('%') } />
             </i>
-            <i className="ico up-arrow margin-left margin-right-wide">
+            <i className="ico pointer hovered margin-left margin-right-wide">
                 <SvgIco name="up-arrow"/>
             </i>
-            <i className="ico postpone">
+            <i className="ico postpone pointer hovered">
                 <SvgIco name="postpone"/>
             </i>
             <main className="inline-text">

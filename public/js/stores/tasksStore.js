@@ -6,10 +6,22 @@ var assign = require('object-assign'),
     ACTIONS = require('constants/actionTypes'),
     _tasks = [];
 
+var taskMethods = {
+    precedence: function (unit) {
+        if (unit === '%') {
+            return this.priority * 100 / 5;
+        } else {
+            throw new Error("unknown unit of precedence: `" + unit + "`");
+        }
+    }
+};
+
 var _trimTask = function (task) {
-    var today = new Date();
-    task.today = dater.equalDays(today, task.date);
-    task.done = false;
+    task = assign({}, task, taskMethods, {
+        today: dater.equalDays(new Date(), task.date),
+        done: false
+    });
+
     return task;
 };
 

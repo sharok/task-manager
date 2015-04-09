@@ -37,7 +37,7 @@ var Confirm = React.createClass({
 
         var detail = popup.detail == null ? '' :  <small>{ popup.detail }</small>;
 
-        return (<div className={ this.animateCs('base:popup; fadeIn:reduce duration-200ms; fadeOut:reduce-out duration-200ms') }>
+        return (<div className={ this.animateCs('base:popup popup-middle; fadeIn:reduce duration-200ms; fadeOut:reduce-out duration-200ms') }>
             <header>
                 <strong>{ popup.title }</strong>
                 { detail }

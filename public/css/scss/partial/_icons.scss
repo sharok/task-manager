@@ -7,6 +7,14 @@
         height: 11px;
     }
 
+    svg rect.partial-star-svg {
+        mask: url(#partial-star-mask);
+    }
+
+    svg rect.partial-star-bg-svg {
+        mask: url(#partial-star-mask);
+    }
+
     &.margin {
         margin: 0 $margin;
     }

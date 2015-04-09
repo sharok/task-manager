@@ -30,20 +30,34 @@
                 }
 
                 .ico {
-                    cursor: pointer;
-
                     svg {
                         fill: #d4d4d3;
                         height: 15px;
-                        transition: fill 180ms;
+                        transition: fill 300ms ease;
+                    }
+
+                    &.hovered:hover {
+                        svg {
+                            fill: $third-bg-color;
+                        }
+                    }
+
+                    &.partial-star {
+                        svg {
+                            height: 17px;
+                        }
+
+                        .partial-star-svg {
+                            fill: #f9bc51;
+                        }
+
+                        .partial-star-bg-svg {
+                            fill: #ededed;
+                        }
                     }
 
                     &.postpone {
                         float: right;
-                    }
-
-                    &.star > svg {
-                        fill: #f9bc51;
                     }
                 }
             }            
