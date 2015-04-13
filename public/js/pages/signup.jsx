@@ -11,7 +11,7 @@ var SignUp = React.createClass({
 
     render: function () {
         return (<WelcomeBlock  onInit={ this.init } title={ lz.SIGN_UP }>
-            <form className="public-form" action="/auth/signup" method="post">
+            <form className="public-form" action="/api/auth/signup" method="post">
                 <section>
                     <label className="public-label">{ lz.LOGIN }</label>
                     <input name="email" type="text" className="public-input" />

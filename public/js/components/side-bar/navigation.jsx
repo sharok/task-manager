@@ -29,7 +29,7 @@ var Navigation = React.createClass({
 
             { title: lz.DESK, pageName: PAGES.DESK, href: '/' },
             { title: lz.PROFILE, pageName: PAGES.PROFILE, href: '/profile' },
-            { title: lz.EXIT, pageName: PAGES.NONE, href: '/auth/logout' }
+            {title: lz.EXIT, pageName: PAGES.NONE, href: '/api/auth/logout'}
 
         ];
 

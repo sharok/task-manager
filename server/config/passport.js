@@ -19,54 +19,53 @@ var setupPassport = function (passport) {
     });
 
     var loginUser = function (req, email, password, done) {
+
         UserRepo.getOne({'local.email': email}).done(function (user) {
-            if (!user) {
-                return done('user undefined', false);
-            }
 
-            if (!user.validPassword(password)) {
-                return done('not valid password', false);
-            }
+                if (!user || !user.validPassword(password)) {
+                    return done(null, false, {message: 'Email or password is incorrect.'});
+                }
 
-            return done(null, user);
-        },
-        function (err) {
-            return done(err);
-        });
+                return done(null, user, {message: 'all is good'});
+
+            },
+            function (err) {
+                return done(err);
+            });
     };
 
     var signUpUser = function (req, email, password, done) {
         UserRepo.getOne({'local.email': email}).done(function (user) {
-            if (user) {
-                return done(null, false);
-            } else {
+                if (user) {
+                    return done(null, false);
+                } else {
 
-                var newUser = UserHelper.createUser('local', email, password);
+                    var newUser = UserHelper.createUser('local', email, password);
 
-                UserRepo.save(newUser, function (user) {
-                    done(null, user);
-                }, function (error) {
-                    done(error);
-                });
-            }
-        },
-        function (err) {
-            return done(err);
-        });
+                    UserRepo.save(newUser, function (user) {
+                        done(null, user);
+                    }, function (error) {
+                        done(error);
+                    });
+                }
+            },
+            function (err) {
+                return done(err);
+            });
     };
 
     passport.use('local-login', new LocalStrategy({
         usernameField: 'email',
         passwordField: 'password',
         passReqToCallback: true
-    }, loginUser ));
+    }, loginUser));
 
 
     passport.use('local-signup', new LocalStrategy({
         usernameField: 'email',
         passwordField: 'password',
         passReqToCallback: true
-    }, signUpUser ));
+    }, signUpUser));
 };
 
 module.exports = setupPassport;

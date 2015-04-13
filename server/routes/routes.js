@@ -4,17 +4,37 @@ var homeController = require('../controllers/home'),
     accountController = require('../apiControllers/accountController');
 
 var routes = function (app, passport) {
-    app.post('/auth/signup', passport.authenticate('local-signup', {
+    app.post('/api/auth/signup', passport.authenticate('local-signup', {
         successRedirect: '/',
         failureRedirect: '/signup'
     }));
 
-    app.post('/auth/login', passport.authenticate('local-login', {
+    app.post('/api/auth/login', function (req, res, next) {
+        passport.authenticate('local-login', function (error, user, info) {
+            if (error) {
+                return res.status(500).json(error);
+            }
+            if (!user) {
+                return res.json(info.message);
+            }
+
+            req.logIn(user, function (err) {
+                if (err) {
+                    return next(err);
+                }
+                return res.json({success: true});
+            });
+
+
+        })(req, res, next);
+    });
+
+    app.post('/api/auth/login', passport.authenticate('local-login', {
         successRedirect: '/',
         failureRedirect: '/login'
     }));
 
-    app.get('/auth/logout', function (req, res) {
+    app.get('/api/auth/logout', function (req, res) {
         req.logout();
         res.redirect('/');
     });

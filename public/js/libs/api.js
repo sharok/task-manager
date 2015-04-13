@@ -11,6 +11,13 @@ var sendRequest = function (url, callback) {
     });
 };
 
+var sendPostRequest = function (url, data, callback) {
+    ajax.post('/api/' + url, data, function (res) {
+        var result = JSON.parse(res);
+        callback(result);
+    });
+};
+
 var trimCallback = function (callback) {
     return callback || function () {
         
@@ -18,6 +25,14 @@ var trimCallback = function (callback) {
 };
 
 var api = {
+    auth: {
+        login: function (data, callback) {
+            sendPostRequest('auth/login', data, function (result) {
+                callback(result);
+            })
+        }
+    },
+
     account: {
         isAuthorized: function (callback) {
             sendRequest('account/isAuthorized', function (result) {
