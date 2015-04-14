@@ -1,10 +1,11 @@
 "use strict"
 
 //TODO: сделать как то нормально)
-var ajax = require('component-ajax'),
-    dater = require('libs/dater');
+var dater = require('libs/dater');
 
 var sendRequest = function (url, callback) {
+    var ajax = require('component-ajax');
+
     ajax.get('/api/' + url, function (res) {
         var result = JSON.parse(res);
         callback(result);

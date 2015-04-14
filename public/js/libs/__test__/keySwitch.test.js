@@ -1,7 +1,7 @@
 var keySwitch = require('../keySwitch'),
     assert = require('assert');
 
-describe('Key switch', function() {
+describe('Key Switch', function() {
     it('should execute `esc` callback', function(){
       	var a = 5;
 

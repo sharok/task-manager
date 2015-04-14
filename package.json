@@ -36,6 +36,8 @@
   },
   "browser": {
     "react": "react/addons",
+    "dispatcher": "./public/js/libs/dispatcher.js",
+    "keys": "./public/js/libs/keys.js",
     "invariant": "./public/js/libs/invariant.js",
     "localization": "./public/js/localization/main.js",
     "key-switch": "./public/js/libs/keySwitch.js",
@@ -74,6 +76,7 @@
     "tiny-lr": "^0.1.4",
     "vinyl-source-stream": "^1.0.0",
     "gulp-mocha": "~2.0.1",
-    "require-globify": "~1.1.0"
+    "require-globify": "~1.1.0",
+    "gulp-replace": "~0.5.3"
   }
 }

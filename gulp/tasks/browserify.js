@@ -3,7 +3,8 @@ var gulp = require('gulp'),
     browserify = require('browserify'),
     streamify = require('gulp-streamify'),
     uglify = require('gulp-uglify'),
-    source = require("vinyl-source-stream");
+    source = require("vinyl-source-stream"),
+    replace = require('gulp-replace');
 
 var defaultOptions = {
     wait: false,
@@ -12,7 +13,8 @@ var defaultOptions = {
     name: 'script.js',
     dest: './public/',
     external: [],
-    transform: []
+    transform: [],
+    environment: 'NONE'
 };
 
 var trimCallback = function (callback) {
@@ -45,13 +47,15 @@ var createTask = function (params, callback) {
         bs.pipe(streamify(uglify()));
     }
 
-    bs.pipe(gulp.dest('./public/'))
-        .on('end', function () {
-            callback();
-        })
-        .on('error', function (err) {
-            callback(err);
-        });
+    bs
+    .pipe(streamify(replace('__CLAVY_ENVIRONMENT__', "'" + params.environment + "'")))
+    .pipe(gulp.dest('./public/'))
+    .on('end', function () {
+        callback();
+    })
+    .on('error', function (err) {
+        callback(err);
+    });
 };
 
 module.exports = function (params) {

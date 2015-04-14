@@ -20,25 +20,28 @@ var jsBundle = {
     entry: rootJsDir + 'app.js',
     name: 'script.js',
     external: external,
-    transform: [reactify, browserifyShim]
+    transform: [reactify, browserifyShim],
+    environment: 'DEVELOP'
 };
 
 var libsBundle = {
     entry: rootJsDir + 'libs.js',
     name: 'libs.js',
-    minify: true
+    minify: true,
+    environment: 'PRODUCTION'
 };
 
 var testBundle = {
     wait: true,
     entry: rootJsDir + 'test.js',
     name: 'test.js',
-    transform: [reactify, globify]
+    transform: [reactify, globify],
+    environment: 'TEST'
 };
 
 var browserifyConfig = {
     jsBundle: jsBundle,
-    jsBundleProduction: assign({ minify: true }, jsBundle),
+    jsBundleProduction: assign({ minify: true, environment: 'PRODUCTION' }, jsBundle),
     libsBundle: libsBundle,
     testBundle: testBundle
 };

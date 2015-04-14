@@ -1,6 +1,7 @@
 "use strict"
 
 var assign = require('object-assign'),
+    utils = require('libs/utils'),
     dater = require('libs/dater'),
     baseStore = require('./baseStore'),
     ACTIONS = require('constants/actionTypes'),
@@ -25,17 +26,49 @@ var _trimTask = function (task) {
     return task;
 };
 
+var _get = function (filterModel) {
+    if (typeof filterModel === 'undefined') {
+        return _tasks;
+    }
+
+    if (typeof filterModel !== 'object') {
+        filterModel = { _id: filterModel };
+    }
+
+    return _tasks.filter(function (t) {
+        return utils.liteEqual(t, filterModel); 
+    });
+};
+
 var tasksStore = baseStore({
+    __test__: {
+        set: function (tasks) {
+            _tasks = tasks;
+        },
+    },
+
     tasksForToday: function () {
-        return _tasks.filter(function (task) {
-            return task.today;
-        });
+        return tasksStore.get({ today: true });
     },
 
     tasksForThen: function () {
-        return _tasks.filter(function (task) {
-            return !task.today;
-        });
+        return tasksStore.get({ today: false });
+    },
+
+    get: function (filterModel) {
+        var result,
+            single = false;
+
+        if (typeof filterModel !== 'undefined' && typeof filterModel !== 'object') {
+            single = true;
+        }
+
+        result = _get(filterModel);
+        return single ? utils.clone(result[0]) : utils.clone(result);
+    },
+
+    count: function () {
+        return _tasks.length;  
     },
 
     setupActions: function (mapAction, invokeAction) {
@@ -44,9 +77,16 @@ var tasksStore = baseStore({
             _tasks.push(savedTask)
         });
 
-        mapAction(ACTIONS.TASKS_RECEIVED, function (payload) {
+        mapAction(ACTIONS.PUT_TASKS_PACK, function (payload) {
             var tasks = payload.action.tasks;
             _tasks = tasks.map(_trimTask);
+        });
+
+        mapAction(ACTIONS.TASK_DONE, function (payload) {
+            var taskId = payload.action.taskId,
+                doneTask = _get(taskId);
+                
+            doneTask[0].done = true;
         });
     }
 });

@@ -8,8 +8,9 @@ var EventEmitter = require('events').EventEmitter,
 
 var BaseStore = function (store) {
     invariant(store.setupActions, 'you must setup actions to store');
-
+    
     var actions = {};
+
     var mapAction = function (actionName, callback) {
         actions[actionName] = callback;
     };
@@ -18,8 +19,14 @@ var BaseStore = function (store) {
         actions[actionName](payload);
     };
 
+    if (__CLAVY_ENVIRONMENT__ === 'TEST') {
+        store = assign(store, store.__test__);
+        store.invokeAction = invokeAction;
+    }
+
     store.setupActions(mapAction, invokeAction);
     delete store.setupActions;
+    delete store.__test__;
 
     var childrenStore = assign({
 
