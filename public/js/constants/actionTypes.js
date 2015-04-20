@@ -13,7 +13,7 @@ var actionTypes = keys({
     SAVING_ADDITION_TASK: null,
     SAVED_TASK: null,
     PUT_TASKS_PACK: null,
-    TASK_DONE: null
+    TASK_UPDATED: null
 });
 
 module.exports = actionTypes;

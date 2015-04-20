@@ -12,6 +12,15 @@
   margin-left: -($width / 2);
 }
 
+@mixin centered($width, $height: null) {
+  @if ($height == null ) {
+    $height: $width;  
+  }
+
+  @include vertical-center($height);
+  @include horizontal-center($width);
+}
+
 @mixin pseudo {
   content: "";
   display: block;

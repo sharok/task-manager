@@ -3,6 +3,7 @@
 var React = require('react'),
     lz = require('localization').get(),
     tasksStore = require('stores/tasksStore'),
+    taskActions = require('actions/taskActions'),
     mixins = require('mixins/main'),
     SvgIco = require('components/svg-ico.jsx'),
     dater = require('libs/dater');
@@ -17,15 +18,23 @@ var ThenTasks = React.createClass({
         }
     },
 
+    _handlePostponeClick: function (taskId) {
+        taskActions.postponeTask(taskId);
+    },
+
+    _handleArrowClick: function (taskId) {
+        taskActions.forToday(taskId);
+    },
+
     renderTask: function (task, index) {
         return <li key={ index }>
             <i className="ico partial-star margin-right">
                 <SvgIco name="partial-star" value={ task.precedence('%') } />
             </i>
-            <i className="ico pointer hovered margin-left margin-right-wide">
+            <i onClick={ this._handleArrowClick.bind(this, task._id) } className="ico pointer hovered margin-left margin-right-wide">
                 <SvgIco name="up-arrow"/>
             </i>
-            <i className="ico postpone pointer hovered">
+            <i onClick={ this._handlePostponeClick.bind(this, task._id) } className="ico postpone pointer hovered">
                 <SvgIco name="postpone"/>
             </i>
             <main className="inline-text">

@@ -18,12 +18,10 @@ var taskMethods = {
 };
 
 var _trimTask = function (task) {
-    task = assign({}, task, taskMethods, {
+    assign(task, taskMethods, {
         today: dater.equalDays(new Date(), task.date),
-        done: false
+        done: typeof task.done === 'undefined' ? false : task.done
     });
-
-    return task;
 };
 
 var _get = function (filterModel) {
@@ -73,20 +71,22 @@ var tasksStore = baseStore({
 
     setupActions: function (mapAction, invokeAction) {
         mapAction(ACTIONS.SAVED_TASK, function (payload) {
-            var savedTask = _trimTask(payload.action.task);
+            var savedTask = payload.action.task;
+            _trimTask(savedTask);
             _tasks.push(savedTask)
         });
 
         mapAction(ACTIONS.PUT_TASKS_PACK, function (payload) {
-            var tasks = payload.action.tasks;
-            _tasks = tasks.map(_trimTask);
+            _tasks = payload.action.tasks;
+            _tasks.forEach(_trimTask);
         });
 
-        mapAction(ACTIONS.TASK_DONE, function (payload) {
-            var taskId = payload.action.taskId,
-                doneTask = _get(taskId);
-                
-            doneTask[0].done = true;
+        mapAction(ACTIONS.TASK_UPDATED, function (payload) {
+            var task = payload.action.task,
+                existing = _get(task._id)[0];
+
+            assign(existing, task);
+            _trimTask(existing);
         });
     }
 });

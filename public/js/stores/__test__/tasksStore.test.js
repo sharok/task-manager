@@ -118,20 +118,34 @@ describe('Tasks Store & Task Actions', function() {
 			});
 		});
 
-		describe('#TASK_DONE', function() {
-			it('should change field `done` of task to true', function() {
+		describe('#TASK_UPDATED', function() {
+			it('should update task with same id', function() {
 				tasksStore.set([{
 					_id: 5,
-					done: false
+					title: 'name1',
+					priority: 1,
+					done: false,
+					today: false
 				}]);
 
-				tasksStore.invokeAction(ACTIONS.TASK_DONE, {
+				var newTask = {
+					_id: 5,
+					title: 'name2',
+					done: true
+				}
+
+				tasksStore.invokeAction(ACTIONS.TASK_UPDATED, {
 					action: {
-						taskId: 5
+						task: newTask
 					}
 				});
 
-				assert.ok(tasksStore.get(5).done);
+				newTask.priority = 1;
+				newTask.today = false;
+				
+				var existing = tasksStore.get(5);
+				delete existing.precedence;
+				assert.deepEqual(existing, newTask);
 			});
 		});
 	});

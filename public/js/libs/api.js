@@ -1,7 +1,9 @@
 "use strict"
 
 //TODO: сделать как то нормально)
-var dater = require('libs/dater');
+var dater = require('libs/dater'),
+    invariant = require('invariant'),
+    assign = require('object-assign');
 
 var sendRequest = function (url, callback) {
     var ajax = require('component-ajax');
@@ -18,6 +20,28 @@ var trimCallback = function (callback) {
     };
 };
 
+var getAllTasks = function () {
+   var tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+   tasks.forEach(function (task) {
+        task.date = dater.parse(task.date);
+    });
+
+   return tasks;
+};
+
+var setAllTasks = function (tasks) {
+    localStorage.setItem('tasks', JSON.stringify(tasks))
+};
+
+var generataId = function (prevTask) {
+    if (typeof prevTask === 'undefined') {
+        return 1;
+    }
+
+    return prevTask._id + 1;
+};
+
 var api = {
     account: {
         isAuthorized: function (callback) {
@@ -28,25 +52,44 @@ var api = {
     },
     tasks: {
         save: function (task, callback) {
-            var tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+            var tasks = getAllTasks();
+            task._id = generataId(tasks[tasks.length - 1]);
             tasks.push(task);
-            localStorage.setItem('tasks', JSON.stringify(tasks));
-
+            
             setTimeout(function () {
+                setAllTasks(tasks);
                 trimCallback(callback)(task);
             }, 0);
         },
 
         get: function (callback) {
-            var tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-            tasks.forEach(function (task) {
-                task.date = dater.parse(task.date);
-            });
+            var tasks =getAllTasks();            
 
             setTimeout(function () {
                 trimCallback(callback)(tasks);
             }, 0);
-        }
+        },
+
+        update: function (id, task, callback) {
+            if (typeof id === 'object') {
+                callback = task;
+                task = id;
+                id = task._id;
+            }
+
+            var tasks = getAllTasks(),
+                existing = tasks.filter(function (t) {
+                    return t._id === id; 
+                })[0];
+                
+            invariant(existing, 'task with _id `%s` was not found', id);
+            assign(existing, task);
+
+            setTimeout(function () {
+                setAllTasks(tasks);
+                trimCallback(callback)(existing);
+            }, 0);
+        }           
     }
 };
 

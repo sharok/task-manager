@@ -1,5 +1,5 @@
 .ico {
-    @include flex-box-inline(center, flex-start);
+    @include flex-box-inline(center, center);
     $margin: 7px;
     height: inherit;
 

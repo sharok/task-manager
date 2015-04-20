@@ -31,7 +31,7 @@
 
                 .ico {
                     svg {
-                        fill: #d4d4d3;
+                        fill: $base-ico-color;
                         height: 15px;
                         transition: fill 300ms ease;
                     }
@@ -58,9 +58,75 @@
 
                     &.postpone {
                         float: right;
+                        opacity: 1;
+                        transform: scale(1);
+                        transition: transform 300ms ease, opacity 300ms ease;
+                    }
+
+                    &.check {
+                        position: relative;
+                        width: 20px;
+
+                        .uncheck-box {
+                            @include position(absolute, 15px);
+                            @include centered(15px);
+
+                            border: 2px solid $base-ico-color;
+                            opacity: 1;
+                            transform: scale(1);
+                            transition: transform 300ms ease, opacity 300ms ease;
+                        }
+
+                        .check-circle {
+                            @include position(absolute, 22px);
+                            @include centered(22px);
+
+                            border-radius: 50%;
+                            background: #8cc665;
+                            opacity: 0;
+                            transform: scale(0);
+                            transition: opacity 300ms ease, transform 300ms ease;
+                        }
+
+                        svg {
+                            height: 14px;
+                            fill: #fff;
+                            opacity: 0;
+                            transform: rotateZ(-90deg);
+                            transition: opacity 300ms ease, transform 300ms ease;
+                        }
                     }
                 }
             }            
+        }
+
+        li.done {
+            & > {
+                .ico {
+                    &.postpone {
+                        opacity: 0;
+                        transform: scale(0); 
+                    }
+
+                    &.check {
+                        .uncheck-box {
+                            opacity: 0;
+                            transform: scale(0);
+                        }
+
+                        .check-circle {
+                            opacity: 1;
+                            transform: scale(1);
+                        }
+
+                        svg {
+                            opacity: 1;
+                            transform: rotateZ(0);
+                            transition-delay: 180ms;
+                        }
+                    }
+                }
+            }
         }
     }
 }
