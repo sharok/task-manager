@@ -4,28 +4,23 @@ var assign = require('object-assign'),
     reactify = require('reactify'),
     browserifyShim = require('browserify-shim'),
     globify = require('require-globify'),
-    pckJson = require('../../package.json'),
-    shim = pckJson['browserify-shim'],
-    external = [],
-    rootJsDir = pckJson['dirs']['js'];
-
-Object.keys(shim).forEach(function (key) {
-    var namespaces = shim[key].split('.');
-    if (namespaces[0] !== 'global:libs') return;
-
-    external.push(key);
-});
+    pack = require('../../common/package');
 
 var jsBundle = {
-    entry: rootJsDir + 'app.js',
+    entry: pack.get('paths:js') + 'app.js',
     name: 'script.js',
-    external: external,
     transform: [reactify, browserifyShim],
-    environment: 'DEVELOP'
+    environment: 'DEVELOP',
+    paths: [pack.get('paths:js')]
 };
 
+var jsBundleProduction = assign(jsBundle, {
+    minify: true, 
+    environment: 'PRODUCTION'
+});
+
 var libsBundle = {
-    entry: rootJsDir + 'libs.js',
+    entry: pack.get('paths:js') + 'libs.js',
     name: 'libs.js',
     minify: true,
     environment: 'PRODUCTION'
@@ -33,17 +28,19 @@ var libsBundle = {
 
 var testBundle = {
     wait: true,
-    entry: rootJsDir + 'test.js',
-    name: 'test.js',
+    entry: pack.get('paths:js') + 'test.js',
+    name: 'client-test.js',
     transform: [reactify, globify],
-    environment: 'TEST'
+    environment: 'TEST',
+    dest: pack.get('paths:bin'),
+    paths: [pack.get('paths:js')]
 };
 
-var browserifyConfig = {
-    jsBundle: jsBundle,
-    jsBundleProduction: assign({ minify: true, environment: 'PRODUCTION' }, jsBundle),
-    libsBundle: libsBundle,
-    testBundle: testBundle
+var config = {
+    develop: jsBundle,
+    production: jsBundleProduction,
+    libs: libsBundle,
+    test: testBundle
 };
 
-module.exports = browserifyConfig;
+module.exports = config;

@@ -1,15 +1,21 @@
-var gulp = require('gulp'),
+"use strict"
+
+var assign = require('object-assign'),
+    pack = require('../../common/package'),
+    gulp = require('gulp'),
     sass = require('gulp-sass'),
     autoprefixer = require('gulp-autoprefixer'),
     minifyCSS = require('gulp-minify-css');
 
-module.exports = function (params) {
-    params = params || {
+module.exports = function (conf) {
+    conf = assign({}, {
+        entry: pack.get('paths:scss') + '*.scss',
+        dest: pack.get('paths:public'),
         minify: false
-    };
+    }, conf);
 
     return function () {
-        var task = gulp.src('./public/css/scss/*.scss')
+        var task = gulp.src(conf.entry)
             .pipe(sass())
             .on('error', function (err) {
                 console.log(err.message);
@@ -19,10 +25,10 @@ module.exports = function (params) {
                 cascade: false
             }));
 
-        if (params.minify) {
+        if (conf.minify) {
             task.pipe(minifyCSS());
         }
 
-        task.pipe(gulp.dest('./public'));
+        task.pipe(gulp.dest(conf.dest));
     };
 };

@@ -1,4 +1,7 @@
-var gulp = require('gulp'),
+"use strict"
+
+var pack = require('../../common/package'),
+    gulp = require('gulp'),
     assign = require('object-assign'),
     browserify = require('browserify'),
     streamify = require('gulp-streamify'),
@@ -6,34 +9,35 @@ var gulp = require('gulp'),
     source = require("vinyl-source-stream"),
     replace = require('gulp-replace');
 
-var defaultOptions = {
+var defaultConfig = {
     wait: false,
     minify: false,
     entry: '',
-    name: 'script.js',
-    dest: './public/',
+    name: 'bundle.js',
+    dest: pack.get('paths:public'),
     external: [],
     transform: [],
-    environment: 'NONE'
+    paths: [],
+    environment: 'NONE',
+    callback: null
 };
 
 var trimCallback = function (callback) {
     return callback || function () {};
 };
 
-var createTask = function (params, callback) {
-    callback = trimCallback(callback);
+var createTask = function (config, done) {
     var b = browserify({
-            entries: [params.entry],
+            entries: [config.entry],
             extensions: ['.jsx'],
-            paths: ['./node_modules','./public/js']
+            paths: ['./node_modules'].concat(config.paths)
         });
-
-    params.external.forEach(function (id) {
-        b.external(id);
+    
+    config.external.forEach(function (ex) {
+        b.external(ex);
     });
 
-    params.transform.forEach(function (tr) {
+    config.transform.forEach(function (tr) {
         b.transform(tr);
     });
 
@@ -41,33 +45,43 @@ var createTask = function (params, callback) {
         .on('error', function (err) {
             console.log(err.message);
         })
-        .pipe(source(params.name));
+        .pipe(source(config.name));
 
-    if (params.minify) {
+    if (config.minify) {
         bs.pipe(streamify(uglify()));
     }
 
     bs
-    .pipe(streamify(replace('__CLAVY_ENVIRONMENT__', "'" + params.environment + "'")))
-    .pipe(gulp.dest('./public/'))
+    .pipe(streamify(replace('__CLAVY_ENVIRONMENT__', "'" + config.environment + "'")))
+    .pipe(gulp.dest(config.dest))
     .on('end', function () {
-        callback();
+        if (done !== null) {
+            done();
+        }
+        if (config.callback != null) {
+            callback();
+        }
     })
     .on('error', function (err) {
-        callback(err);
+        if (done !== null) {
+            done(err);
+        }
+        if (config.callback != null) {
+            callback(err);
+        }
     });
 };
 
-module.exports = function (params) {
-    params = assign({}, defaultOptions, params);
+module.exports = function (config) {
+    config = assign({}, defaultConfig, config);
 
-    if (params.wait) {
+    if (config.wait) {
         return function (done) {
-            createTask(params, done);
+            createTask(config, done);
         }
     } else {
         return function () {
-            createTask(params);
+            createTask(config, null);
         }
     }
 };
