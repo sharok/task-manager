@@ -12,6 +12,7 @@ var localization = {
     ALL_TASKS: 'all tasks',
     PROFILE: 'profile',
     UPCOMING_TASKS: 'upcoming tasks',
+    NO_UPCOMING_TASK: 'the are no upcoming tasks',
     TODAY: 'today',
     ADD_TASK: 'add task',
     THEN: 'then',
