@@ -17,6 +17,41 @@ describe('Key Switch', function() {
     		assert.equal(a, 10);	
     });
 
+    it('should trigger `digits` callback if pressed key is digit', function () {
+        var sum = 0;
+            trigger = function (keyCode) {
+                keySwitch(keyCode, {
+                    'digits': function () {
+                        sum++;
+                    }
+                });
+            };
+
+        trigger(49);
+        trigger(53);
+        trigger(56);
+
+        assert.equal(sum, 3);
+    });
+
+    it('should trigger `digits` callback if pressed key is numpad* or digit', function () {
+        var sum = 0;
+            trigger = function (keyCode) {
+                keySwitch(keyCode, {
+                    'digits': function () {
+                        sum++;
+                    }
+                });
+            };
+
+        trigger(49);
+        trigger(96);
+        trigger(56);
+        trigger(104);
+
+        assert.equal(sum, 4);
+    });
+
     it('should execute `other` callback if callback of passing key is not defined', function() {
         var a = 5;
 
@@ -33,5 +68,16 @@ describe('Key Switch', function() {
         });
 
         assert.equal(a, 0);
+    });
+
+    it('should return name according key code', function () {
+        assert.equal(keySwitch(27), 'esc');
+    });
+
+    it('should return digit according key code', function () {
+        assert.equal(keySwitch(51), '3');
+    });
+    it('should return digit according key code (numpad*)', function () {
+        assert.equal(keySwitch(51), '3');
     });
 });

@@ -27,6 +27,8 @@ var ThenTasks = React.createClass({
     },
 
     renderTask: function (task, index) {
+        var dateFormat = task.timeWasSet ? 'Do MMMM HH:mm' : 'Do MMMM';
+
         return <li key={ index }>
             <i className="ico partial-star margin-right">
                 <SvgIco name="partial-star" value={ task.precedence('%') } />
@@ -40,7 +42,7 @@ var ThenTasks = React.createClass({
             <main className="inline-text">
                 <strong>{task.title[0]}</strong>
                 <span>{ task.title.substring(1, task.title.length) }</span> 
-                <small> | {dater.format('Do MMMM', task.date)}</small>
+                <small> | {dater.format(dateFormat, task.date)}</small>
             </main>
         </li>;
     },

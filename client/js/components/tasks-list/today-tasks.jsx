@@ -2,6 +2,7 @@
 
 var React = require('react'),
     lz = require('localization').get(),
+    dater = require('libs/dater'),
     tasksStore = require('stores/tasksStore'),
     taskActions = require('actions/taskActions'),
     mixins = require('mixins/main'),
@@ -32,6 +33,8 @@ var TodayTasks = React.createClass({
     },
 
     renderTask: function (task, index) {
+        var extra = task.timeWasSet ? <small> | {dater.format('HH:mm', task.date)}</small> : '';
+
         return <li key={ index } className={ this.cs({ 'done': task.done }) }>
             <i className="ico partial-star margin-right">
                 <SvgIco name="partial-star" value={ task.precedence('%') } />
@@ -48,6 +51,7 @@ var TodayTasks = React.createClass({
             <main className="inline-text">
                 <strong>{task.title[0]}</strong>
                 <span>{ task.title.substring(1, task.title.length) }</span>
+                { extra }
             </main>
         </li>;
     },

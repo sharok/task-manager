@@ -11,8 +11,9 @@ var assign = require('object-assign'),
 var defaultTask = {
     title: '',
     today: true,
+    timeWasSet: false,
     date: new Date(),
-    priority: 2
+    priority: 2,
 };
 
 var task = assign({}, defaultTask);

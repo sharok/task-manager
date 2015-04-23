@@ -45,8 +45,12 @@ var taskActions = {
         }).then(function (setDate) {
             if (!setDate) return;
             return popup.calendar();
-        }).then(function (selectDate) {
-            api.tasks.update(id, { date: selectDate || null }, function (task) {
+        }).then(function (res) {
+            res = res || {};
+            api.tasks.update(id, { 
+                date: res.date || null,
+                timeWasSet: res.timeWasSet || false,
+            }, function (task) {
                 _updateTask(task);
             });          
         });

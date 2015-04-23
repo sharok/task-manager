@@ -66,8 +66,10 @@ var quickTaskAddActions = {
         }).then(function (setDate) {
             if (!setDate) return;
             return popup.calendar();
-        }).then(function (selectDate) {
-            savingTask.date = selectDate || null;
+        }).then(function (res) {
+            res = res || {};
+            savingTask.date = res.date || null;
+            savingTask.timeWasSet = res.timeWasSet || false;
             quickTaskAddActions.saveTask(savingTask);
         });
     },

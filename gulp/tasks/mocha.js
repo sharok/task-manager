@@ -6,6 +6,8 @@ var gulp = require('gulp'),
 module.exports = function (config) {
 	return function () {
 		var task = gulp.src(config.entry, {read: false})
-			.pipe(mocha());	
+			.pipe(mocha({
+				debugBrk: true,
+			}));
 	};
 };

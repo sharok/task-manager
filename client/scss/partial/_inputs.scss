@@ -16,6 +16,16 @@
     }
 }
 
+.modal-input {
+    background: none;
+    border: none;
+    border-bottom: 1px solid lighten($modal-color, 10%);
+    height: 30px;
+    color: $secondary-font-color;
+    font-size: 20px;
+    text-transform: uppercase;
+}
+
 .public-label {
     display: block;
     font-size: 14px;

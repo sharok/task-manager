@@ -7,18 +7,27 @@
     & > {
         .month {
             font-size: 24px;
-            color: #fff;
+            color: $secondary-font-color;
         }
 
         .day {
             font-size: 53px;
-            color: #fff;
+            color: $secondary-font-color;
             margin: 5px 0;
         }
 
         .year {
             font-size: 24px;
             color: lighten($modal-color, 10%);
+        }
+
+        .time {
+            color: $secondary-font-color;
+
+            input[type="text"] {
+                width: 30px;
+                text-align: center;
+            }
         }
     }
 }

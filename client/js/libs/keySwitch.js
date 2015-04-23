@@ -1,5 +1,3 @@
-"use strict"
-
 var assign = require('object-assign'),
     invariant = require('invariant');
 
@@ -13,20 +11,46 @@ var keysCodes = {
     13: 'enter'
 };
 
+var getKey = function (keyCode) {
+    var key = keysCodes[keyCode];
+
+    if (keyCode >= 48 && keyCode <= 57) {
+        key = keyCode - 48;
+    }
+
+    if (keyCode >= 96 && keyCode <= 105) {
+        key = keyCode - 96;
+    }
+
+    return key + ''; 
+};
+
 var keySwitch = function (keyCode, actions) {
-    actions = assign({
-        other: function () {
+    if (typeof actions === 'undefined') {
+        return getKey(keyCode);
+    };
 
-        }
-    }, actions);
+    var callbacks = [],
+        keyName = keysCodes[keyCode],
+        action = actions[keyName];
 
-    var actionKey = keysCodes[keyCode],
-    action = actions[actionKey];
+    if (typeof action !== 'undefined') {
+        callbacks.push(action);
+    }
 
-    if (typeof action === 'undefined')
-        actions.other();
-    else
-        action();
+    if (typeof action === 'undefined' && typeof actions.other !== 'undefined') {
+        callbacks.push(actions.other);
+    }
+
+    if (typeof actions.digits !== 'undefined' && 
+        ( (keyCode >= 48 && keyCode <= 57) || (keyCode >= 96 && keyCode <= 105))
+        ) {
+        callbacks.push(actions.digits);
+    }
+
+    callbacks.forEach(function (callback) {
+        callback(); 
+    });
 };
 
 module.exports = keySwitch;
