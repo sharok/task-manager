@@ -18,3 +18,5 @@ Afterwards all dependencies are installed you can follow this steps to run the p
 * Due to bundle files aren't kept in repo they must be compiled. To do this run production task: `npm run production`.
 * Run the server: `npm run start`. Now Clavy is available on `localhost:8080`.
 
+### License
+MIT © Clavy project
