@@ -11,7 +11,7 @@ To run Clavy on your local mashine some softwares need to be installed. Below th
 * Eventually package management. Since the project uses Node.js environment it's naturally to use npm. It must be already installed with Node.js.
 
 Afterwards all dependencies are installed you can follow this steps to run the project:
-* Clone the project to a some folder on your system. The Link can be got from the [GitHub repository](https://github.com/atomiomi/clavy).
+* Clone the project to a some folder on your system. The link can be got from the [GitHub repository](https://github.com/atomiomi/clavy).
 * All commands are performed in a project folder, so open terminal and go to it.
 * At first npm packages must be installed. Just type: `npm install`.
 * Gulp should be installed globally: `npm install gulp -g`.
