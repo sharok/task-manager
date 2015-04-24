@@ -110,7 +110,7 @@
     "key-switch": "./client/js/libs/keySwitch.js",
     "api": "./client/js/libs/api.js"
   },
-  "license": "BSD-2-Clause",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/atomiomi/clavy/issues"
   }
