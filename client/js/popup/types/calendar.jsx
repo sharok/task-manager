@@ -44,19 +44,17 @@ var Calendar = React.createClass({
     },
 
     _handleTimeChange: function (i, syntheticEvent) {
-        var that = this,
-            time = utils.clone(this.state.time),
+        var time = utils.clone(this.state.time),
+            regEx = new RegExp(/^[0-9]*$/),
             node = syntheticEvent.target,
-            pos = node.selectionStart,
-            value = node.value.split(''),
-            newDigit = pos === 1 ? value[0] : value[1];
+            value = node.value;
 
-        if (value.length > 3 || isNaN(+newDigit)) {
+        if (!regEx.test(value) || value.length > 2) {
             return;
         }
-        this._timeWasSet = true;
-        time[i] = (value[0] || '0') + ((pos === 1 ? value[2] : value[1]) || '0');
-        this._pos[i] = pos;
+
+        this._timeWasSet = !(time[0] === '');
+        time[i] = value;
         this.setState({ time: time });
     },
 
@@ -105,37 +103,18 @@ var Calendar = React.createClass({
     getInitialState: function () {
         return {
             selectDate: new Date(),
-            time: ['00', '00'],
+            time: ['', ''],
             display: 'fadeIn'
         }
     },
 
     componentWillUpdate: function (nextProps, nextState) {
-        if (+nextState.time[0] > 23 || +nextState.time[0] < 0) {
-            nextState.time[0] = this.state.time[0];
-        }
-        if (+nextState.time[1] > 60 || +nextState.time[1] < 0) {
-            nextState.time[1] = this.state.time[1];
-        }
         this._days = dater.monthDays(nextState.selectDate);
     },
 
     componentWillMount: function () {
         this._timeWasSet = false;
-        this._pos = [0, 0];
         this._days = dater.monthDays(this.state.selectDate);
-    },
-
-    componentDidUpdate: function (prevProp, prevState) {
-        var minuteNode = this.refs.minute.getDOMNode(),
-            hourNode = this.refs.hour.getDOMNode();
-
-        if (prevState.time[0] !== this.state.time[0]) {
-            hourNode.setSelectionRange(this._pos[0], this._pos[0]);
-        }
-        if (prevState.time[1] !== this.state.time[1]) {
-            minuteNode.setSelectionRange(this._pos[1], this._pos[1]);
-        }       
     },
 
     renderDays: function () {
