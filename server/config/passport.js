@@ -26,7 +26,7 @@ var setupPassport = function (passport) {
                     return done(null, false, {message: 'Email or password is incorrect.'});
                 }
 
-                return done(null, user, {message: 'all is good'});
+                return done(null, user);
 
             },
             function (err) {

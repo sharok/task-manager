@@ -29,11 +29,6 @@ var routes = function (app, passport) {
         })(req, res, next);
     });
 
-    app.post('/api/auth/login', passport.authenticate('local-login', {
-        successRedirect: '/',
-        failureRedirect: '/login'
-    }));
-
     app.get('/api/auth/logout', function (req, res) {
         req.logout();
         res.redirect('/');

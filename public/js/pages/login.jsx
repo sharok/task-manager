@@ -10,7 +10,8 @@ var Login = React.createClass({
         return {
             email: '',
             password: '',
-            isSubmitting: false
+            isSubmitting: false,
+            validationMessage: ''
         }
     },
 
@@ -42,6 +43,12 @@ var Login = React.createClass({
         });
     },
 
+    showValidationError: function (message) {
+        this.setState({
+            validationMessage: message
+        })
+    },
+
     handleSubmit: function (e) {
         e.preventDefault();
 
@@ -60,14 +67,19 @@ var Login = React.createClass({
                 window.location.href = "/";
             }
             else {
-                //TODO show validation error
+                that.showValidationError(result);
+                that.enableSubmitButton();
             }
-            that.enableSubmitButton();
         });
     },
 
     render: function () {
         return (<WelcomeBlock onInit={ this.init } title={ lz.LOGIN }>
+
+            { this.state.validationMessage ?
+                <div className="error-container"><span>{this.state.validationMessage}</span></div>
+                : null }
+
             <form className="public-form" onSubmit={this.handleSubmit}>
                 <section>
                     <label className="public-label">{ lz.LOGIN }</label>
@@ -82,6 +94,7 @@ var Login = React.createClass({
                     <input type="submit" className="base-button" disabled={this.state.isSubmitting} value={ lz.ENTER }/>
                 </section>
             </form>
+
         </WelcomeBlock>);
     }
 });
