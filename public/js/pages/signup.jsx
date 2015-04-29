@@ -59,7 +59,7 @@ var SignUp = React.createClass({
     render: function () {
         return (<WelcomeBlock  onInit={ this.init } title={ lz.SIGN_UP }>
             { this.state.validationMessage ?
-                <div className="error-container"><span>{this.state.validationMessage}</span></div>
+                <div className="error-message"><span>{this.state.validationMessage}</span></div>
                 : null }
 
             <form className="public-form" onSubmit={this.handleSubmit}>
