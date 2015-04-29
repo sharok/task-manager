@@ -8,8 +8,6 @@ var React = require('react'),
 var Login = React.createClass({
     getInitialState: function () {
         return {
-            email: '',
-            password: '',
             isSubmitting: false,
             validationMessage: ''
         }
@@ -19,27 +17,9 @@ var Login = React.createClass({
         this.props.onInit(welcome);
     },
 
-    changeEmail: function (e) {
+    enableForm: function (enable) {
         this.setState({
-            email: e.target.value
-        });
-    },
-
-    changePassword: function (e) {
-        this.setState({
-            password: e.target.value
-        });
-    },
-
-    disableSubmitButton: function () {
-        this.setState({
-            isSubmitting: true
-        });
-    },
-
-    enableSubmitButton: function () {
-        this.setState({
-            isSubmitting: false
+            isSubmitting: !enable
         });
     },
 
@@ -52,10 +32,10 @@ var Login = React.createClass({
     handleSubmit: function (e) {
         e.preventDefault();
 
-        this.disableSubmitButton();
+        this.enableForm(false);
 
-        var email = this.state.email.trim();
-        var password = this.state.password.trim();
+        var email = this.refs.email.getDOMNode().value.trim();
+        var password = this.refs.password.getDOMNode().value.trim().trim();
         var data = {
             email: email,
             password: password
@@ -68,7 +48,7 @@ var Login = React.createClass({
             }
             else {
                 that.showValidationError(result);
-                that.enableSubmitButton();
+                that.enableForm(true);
             }
         });
     },
@@ -83,12 +63,10 @@ var Login = React.createClass({
             <form className="public-form" onSubmit={this.handleSubmit}>
                 <section>
                     <label className="public-label">{ lz.LOGIN }</label>
-                    <input name="email" type="text" className="public-input" value={ this.state.email }
-                           onChange={ this.changeEmail }/>
+                    <input ref="email" name="email" type="text" className="public-input"/>
 
                     <label className="public-label margin-top">{ lz.PASSWORD }</label>
-                    <input name="password" type="password" className="public-input" value={ this.state.password }
-                           onChange={ this.changePassword }/>
+                    <input ref="password" name="password" type="password" className="public-input"/>
                 </section>
                 <section className="text-center">
                     <input type="submit" className="base-button" disabled={this.state.isSubmitting} value={ lz.ENTER }/>
