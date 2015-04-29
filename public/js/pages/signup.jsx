@@ -4,6 +4,7 @@ var React = require('react'),
     lz = require('localization').get(),
     api = require('../libs/api'),
     route = require('page'),
+    authorizer = require('libs/authorizer'),
     WelcomeBlock = require('components/welcome/welcome-block.jsx');
 
 var SignUp = React.createClass({
@@ -47,7 +48,9 @@ var SignUp = React.createClass({
         var that = this;
         api.auth.signup(data, function (result) {
             if (result.success) {
-                route('/');
+                authorizer.init(function () {
+                    route('/');
+                });
             }
             else {
                 that.showValidationError(result);
