@@ -30,6 +30,12 @@ var api = {
             sendPostRequest('auth/login', data, function (result) {
                 callback(result);
             })
+        },
+
+        signup: function (data, callback) {
+            sendPostRequest('auth/signup', data, function (result) {
+                callback(result);
+            })
         }
     },
 

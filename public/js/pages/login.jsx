@@ -3,6 +3,7 @@
 var React = require('react'),
     lz = require('localization').get(),
     api = require('../libs/api'),
+    route = require('page'),
     WelcomeBlock = require('components/welcome/welcome-block.jsx');
 
 var Login = React.createClass({
@@ -35,7 +36,7 @@ var Login = React.createClass({
         this.enableForm(false);
 
         var email = this.refs.email.getDOMNode().value.trim();
-        var password = this.refs.password.getDOMNode().value.trim().trim();
+        var password = this.refs.password.getDOMNode().value.trim();
         var data = {
             email: email,
             password: password
@@ -44,7 +45,7 @@ var Login = React.createClass({
         var that = this;
         api.auth.login(data, function (result) {
             if (result.success) {
-                window.location.href = "/";
+                route('/');
             }
             else {
                 that.showValidationError(result);

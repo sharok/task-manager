@@ -21,7 +21,6 @@ var setupPassport = function (passport) {
     var loginUser = function (req, email, password, done) {
 
         UserRepo.getOne({'local.email': email}).done(function (user) {
-
                 if (!user || !user.validPassword(password)) {
                     return done(null, false, {message: 'Email or password is incorrect.'});
                 }
@@ -35,11 +34,16 @@ var setupPassport = function (passport) {
     };
 
     var signUpUser = function (req, email, password, done) {
+        var confirmPassword = req.body.confirmPassword;
+
+        if (password !== confirmPassword) {
+            return done(null, false, {message: 'Password does not match the confirm password.'})
+        }
+
         UserRepo.getOne({'local.email': email}).done(function (user) {
                 if (user) {
-                    return done(null, false);
+                    return done(null, false, {message: 'The given email is registered.'});
                 } else {
-
                     var newUser = UserHelper.createUser('local', email, password);
 
                     UserRepo.save(newUser, function (user) {

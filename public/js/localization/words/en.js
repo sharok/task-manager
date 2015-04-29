@@ -6,6 +6,7 @@ var localization = {
     ABOUT_PROJECT: 'about project',
     ENTER: 'enter',
     PASSWORD: 'password',
+    CONFIRM_PASSWORD: 'confirm password',
     REGISTER: 'register',
     WELCOME: 'welcome',
     SIGN_UP: 'sign up',
