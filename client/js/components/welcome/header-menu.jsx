@@ -39,9 +39,16 @@ var HeaderLinks = React.createClass({
     },
 
     _moveUnderLine: function (pageName) {
-        var underLineNode = this.refs.underline.getDOMNode(),
-            linkNode = this.refs[pageName].getDOMNode(),
-            parentNode = linkNode.parentNode;
+        var parentNode,
+            underLineNode = this.refs.underline.getDOMNode(),
+            linkNode = this.refs[pageName];
+
+        if (typeof linkNode === 'undefined') {
+            return;
+        }
+
+        linkNode = linkNode.getDOMNode();
+        parentNode = linkNode.parentNode;
 
         assign(underLineNode.style, {
             left: linkNode.offsetLeft - parentNode.offsetLeft + 'px',
