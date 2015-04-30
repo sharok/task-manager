@@ -36,16 +36,16 @@ var SignUp = React.createClass({
 
         this.enableForm(false);
 
-        var email = this.refs.email.getDOMNode().value.trim();
-        var password = this.refs.password.getDOMNode().value.trim().trim();
-        var confirmPassword = this.refs.confirmPassword.getDOMNode().value.trim().trim();
-        var data = {
-            email: email,
-            password: password,
-            confirmPassword: confirmPassword
-        };
+        var that = this,
+            email = this.refs.email.getDOMNode().value.trim(),
+            password = this.refs.password.getDOMNode().value.trim().trim(),
+            confirmPassword = this.refs.confirmPassword.getDOMNode().value.trim().trim(),
+            data = {
+                email: email,
+                password: password,
+                confirmPassword: confirmPassword
+            };
 
-        var that = this;
         api.auth.signup(data, function (result) {
             if (result.success) {
                 authorizer.init(function () {
