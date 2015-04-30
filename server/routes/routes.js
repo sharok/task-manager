@@ -3,18 +3,36 @@
 var homeController = require('../controllers/home'),
     accountController = require('../apiControllers/accountController');
 
+
+var handleAuthenticate = function (strategy, passport, req, res, next) {
+    passport.authenticate(strategy, function (error, user, info) {
+        if (error) {
+            return res.status(500).json(error);
+        }
+        if (!user) {
+            return res.json(info.message);
+        }
+
+        req.logIn(user, function (err) {
+            if (err) {
+                return next(err);
+            }
+            return res.json({success: true});
+        })
+    })(req, res, next);
+};
+
 var routes = function (app, passport) {
-    app.post('/auth/signup', passport.authenticate('local-signup', {
-        successRedirect: '/',
-        failureRedirect: '/signup'
-    }));
 
-    app.post('/auth/login', passport.authenticate('local-login', {
-        successRedirect: '/',
-        failureRedirect: '/login'
-    }));
+    app.post('/api/auth/signup', function (req, res, next) {
+        handleAuthenticate('local-signup', passport, req, res, next);
+    });
 
-    app.get('/auth/logout', function (req, res) {
+    app.post('/api/auth/login', function (req, res, next) {
+        handleAuthenticate('local-login', passport, req, res, next);
+    });
+
+    app.get('/api/auth/logout', function (req, res) {
         req.logout();
         res.redirect('/');
     });
