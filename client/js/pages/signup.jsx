@@ -4,6 +4,7 @@ var React = require('react'),
     lz = require('localization').get(),
     api = require('../libs/api'),
     route = require('page'),
+    validator = require('../libs/validator'),
     authorizer = require('libs/authorizer'),
     WelcomeBlock = require('components/welcome/welcome-block.jsx');
 
@@ -31,6 +32,25 @@ var SignUp = React.createClass({
         })
     },
 
+    validateForm: function (email, password, confirmPassword) {
+        if (!validator.checkEmail(email)) {
+            this.showValidationError(lz.VALIDATION_WRONG_EMAIL);
+            return false;
+        }
+
+        if (!validator.checkPasswords(password, confirmPassword)) {
+            this.showValidationError(lz.VALIDATION_WRONG_CONFIRM_PASSWORD);
+            return false;
+        }
+
+        if (password === '') {
+            this.showValidationError(lz.VALIDATION_EMPTY_PASSWORD);
+            return false;
+        }
+
+        return true;
+    },
+
     handleSubmit: function (e) {
         e.preventDefault();
 
@@ -45,6 +65,11 @@ var SignUp = React.createClass({
                 password: password,
                 confirmPassword: confirmPassword
             };
+
+        if (!this.validateForm(email, password, confirmPassword)) {
+            this.enableForm(true);
+            return;
+        }
 
         api.auth.signup(data, function (result) {
             if (result.success) {
