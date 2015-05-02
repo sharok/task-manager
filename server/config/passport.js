@@ -2,6 +2,7 @@
 
 var LocalStrategy = require('passport-local').Strategy,
     db = require('../config/mongoose'),
+    validator = require('../../common/libs/validator'),
     UserRepo = require('../modules/repo')('user'),
     UserHelper = require('../modules/userHelper');
 
@@ -36,8 +37,16 @@ var setupPassport = function (passport) {
     var signUpUser = function (req, email, password, done) {
         var confirmPassword = req.body.confirmPassword;
 
-        if (password !== confirmPassword) {
+        if (!validator.checkPasswords(password, confirmPassword)) {
             return done(null, false, {message: 'Password does not match the confirm password.'})
+        }
+
+        if (!validator.checkEmail(email)) {
+            return done(null, false, {message: 'The given email is incorrect'})
+        }
+
+        if (!validator.checkPasswords(password, confirmPassword)) {
+            return done(null, false, {message: 'Password does not match the confirm password'})
         }
 
         UserRepo.getOne({'local.email': email}).done(function (user) {

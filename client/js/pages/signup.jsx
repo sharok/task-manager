@@ -4,7 +4,7 @@ var React = require('react'),
     lz = require('localization').get(),
     api = require('../libs/api'),
     route = require('page'),
-    validator = require('../libs/validator'),
+    validator = require('../../../common/libs/validator'),
     authorizer = require('libs/authorizer'),
     WelcomeBlock = require('components/welcome/welcome-block.jsx');
 
