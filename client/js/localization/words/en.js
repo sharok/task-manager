@@ -24,10 +24,7 @@ var localization = {
     YES: 'yes',
     OK: 'ok',
     CONFIRM: 'confirm',
-    NO_DATE: 'no date',
-    VALIDATION_WRONG_EMAIL: 'The given email is incorrect.',
-    VALIDATION_EMPTY_PASSWORD: 'Password cannot be empty.',
-    VALIDATION_WRONG_CONFIRM_PASSWORD: 'Password does not match the confirm password'
+    NO_DATE: 'no date'
 };
 
 module.exports = localization;

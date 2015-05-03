@@ -1,7 +1,7 @@
 "use strict"
 
 var React = require('react'),
-    lz = require('localization').get(),
+    lz = require('localization').get('sentences'),
     api = require('../libs/api'),
     route = require('page'),
     validator = require('../../../common/libs/validator'),
