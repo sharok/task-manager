@@ -1,54 +1,18 @@
 "use strict"
 
 var React = require('react'),
-    lz = require('localization').get('sentences'),
+    lz = require('localization').get(),
     api = require('../libs/api'),
     route = require('page'),
-    validator = require('../../../common/libs/validator'),
     authorizer = require('libs/authorizer'),
+    mixins = require('mixins/main'),
     WelcomeBlock = require('components/welcome/welcome-block.jsx');
 
 var SignUp = React.createClass({
+    mixins: mixins('form'),
+
     init: function (welcome) {
         this.props.onInit(welcome);
-    },
-
-    getInitialState: function () {
-        return {
-            isSubmitting: false,
-            validationMessage: ''
-        }
-    },
-
-    enableForm: function (enable) {
-        this.setState({
-            isSubmitting: !enable
-        });
-    },
-
-    showValidationError: function (message) {
-        this.setState({
-            validationMessage: message
-        })
-    },
-
-    validateForm: function (email, password, confirmPassword) {
-        if (!validator.checkEmail(email)) {
-            this.showValidationError(lz.VALIDATION_WRONG_EMAIL);
-            return false;
-        }
-
-        if (!validator.checkPasswords(password, confirmPassword)) {
-            this.showValidationError(lz.VALIDATION_WRONG_CONFIRM_PASSWORD);
-            return false;
-        }
-
-        if (password === '') {
-            this.showValidationError(lz.VALIDATION_EMPTY_PASSWORD);
-            return false;
-        }
-
-        return true;
     },
 
     handleSubmit: function (e) {

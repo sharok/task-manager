@@ -5,7 +5,8 @@ var invariant = require('invariant');
 var mixins = {
     dynamicStyle: require('./dynamicStyle'),
     bindToStore: require('./bindToStore'),
-    initialized: require('./initialized')
+    initialized: require('./initialized'),
+    form: require('./form')
 };
 
 var main = function () {
