@@ -1,10 +1,15 @@
 "use strict"
 
-var pack = require('./common/package'),
+var argv,
+	pack = require('./common/package'),
 	gulp = require('gulp'),
     requireTree = require('require-tree'),
     tasks = requireTree('./gulp/tasks'),
     config = requireTree('./gulp/config');
+
+argv = require('yargs')
+		.default('folder', '')
+		.argv;
 
 gulp.task('js:bundle', tasks.browserify( config.browserify.develop ));
 gulp.task('js:production', tasks.browserify( config.browserify.production ));
@@ -21,7 +26,8 @@ gulp.task('watch', function () {
 });
 
 gulp.task('test:client', ['tests:bundle'], tasks.mocha( config.mocha.client ));
+gulp.task('test:server', tasks.mocha( config.mocha.server(argv.folder) ));
 
-gulp.task('test', ['test:client']);
+gulp.task('test', ['test:client', 'test:server']);
 gulp.task('develop', ['libs:bundle', 'js:bundle', 'sass', 'watch']);
 gulp.task('production', ['libs:bundle', 'js:production', 'sass:min']);
