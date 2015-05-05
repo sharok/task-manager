@@ -2,10 +2,12 @@
 
 var React = require('react'),
     lz = require('localization').get(),
+    lzSentences = require('localization').get('sentences'),
     api = require('../libs/api'),
     route = require('page'),
     authorizer = require('libs/authorizer'),
     mixins = require('mixins/main'),
+    validator = require('../../../common/libs/validator'),
     WelcomeBlock = require('components/welcome/welcome-block.jsx');
 
 var Login = React.createClass({
@@ -15,37 +17,71 @@ var Login = React.createClass({
         this.props.onInit(welcome);
     },
 
-    handleSubmit: function (e) {
-        e.preventDefault();
+    componentDidMount: function () {
+        this.setupInputs('email', this.validateEmail);
+        this.setState({action: api.auth.login});
+    },
 
-        this.enableForm(false);
-
-        var that = this,
-            email = this.refs.email.getDOMNode().value.trim(),
+    getFormData: function () {
+        var email = this.refs.email.getDOMNode().value.trim(),
             password = this.refs.password.getDOMNode().value.trim(),
             data = {
                 email: email,
                 password: password
             };
+        return data;
+    },
 
-        console.log(this.refs.email.getDOMNode());
+    getEmailData: function () {
+        return this.refs.email.getDOMNode().value.trim();
+    },
 
-        if (!this.validateForm(email, password)) {
+    validateEmail: function (email) {
+        if (!validator.checkEmail(email)) {
+            this.showValidationError(lzSentences.VALIDATION_WRONG_EMAIL);
+            //ставить invalid в true
+            return false;
+        }
+
+        return true;
+    },
+
+    handleSubmit: function (e) {
+        e.preventDefault();
+        this.enableForm(false);
+        debugger;
+        if (!this.validateForm2()) {
             this.enableForm(true);
             return;
         }
 
-        api.auth.login(data, function (result) {
-            if (result.success) {
-                authorizer.init(function () {
-                    route('/');
-                });
-            }
-            else {
-                that.showValidationError(result);
-                that.enableForm(true);
-            }
-        });
+        this.submitForm();
+
+        //var that = this,
+        //    email = this.refs.email.getDOMNode().value.trim(),
+        //    password = this.refs.password.getDOMNode().value.trim(),
+        //    data = {
+        //        email: email,
+        //        password: password
+        //    };
+
+
+        //if (!this.validateForm(email, password)) {
+        //    this.enableForm(true);
+        //    return;
+        //}
+        //
+        //api.auth.login(data, function (result) {
+        //    if (result.success) {
+        //        authorizer.init(function () {
+        //            route('/');
+        //        });
+        //    }
+        //    else {
+        //        that.showValidationError(result);
+        //        that.enableForm(true);
+        //    }
+        //});
     },
 
     render: function () {
