@@ -4,14 +4,19 @@ var lzSentences = require('localization').get('sentences'),
     React = require('react');
 
 var form = {
-    formSettings: {},
 
     getInitialState: function () {
         return {
             isSubmitting: false,
             validationMessage: '',
-            inputs: [],
-            action: null
+            inputs: []
+        }
+    },
+
+    componentDidMount: function () {
+        for (var input in this.formConfig.inputs) {
+            var inputProperties = this.formConfig.inputs[input];
+            this.setupInputs(input, inputProperties.validate, inputProperties.validateMessage)
         }
     },
 
@@ -21,9 +26,9 @@ var form = {
         });
     },
 
-    setupInputs: function (inputName, validator) {
+    setupInputs: function (inputName, validate, validationMessage) {
         var inputs = this.state.inputs;
-        inputs.push({name: inputName, isInvalid: false, validator: validator});
+        inputs.push({name: inputName, isInvalid: false, validate: validate, validateMessage: validationMessage});
         this.setState({
             inputs: inputs
         });
@@ -35,11 +40,28 @@ var form = {
         })
     },
 
+    makeInvalid: function (elemName) {
+
+        var inputs = this.state.inputs;
+
+        for (var i = 0; i < inputs.length; i++) {
+            if (inputs[i].name === elemName) {
+                inputs[i].isInvalid = true;
+                this.showValidationError(inputs[i].validateMessage);
+            }
+        }
+
+        this.setState({inputs: inputs});
+    },
+
     validateForm2: function () {
         for (var i = 0; i < this.state.inputs.length; i++) {
+            debugger;
             var currentInput = this.state.inputs[i];
-            var inputValue = this.refs[currentInput.name].getDOMNode().value.trim();
-            if (!currentInput.validator(inputValue)) {
+            //var inputValue = this.refs[currentInput.name].getDOMNode().value.trim();
+            var inputValue = this.formConfig.data[currentInput.name];
+            if (!currentInput.validate(inputValue)) {
+                this.makeInvalid(currentInput.name);
                 return false;
             }
         }

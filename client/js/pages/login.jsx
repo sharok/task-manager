@@ -17,24 +17,71 @@ var Login = React.createClass({
         this.props.onInit(welcome);
     },
 
+    formConfig: {
+        inputs: {
+            email: {
+                validate: function (email) {
+                    return validator.checkEmail(email)
+                },
+                validateMessage: lzSentences.VALIDATION_WRONG_EMAIL
+            }
+        },
+        data: function () {
+            console.log(this);
+            var email = this.refs.email.getDOMNode().value.trim(),
+                password = this.refs.password.getDOMNode().value.trim(),
+                data = {
+                    email: email,
+                    password: password
+                };
+            return data;
+        }.bind(this)
+    },
+
+
+    //formConfig: {
+    //    action: api.auth.login,
+    //    inputs: [{
+    //        name: 'email', validator: function (email) {
+    //            if (!validator.checkEmail(email)) {
+    //                this.showValidationError(lzSentences.VALIDATION_WRONG_EMAIL);
+    //                //ставить invalid в true
+    //                return false;
+    //            }
+    //
+    //            return true;
+    //        }
+    //    }],
+    //    data: function () {
+    //        var email = this.refs.email.getDOMNode().value.trim(),
+    //            password = this.refs.password.getDOMNode().value.trim(),
+    //            data = {
+    //                email: email,
+    //                password: password
+    //            };
+    //        return data;
+    //    }
+    //},
+
+
     componentDidMount: function () {
-        this.setupInputs('email', this.validateEmail);
-        this.setState({action: api.auth.login});
+        //this.setupInputs('email', this.validateEmail);
+        //this.setState({action: api.auth.login});
     },
 
-    getFormData: function () {
-        var email = this.refs.email.getDOMNode().value.trim(),
-            password = this.refs.password.getDOMNode().value.trim(),
-            data = {
-                email: email,
-                password: password
-            };
-        return data;
-    },
+    //getFormData: function () {
+    //    var email = this.refs.email.getDOMNode().value.trim(),
+    //        password = this.refs.password.getDOMNode().value.trim(),
+    //        data = {
+    //            email: email,
+    //            password: password
+    //        };
+    //    return data;
+    //},
 
-    getEmailData: function () {
-        return this.refs.email.getDOMNode().value.trim();
-    },
+    //getEmailData: function () {
+    //    return this.refs.email.getDOMNode().value.trim();
+    //},
 
     validateEmail: function (email) {
         if (!validator.checkEmail(email)) {
