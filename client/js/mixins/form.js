@@ -8,7 +8,7 @@ var form = {
     getInitialState: function () {
         return {
             isSubmitting: false,
-            validationMessage: '',
+            validationSummary: '',
             inputs: []
         }
     },
@@ -35,43 +35,66 @@ var form = {
     },
 
     showValidationError: function (message) {
+        var summary = this.state.validationSummary + message;
         this.setState({
-            validationMessage: message
-        })
+            validationSummary: summary
+        });
+    },
+
+    resetInvalid: function () {
+        var inputs = this.state.inputs;
+
+        inputs.forEach(function (item) {
+            item.isInvalid = false;
+        });
+
+        this.setState({inputs: inputs, validationSummary: '', isInvalidForm: false});
+
     },
 
     makeInvalid: function (elemName) {
-
         var inputs = this.state.inputs;
 
         for (var i = 0; i < inputs.length; i++) {
             if (inputs[i].name === elemName) {
                 inputs[i].isInvalid = true;
-                this.showValidationError(inputs[i].validateMessage);
             }
         }
-
         this.setState({inputs: inputs});
     },
 
     validateForm2: function () {
+        var formIsValid = true;
         for (var i = 0; i < this.state.inputs.length; i++) {
-            debugger;
             var currentInput = this.state.inputs[i];
-            //var inputValue = this.refs[currentInput.name].getDOMNode().value.trim();
-            var inputValue = this.formConfig.data[currentInput.name];
+            var inputValue = this.state[currentInput.name];
             if (!currentInput.validate(inputValue)) {
+                formIsValid = false;
                 this.makeInvalid(currentInput.name);
-                return false;
             }
         }
 
-        return true;
+        if (!formIsValid) {
+            this.buildSummaryValidationMessage();
+            this.showValidationError()
+        }
+
+        return formIsValid;
     },
 
     submitForm: function () {
         var that = this;
-        this.state.action(this.getFormData(), function (result) {
+        this.resetInvalid();
+        this.enableForm(false);
+
+        if (!this.validateForm2()) {
+            this.enableForm(true);
+            return;
+        }
+
+        var formData = this.formConfig.data.bind(this)();
+
+        this.formConfig.action(formData, function (result) {
             // всю эту часть наверно лучше как callback прокидывать, т.к у разных форм могут быть разные действия
 
             if (result.success) {
@@ -84,28 +107,8 @@ var form = {
                 that.enableForm(true);
             }
         })
-    },
-
-    validateForm: function (email, password, confirmPassword) {
-        //if (!validator.checkEmail(email)) {
-        //    this.showValidationError(lzSentences.VALIDATION_WRONG_EMAIL);
-        //    return false;
-        //}
-
-        if (password === '') {
-            this.showValidationError(lzSentences.VALIDATION_EMPTY_PASSWORD);
-            return false;
-        }
-
-        if (confirmPassword !== undefined) {
-            if (!validator.checkPasswords(password, confirmPassword)) {
-                this.showValidationError(lzSentences.VALIDATION_WRONG_CONFIRM_PASSWORD);
-                return false;
-            }
-        }
-
-        return true;
     }
+
 
 };
 

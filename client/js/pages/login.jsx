@@ -13,6 +13,13 @@ var React = require('react'),
 var Login = React.createClass({
     mixins: mixins('form', 'dynamicStyle'),
 
+    getInitialState: function () {
+        return {
+            email: '',
+            password: ''
+        }
+    },
+
     init: function (welcome) {
         this.props.onInit(welcome);
     },
@@ -24,127 +31,73 @@ var Login = React.createClass({
                     return validator.checkEmail(email)
                 },
                 validateMessage: lzSentences.VALIDATION_WRONG_EMAIL
+            },
+            password: {
+                validate: function (password) {
+                    return validator.checkPassword(password)
+                },
+                validateMessage: lzSentences.VALIDATION_EMPTY_PASSWORD
             }
         },
         data: function () {
-            console.log(this);
-            var email = this.refs.email.getDOMNode().value.trim(),
-                password = this.refs.password.getDOMNode().value.trim(),
-                data = {
-                    email: email,
-                    password: password
-                };
-            return data;
-        }.bind(this)
+            var email = this.state.email,
+                password = this.state.password;
+            return {
+                email: email,
+                password: password
+            };
+        },
+        action: api.auth.login
     },
 
-
-    //formConfig: {
-    //    action: api.auth.login,
-    //    inputs: [{
-    //        name: 'email', validator: function (email) {
-    //            if (!validator.checkEmail(email)) {
-    //                this.showValidationError(lzSentences.VALIDATION_WRONG_EMAIL);
-    //                //ставить invalid в true
-    //                return false;
-    //            }
-    //
-    //            return true;
-    //        }
-    //    }],
-    //    data: function () {
-    //        var email = this.refs.email.getDOMNode().value.trim(),
-    //            password = this.refs.password.getDOMNode().value.trim(),
-    //            data = {
-    //                email: email,
-    //                password: password
-    //            };
-    //        return data;
-    //    }
-    //},
-
-
-    componentDidMount: function () {
-        //this.setupInputs('email', this.validateEmail);
-        //this.setState({action: api.auth.login});
+    changeEmail: function (e) {
+        this.setState({
+            email: e.target.value
+        });
     },
 
-    //getFormData: function () {
-    //    var email = this.refs.email.getDOMNode().value.trim(),
-    //        password = this.refs.password.getDOMNode().value.trim(),
-    //        data = {
-    //            email: email,
-    //            password: password
-    //        };
-    //    return data;
-    //},
-
-    //getEmailData: function () {
-    //    return this.refs.email.getDOMNode().value.trim();
-    //},
-
-    validateEmail: function (email) {
-        if (!validator.checkEmail(email)) {
-            this.showValidationError(lzSentences.VALIDATION_WRONG_EMAIL);
-            //ставить invalid в true
-            return false;
-        }
-
-        return true;
+    changePassword: function (e) {
+        this.setState({
+            password: e.target.value
+        });
     },
 
     handleSubmit: function (e) {
         e.preventDefault();
-        this.enableForm(false);
-        debugger;
-        if (!this.validateForm2()) {
-            this.enableForm(true);
-            return;
-        }
-
         this.submitForm();
+    },
 
-        //var that = this,
-        //    email = this.refs.email.getDOMNode().value.trim(),
-        //    password = this.refs.password.getDOMNode().value.trim(),
-        //    data = {
-        //        email: email,
-        //        password: password
-        //    };
+    buildClassName: function (inputName) {
+        var isInvalid = false;
+        this.state.inputs.forEach(function (item) {
+            if (item.name === inputName) {
+                isInvalid = item.isInvalid;
+                return;
+            }
+        });
 
-
-        //if (!this.validateForm(email, password)) {
-        //    this.enableForm(true);
-        //    return;
-        //}
-        //
-        //api.auth.login(data, function (result) {
-        //    if (result.success) {
-        //        authorizer.init(function () {
-        //            route('/');
-        //        });
-        //    }
-        //    else {
-        //        that.showValidationError(result);
-        //        that.enableForm(true);
-        //    }
-        //});
+        return this.cs({'public-input': true, 'error-input': isInvalid})
     },
 
     render: function () {
         return (<WelcomeBlock onInit={ this.init } title={ lz.LOGIN }>
 
-            { this.state.validationMessage ?
-                <div className="error-message"><span>{this.state.validationMessage}</span></div>
+            { this.state.validationSummary ?
+                <div className="error-message"><span>{this.state.validationSummary}</span></div>
                 : null }
+
 
             <form className="public-form" onSubmit={this.handleSubmit}>
                 <section>
                     <label className="public-label">{ lz.LOGIN }</label>
-                    <input ref="email" name="email" type="text" className="public-input"/>
+                    <input name="email" type="text" className={this.buildClassName('email')}
+                           value={ this.state.email }
+                           onChange={ this.changeEmail }/>
 
                     <label className="public-label margin-top">{ lz.PASSWORD }</label>
-                    <input ref="password" name="password" type="password" className="public-input"/>
+                    <input name="password" type="password" className={this.buildClassName('password')}
+                           value={ this.state.password }
+                           onChange={ this.changePassword }/>
                 </section>
                 <section className="text-center">
                     <input type="submit" className="base-button" disabled={this.state.isSubmitting} value={ lz.ENTER }/>

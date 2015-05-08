@@ -10,7 +10,14 @@ var validator = {
         return re.test(email);
     },
 
-    checkPasswords: function (password, confirmPassword) {
+    checkPassword: function (password) {
+        if (password === '') {
+            return false;
+        }
+        return true;
+    },
+
+    checkConfirmPassword: function (password, confirmPassword) {
         if (password !== confirmPassword) {
             return false;
         }
