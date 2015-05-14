@@ -34,12 +34,6 @@ var form = {
         });
     },
 
-    showValidationError: function (message) {
-        var summary = this.state.validationSummary + message;
-        this.setState({
-            validationSummary: summary
-        });
-    },
 
     resetInvalid: function () {
         var inputs = this.state.inputs;
@@ -52,34 +46,62 @@ var form = {
 
     },
 
-    makeInvalid: function (elemName) {
-        var inputs = this.state.inputs;
+    buildSummaryValidationMessage: function () {
+        var summaryMessage = '';
 
-        for (var i = 0; i < inputs.length; i++) {
-            if (inputs[i].name === elemName) {
-                inputs[i].isInvalid = true;
+        for (var i = 0, len = this.state.inputs.length; i < len; i++) {
+            if (this.state.inputs[i].isInvalid) {
+                summaryMessage += this.state.inputs[i].validateMessage;
             }
         }
-        this.setState({inputs: inputs});
+
+        this.setSummaryValidationMessage(summaryMessage);
     },
 
-    validateForm2: function () {
-        var formIsValid = true;
-        for (var i = 0; i < this.state.inputs.length; i++) {
-            var currentInput = this.state.inputs[i];
+    setSummaryValidationMessage: function (message) {
+        this.setState({
+            validationSummary: message
+        });
+    },
+
+
+    validateForm: function () {
+        var formIsValid = true,
+            inputs = this.state.inputs;
+
+
+        for (var i = 0, len = inputs.length; i < len; i++) {
+            var currentInput = inputs[i];
             var inputValue = this.state[currentInput.name];
             if (!currentInput.validate(inputValue)) {
                 formIsValid = false;
-                this.makeInvalid(currentInput.name);
+                inputs[i].isInvalid = true;
             }
         }
 
+        this.setState({inputs: inputs});
+
         if (!formIsValid) {
             this.buildSummaryValidationMessage();
-            this.showValidationError()
         }
 
         return formIsValid;
+    },
+
+    handleServerValidationErrors: function (serverResponse) {
+        var inputs = this.state.inputs;
+
+        serverResponse.inputs.forEach(function (serverInput) {
+            for (var i = 0, len = inputs.length; i < len; i++) {
+                if (inputs[i].name === serverInput) {
+                    inputs[i].isInvalid = true;
+                }
+            }
+        });
+
+        this.setState({
+            inputs: inputs
+        });
     },
 
     submitForm: function () {
@@ -87,7 +109,7 @@ var form = {
         this.resetInvalid();
         this.enableForm(false);
 
-        if (!this.validateForm2()) {
+        if (!this.validateForm()) {
             this.enableForm(true);
             return;
         }
@@ -103,7 +125,8 @@ var form = {
                 });
             }
             else {
-                that.showValidationError(result);
+                that.handleServerValidationErrors(result);
+                that.setSummaryValidationMessage(result.message);
                 that.enableForm(true);
             }
         })

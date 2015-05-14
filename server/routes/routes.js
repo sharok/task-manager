@@ -10,7 +10,7 @@ var handleAuthenticate = function (strategy, passport, req, res, next) {
             return res.status(500).json(error);
         }
         if (!user) {
-            return res.json(info.message);
+            return res.json(info);
         }
 
         req.logIn(user, function (err) {

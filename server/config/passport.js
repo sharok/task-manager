@@ -23,7 +23,10 @@ var setupPassport = function (passport) {
 
         UserRepo.getOne({'local.email': email}).done(function (user) {
                 if (!user || !user.validPassword(password)) {
-                    return done(null, false, {message: 'Email or password is incorrect.'});
+                    return done(null, false, {
+                        inputs: ['email', 'password'],
+                        message: 'Email or password is incorrect.'
+                    });
                 }
 
                 return done(null, user);
@@ -45,7 +48,7 @@ var setupPassport = function (passport) {
             return done(null, false, {message: 'The given email is incorrect'})
         }
 
-        if (!validator.checkPasswords(password, confirmPassword)) {
+        if (!validator.checkConfirmPassword(password, confirmPassword)) {
             return done(null, false, {message: 'Password does not match the confirm password'})
         }
 
