@@ -40,21 +40,27 @@ var setupPassport = function (passport) {
     var signUpUser = function (req, email, password, done) {
         var confirmPassword = req.body.confirmPassword;
 
-        if (!validator.checkPasswords(password, confirmPassword)) {
-            return done(null, false, {message: 'Password does not match the confirm password.'})
-        }
-
         if (!validator.checkEmail(email)) {
-            return done(null, false, {message: 'The given email is incorrect'})
+            return done(null, false, {
+                inputs: ['email'],
+                message: 'The given email is incorrect.'
+            })
         }
 
         if (!validator.checkConfirmPassword(password, confirmPassword)) {
-            return done(null, false, {message: 'Password does not match the confirm password'})
+            return done(null, false, {
+                inputs: ['password, confirmPassword'],
+                message: 'Password does not match the confirm password.'
+            })
         }
 
         UserRepo.getOne({'local.email': email}).done(function (user) {
                 if (user) {
-                    return done(null, false, {message: 'The given email is registered.'});
+                    return done(null, false, {
+                        inputs: ['email'],
+                        message: 'The given email is registered.'
+                    });
+
                 } else {
                     var newUser = UserHelper.createUser('local', email, password);
 
