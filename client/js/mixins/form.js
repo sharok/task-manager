@@ -78,7 +78,6 @@ var
             });
         },
 
-
         resetInvalid: function () {
             var inputs = this.state.inputs;
 
@@ -87,7 +86,6 @@ var
             });
 
             this.setState({inputs: inputs, validationSummary: '', isInvalidForm: false});
-
         },
 
         buildSummaryValidationMessage: function () {
@@ -107,7 +105,6 @@ var
                 validationSummary: message
             });
         },
-
 
         validateForm: function () {
             var formIsValid = true,
@@ -174,8 +171,6 @@ var
                 }
             })
         }
-
-
     };
 
 module.exports = form;

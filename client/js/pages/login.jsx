@@ -7,7 +7,8 @@ var React = require('react'),
     authorizer = require('libs/authorizer'),
     mixins = require('mixins/main'),
     validator = require('../../../common/libs/validator'),
-    WelcomeBlock = require('components/welcome/welcome-block.jsx');
+    WelcomeBlock = require('components/welcome/welcome-block'),
+    ErrorMessage = require('components/common/error-message');
 
 var Login = React.createClass({
     mixins: mixins('form', 'dynamicStyle'),
@@ -57,10 +58,7 @@ var Login = React.createClass({
     render: function () {
         return (<WelcomeBlock onInit={ this.init } title={ lz.LOGIN }>
 
-            { this.state.validationSummary ?
-                <div className="error-message"><span>{this.state.validationSummary}</span></div>
-                : null }
-
+            <ErrorMessage message={this.state.validationSummary}/>
 
             <form className="public-form" onSubmit={this.handleSubmit}>
                 <section>
